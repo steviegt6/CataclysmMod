@@ -1,1 +1,4 @@
-Cataclysm (Calamity Addon) is a pretty cool mod, it does...this. Modify this file with a description of your mod.
+Addon to Calamity.
+
+Current features:
+- Cavern shrines now use gray bricks, stone, and a gold chest (as opposed to obsidian stuff).
