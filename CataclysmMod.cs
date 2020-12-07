@@ -2,7 +2,7 @@ using Terraria.ModLoader;
 
 namespace CataclysmMod
 {
-	public class CataclysmMod : Mod
+	public partial class CataclysmMod : Mod
 	{
 		public static CataclysmMod Instance { get; private set; }
 
@@ -18,5 +18,9 @@ namespace CataclysmMod
 				AutoloadSounds = true
 			};
         }
-	}
+
+		public override void Load() => LoadIL();
+
+		public override void Unload() => UnloadIL();
+    }
 }

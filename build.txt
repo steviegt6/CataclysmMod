@@ -1,4 +1,6 @@
 displayName = Cataclysm (Calamity Addon)
 author = convicted tomatophile (Stevie)
-version = 1.0.0
-modReferences = CalamityMod
+version = 1.0.0.0
+modReferences = CalamityMod@1.4.5.7
+dllReferences = MMHOOK_CalamityMod_v1.4.5.7
+sortAfter = CalamityMod
