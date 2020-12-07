@@ -3,3 +3,4 @@ Addon to Calamity.
 Current features:
 - Cavern shrines now use gray bricks, stone, and a gold chest (as opposed to obsidian stuff).
 - Lore items give you their effects in piggy banks.
+- Added a drop to the Grand Sand Shark that blocks it from spawning as a result of killing 10 sand sharks.
