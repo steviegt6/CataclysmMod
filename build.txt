@@ -1,3 +1,4 @@
 displayName = Cataclysm (Calamity Addon)
 author = convicted tomatophile (Stevie)
-version = 0.1
+version = 1.0.0
+modReferences = CalamityMod
