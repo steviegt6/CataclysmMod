@@ -9,3 +9,4 @@ Current features:
 - Anomura Fungus can now spawn in underground mushroom biomes pre-HM.
 - Buffed spider armor defense.
 - Spider armor gives you the effect of climbing claws.
+- Drataliornus arrows can be shot through blocks.
