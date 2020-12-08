@@ -6,3 +6,5 @@ Current features:
 - Added a drop to the Grand Sand Shark that blocks it from spawning as a result of killing 10 sand sharks.
 - Added a new shell from Abyssal Crates that teleports you the the Sulphurous Sea.
 - Fungal Clump now deals true damage and can be affected by all damage modifiers.
+- Anomura Fungus can now spawn in underground mushroom biomes pre-HM.
+- Buffed spider armor defense.
