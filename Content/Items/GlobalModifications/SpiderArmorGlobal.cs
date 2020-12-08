@@ -23,5 +23,25 @@ namespace CataclysmMod.Content.Items.GlobalModifications
                     break;
             }
         }
+
+        public override string IsArmorSet(Item head, Item body, Item legs)
+        {
+            if (head.type == ItemID.SpiderMask && body.type == ItemID.SpiderBreastplate && legs.type == ItemID.SpiderGreaves)
+                return "Cataclysm:SpiderArmor";
+
+            return base.IsArmorSet(head, body, legs);
+        }
+
+        public override void UpdateArmorSet(Player player, string set)
+        {
+            switch (set)
+            {
+                case "Cataclysm:SpiderArmor":
+                    player.setBonus += "\nYou can stick to walls like a spider";
+
+                    player.spikedBoots = 3;
+                    break;
+            }
+        }
     }
 }

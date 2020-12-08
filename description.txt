@@ -8,3 +8,4 @@ Current features:
 - Fungal Clump now deals true damage and can be affected by all damage modifiers.
 - Anomura Fungus can now spawn in underground mushroom biomes pre-HM.
 - Buffed spider armor defense.
+- Spider armor gives you the effect of climbing claws.
