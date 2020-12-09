@@ -18,3 +18,9 @@ Gelitic Blade:
 
 Redtide Sword:
 * Give projectiles an effect like the Wind Blade's on death.
+
+Avalance:
+* Randomize Ice Bomb y-axis offset.
+
+Forbidden Oathblade:
+* Scythe projectiles give an effect like the Wind Blade's on death.
