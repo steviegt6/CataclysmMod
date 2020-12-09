@@ -1,3 +1,11 @@
 Aftershock:
 * Aftershock rocks produce more dust when they hit the ground?
 * They explode into dust when they despawn?
+
+Basher:
+* 1.2x scale
+
+Biome Blade,
+True Biome Blade,
+Omega Biome Blade:
+* Sprite physically changes depending on the biome, just like the projectiles.
