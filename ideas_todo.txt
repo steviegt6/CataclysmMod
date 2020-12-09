@@ -9,3 +9,12 @@ Biome Blade,
 True Biome Blade,
 Omega Biome Blade:
 * Sprite physically changes depending on the biome, just like the projectiles.
+
+Bladecrest Oathsword:
+* Scythe projectiles emit dust on death so they don't look like they just disappear.
+
+Gelitic Blade:
+* Gel Wave fades away instead of teleporting out of existence.
+
+Redtide Sword:
+* Give projectiles an effect like the Wind Blade's on death.
