@@ -1,0 +1,3 @@
+Aftershock:
+* Aftershock rocks produce more dust when they hit the ground?
+* They explode into dust when they despawn?
