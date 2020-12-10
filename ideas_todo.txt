@@ -2,6 +2,12 @@ Additions:
  Aquatic Hook
  * Dropped by Aquatic Parasites. Can be combined with a chain to make an Aquatic Grapple which pulls you faster when under water.
 
+ Tentacle
+ * Dropped by Giant Squids. Small dots that glow in the dark. Allows you to move faster underwater. 2 hooks.
+
+ Gyrator Containment Unit
+ * Dropped by Wulfrum Gyrators. Miniature D.C.U.
+
 Changes:
  Aftershock:
  * Aftershock rocks produce more dust when they hit the ground?
