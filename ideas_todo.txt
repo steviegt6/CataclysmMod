@@ -8,6 +8,9 @@ Additions:
  Gyrator Containment Unit
  * Dropped by Wulfrum Gyrators. Miniature D.C.U.
 
+ Astral Probe
+ * Hook dropped by Astral Probes.
+
 Changes:
  Aftershock:
  * Aftershock rocks produce more dust when they hit the ground?
