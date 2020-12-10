@@ -1,26 +1,31 @@
-Aftershock:
-* Aftershock rocks produce more dust when they hit the ground?
-* They explode into dust when they despawn?
+Additions:
+ Aquatic Hook
+ * Dropped by Aquatic Parasites. Can be combined with a chain to make an Aquatic Grapple which pulls you faster when under water.
 
-Basher:
-* 1.2x scale
+Changes:
+ Aftershock:
+ * Aftershock rocks produce more dust when they hit the ground?
+ * They explode into dust when they despawn?
 
-Biome Blade,
-True Biome Blade,
-Omega Biome Blade:
-* Sprite physically changes depending on the biome, just like the projectiles.
+ Basher:
+ * 1.2x scale
 
-Bladecrest Oathsword:
-* Scythe projectiles emit dust on death so they don't look like they just disappear.
+ Biome Blade,
+ True Biome Blade,
+ Omega Biome Blade:
+ * Sprite physically changes depending on the biome, just like the projectiles.
 
-Gelitic Blade:
-* Gel Wave fades away instead of teleporting out of existence.
+ Bladecrest Oathsword:
+ * Scythe projectiles emit dust on death so they don't look like they just disappear.
 
-Redtide Sword:
-* Give projectiles an effect like the Wind Blade's on death.
+ Gelitic Blade:
+ * Gel Wave fades away instead of teleporting out of existence.
 
-Avalance:
-* Randomize Ice Bomb y-axis offset.
+ Redtide Sword:
+ * Give projectiles an effect like the Wind Blade's on death.
 
-Forbidden Oathblade:
-* Scythe projectiles give an effect like the Wind Blade's on death.
+ Avalance:
+ * Randomize Ice Bomb y-axis offset.
+
+ Forbidden Oathblade:
+ * Scythe projectiles give an effect like the Wind Blade's on death.
