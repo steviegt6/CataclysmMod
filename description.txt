@@ -1,5 +1,8 @@
 Addon to Calamity.
 
+Temporarily removed the rarity fix in order to fix an issue with True Tooltips.
+Issues with dedicated servers causes by a Fungal Clump issue has been fixed.
+
 Current features:
 - Cavern shrines now use gray bricks, stone, and a gold chest (as opposed to obsidian stuff).
 - Lore items give you their effects in piggy banks.
@@ -10,4 +13,3 @@ Current features:
 - Buffed spider armor defense.
 - Spider armor gives you the effect of climbing claws.
 - Drataliornus arrows can be shot through blocks.
-- Partial rarity fix.
