@@ -10,3 +10,4 @@ Current features:
 - Buffed spider armor defense.
 - Spider armor gives you the effect of climbing claws.
 - Drataliornus arrows can be shot through blocks.
+- Basher now has 1.2x scale.
