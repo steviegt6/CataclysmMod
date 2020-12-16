@@ -1,4 +1,5 @@
-﻿using Terraria.ModLoader;
+﻿using CataclysmMod.Common.IL;
+using Terraria.ModLoader;
 
 namespace CataclysmMod
 {
@@ -6,26 +7,22 @@ namespace CataclysmMod
     {
         internal void LoadIL()
         {
-            // LoadDetours();
+            // IL to change the appearance of Cavern Shrines
+            IL.CalamityMod.World.SmallBiomes.PlaceShrines += CavernShrine.ChangeCavernShrineBlocks;
+            IL.CalamityMod.World.WorldGenerationMethods.SpecialChest += CavernShrine.ChangeCavernShrineChest;
 
-            IL.CalamityMod.World.SmallBiomes.PlaceShrines += ChangeCavernShrineBlocks;
-            IL.CalamityMod.World.WorldGenerationMethods.SpecialChest += ChanceCavernShrineChest;
-            IL.CalamityMod.Items.Accessories.FungalClump.UpdateAccessory += RemoveSummonDamageBonus;
-            // IL.Terraria.ItemText.NewText += ChangeItemTextColor;
-            // IL.Terraria.ItemText.UpdateItemText += UpdateAnimatedCalamityRarities;
-            // IL.Terraria.Main.MouseText += MouseTextRarityColors;
-            // IL.Terraria.Item.Prefix += RemovePrefixRarityCap;
+            // IL to change Fungal Clump's damage
+            IL.CalamityMod.Items.Accessories.FungalClump.UpdateAccessory += FungalClumpDamage.RemoveSummonDamageBonus;
         }
 
         internal void UnloadIL()
         {
-            IL.CalamityMod.World.SmallBiomes.PlaceShrines -= ChangeCavernShrineBlocks;
-            IL.CalamityMod.World.WorldGenerationMethods.SpecialChest -= ChanceCavernShrineChest;
-            IL.CalamityMod.Items.Accessories.FungalClump.UpdateAccessory -= RemoveSummonDamageBonus;
-            // IL.Terraria.ItemText.NewText -= ChangeItemTextColor;
-            // IL.Terraria.ItemText.UpdateItemText -= UpdateAnimatedCalamityRarities;
-            // IL.Terraria.Main.MouseText -= MouseTextRarityColors;
-            // IL.Terraria.Item.Prefix -= RemovePrefixRarityCap;
+            // IL to change the appearance of Cavern Shrines
+            IL.CalamityMod.World.SmallBiomes.PlaceShrines -= CavernShrine.ChangeCavernShrineBlocks;
+            IL.CalamityMod.World.WorldGenerationMethods.SpecialChest -= CavernShrine.ChangeCavernShrineChest;
+
+            // IL to change Fungal Clump's damage
+            IL.CalamityMod.Items.Accessories.FungalClump.UpdateAccessory -= FungalClumpDamage.RemoveSummonDamageBonus;
         }
     }
 }
