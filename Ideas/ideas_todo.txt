@@ -38,3 +38,6 @@ Changes:
 
  Forbidden Oathblade:
  * Scythe projectiles give an effect like the Wind Blade's on death.
+
+ Hallow Ore:
+ * Can spawn underground in pearlstone, spreads? (https://discord.com/channels/225030931008847874/263382359397761025/787853763804266517)
