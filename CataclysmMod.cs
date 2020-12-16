@@ -31,7 +31,7 @@ namespace CataclysmMod
             RecipeFinder finder = new RecipeFinder();
             finder.AddIngredient(ItemID.RedBrick, 5);
             finder.AddTile(TileID.Anvils);
-            finder.SetResult(ModContent.ItemType<ThrowingBrick>());
+            finder.SetResult(ModContent.ItemType<ThrowingBrick>(), 15);
 
             RecipeEditor editor = new RecipeEditor(finder.FindExactRecipe());
             editor.DeleteTile(TileID.Anvils);
