@@ -41,3 +41,45 @@ Changes:
 
  Hallow Ore:
  * Can spawn underground in pearlstone, spreads? (https://discord.com/channels/225030931008847874/263382359397761025/787853763804266517)
+
+ Bloodworms:
+ * May eventually potentially get a crafting recipe by chance probably. (https://discord.com/channels/225030931008847874/263382359397761025/788044707472343070)
+
+ Torrential Tear:
+ * Can be dropped from Abyssal Crates. (https://discord.com/channels/225030931008847874/263382359397761025/784191417479069698)
+
+ Aquatic Scourge Lore:
+ * Prevents the Aquatic Scourge from naturally spawning. (https://discord.com/channels/225030931008847874/263382359397761025/784264427951489034)
+
+ Mana:
+ * Remove cap (I've already made IL for this). (https://discord.com/channels/225030931008847874/263382359397761025/782803423862194196)
+
+ Rage Meter / Adrenaline Meter:
+ * Add text lol
+
+ Bricks:
+ * Crafted at a workbench instead of an anvil. (https://discord.com/channels/225030931008847874/263382359397761025/782144110781399051)
+
+ Piggy:
+ * Crafts into 5 bacon. (https://discord.com/channels/225030931008847874/263382359397761025/782144110231814154)
+
+ Wizard:
+ * Sells Aqua Scepter. (https://discord.com/channels/225030931008847874/263382359397761025/781382537922347028)
+
+ Providence:
+ * Remove stinky ugly box. (https://discord.com/channels/225030931008847874/263382359397761025/781187723741495326)
+
+ Pickaxes:
+ * Add descs:
+ "For continuity's sake, many pickaxes display what they mine but are often incomplete or not present. Picksaw displays it can mine uelibloom, but doesnt mention exodium, neither does Lunar ones, and so on. The point is to consistanly display what ore is able to mine said pickaxe, to avoid confusion, bring continuity, and prevent people from crafting pickaxes they dont actually want
+  -Deathbringer/Nightmare picks should mention mention being able to mine Aerialite
+  -Adamantite/Titanium picks should mention mention being able to mine Cryonic
+  -Pickaxe Axe/Chlorophyte Pick should mention mention being able to mine Perennial
+  -Picksaw/Flamebeak Hampick should mention mention being able to mine Astral ore
+  -and lunar picks/genesis pick should mention mention being able to mine Exodium Clusters" (https://discord.com/channels/225030931008847874/263382359397761025/780500761482231818)
+
+ Dryad:
+ * Shows Astral Infection percentages. (https://discord.com/channels/225030931008847874/263382359397761025/780420199547404298)
+
+ D.C.U.:
+ * Scales to pickaxe power.
