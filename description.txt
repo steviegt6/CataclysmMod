@@ -11,3 +11,4 @@ Current features:
 - Spider armor gives you the effect of climbing claws.
 - Drataliornus arrows can be shot through blocks.
 - Basher now has 1.2x scale.
+- Pickaxes now have consistent tooltips for what ores they can mine

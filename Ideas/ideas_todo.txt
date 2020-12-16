@@ -16,9 +16,6 @@ Changes:
  * Aftershock rocks produce more dust when they hit the ground?
  * They explode into dust when they despawn?
 
- Basher:
- * 1.2x scale
-
  Biome Blade,
  True Biome Blade,
  Omega Biome Blade:
@@ -69,18 +66,8 @@ Changes:
  Providence:
  * Remove stinky ugly box. (https://discord.com/channels/225030931008847874/263382359397761025/781187723741495326)
 
- Pickaxes:
- * Add descs:
- "For continuity's sake, many pickaxes display what they mine but are often incomplete or not present. Picksaw displays it can mine uelibloom, but doesnt mention exodium, neither does Lunar ones, and so on. The point is to consistanly display what ore is able to mine said pickaxe, to avoid confusion, bring continuity, and prevent people from crafting pickaxes they dont actually want
-  -Deathbringer/Nightmare picks should mention mention being able to mine Aerialite
-  -Adamantite/Titanium picks should mention mention being able to mine Cryonic
-  -Pickaxe Axe/Chlorophyte Pick should mention mention being able to mine Perennial
-  -Picksaw/Flamebeak Hampick should mention mention being able to mine Astral ore
-  -and lunar picks/genesis pick should mention mention being able to mine Exodium Clusters" (https://discord.com/channels/225030931008847874/263382359397761025/780500761482231818)
-
  Dryad:
  * Shows Astral Infection percentages. (https://discord.com/channels/225030931008847874/263382359397761025/780420199547404298)
 
  D.C.U.:
  * Scales to pickaxe power.
-
