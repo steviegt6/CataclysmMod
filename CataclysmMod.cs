@@ -1,4 +1,6 @@
 using CalamityMod.Items.Weapons.Rogue;
+using CataclysmMod.Utilities;
+using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
 
@@ -33,9 +35,11 @@ namespace CataclysmMod
             finder.AddTile(TileID.Anvils);
             finder.SetResult(ModContent.ItemType<ThrowingBrick>(), 15);
 
-            RecipeEditor editor = new RecipeEditor(finder.FindExactRecipe());
-            editor.DeleteTile(TileID.Anvils);
-            editor.AddTile(TileID.WorkBenches);
+            if (finder.TryFindExactRecipe(out RecipeEditor editor))
+            {
+                editor.DeleteTile(TileID.Anvils);
+                editor.AddTile(TileID.WorkBenches);
+            }
         }
     }
 }
