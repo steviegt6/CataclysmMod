@@ -1,6 +1,6 @@
 ﻿using Mono.Cecil.Cil;
 using MonoMod.Cil;
-using Terraria;
+using ReLogic.OS;
 using Terraria.ModLoader;
 
 namespace CataclysmMod.Common.IL
@@ -9,9 +9,8 @@ namespace CataclysmMod.Common.IL
     {
         internal static void RemoveSummonDamageBonus(ILContext il)
         {
-            // Seems to crash on servers (or at least Mac & Linux ones)?
-            // Doubt that's normal, further investigation required.
-            if (!Main.dedServ)
+            // FNA IL for this method seems to be different.
+            if (Platform.IsWindows)
             {
                 ILCursor c = new ILCursor(il);
 
@@ -65,6 +64,8 @@ namespace CataclysmMod.Common.IL
 
                 ModContent.GetInstance<CataclysmMod>().Logger.Info("[IL] Finished patching!");
             }
+            else
+                ModContent.GetInstance<CataclysmMod>().Logger.Warn("[IL] Linux or Mac OS detected, skipping Funal Clump IL editing...");
         }
     }
 }
