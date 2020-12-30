@@ -48,6 +48,34 @@ namespace CataclysmMod.Content.Projectiles.GlobalModifications
 
             if (projectile.type == ModContent.ProjectileType<CinderBlossom>())
                 projectile.rotation = savedRotation + (MathHelper.ToRadians(1.5f) + (player.velocity.X / player.maxRunSpeed / 5f * player.direction)) * player.direction;
+
+            if (projectile.type == ModContent.ProjectileType<CalamariMinion>())
+            {
+                projectile.rotation = savedRotation;
+
+                NPC target = null;
+
+                if (player.HasMinionAttackTargetNPC)
+                    target = Main.npc[player.MinionAttackTargetNPC];
+                else
+                    foreach (NPC npc in Main.npc) {
+                        if (npc.CanBeChasedBy(projectile))
+                        {
+                            target = npc;
+                            break;
+                        }
+                    }
+
+                if (target != null)
+                {
+                    Vector2 npcPos = target.position + target.Size * new Vector2(0.5f, 0f);
+                    Vector2 wantedRotation = npcPos - projectile.Center;
+                    wantedRotation.Normalize();
+                    wantedRotation *= 12f;
+
+                    projectile.rotation = projectile.rotation.AngleTowards(wantedRotation.ToRotation() - MathHelper.PiOver2, 0.2f);
+                }
+            }
         }
 
         public static void LerpToRotation(Projectile projectile, float amount, float adjustment = MathHelper.PiOver2) => projectile.rotation = projectile.rotation.AngleTowards(projectile.velocity.ToRotation() - adjustment, amount);
