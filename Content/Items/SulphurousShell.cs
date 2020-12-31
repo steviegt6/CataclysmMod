@@ -13,7 +13,7 @@ namespace CataclysmMod.Content.Items
         public int use = 0;
         public bool inUse = false;
 
-        public override bool Autoload(ref string name) => CalamityChangesConfig.Instance.sulphurousShell;
+        public override bool Autoload(ref string name) => false;
 
         public override void SetDefaults()
         {

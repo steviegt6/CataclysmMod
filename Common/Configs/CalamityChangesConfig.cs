@@ -6,12 +6,7 @@ namespace CataclysmMod.Common.Configs
     [Label("Calamity Changes")]
     public class CalamityChangesConfig : ModConfig
     {
-        public static CalamityChangesConfig Instance { get; private set; }
-
-        public CalamityChangesConfig()
-        {
-            Instance = this;
-        }
+        public static CalamityChangesConfig Instance { get; internal set; }
 
         public override ConfigScope Mode => ConfigScope.ClientSide;
 
@@ -89,6 +84,11 @@ namespace CataclysmMod.Common.Configs
         [Tooltip("Reduce the sell price of Sulphurskin Potions so you can't easily sell them to make tons of money.")]
         [DefaultValue(true)]
         public bool sulphurSkinPotionPriceNerf;
+
+        [Label("Dagger of Decree")]
+        [Tooltip("Add the Dagger of Decree, a rare varient of the Cursed Dagger.")]
+        [DefaultValue(true)]
+        public bool daggerOfDecree;
 
         // NPC Changes
         [Header("NPC Changes")]

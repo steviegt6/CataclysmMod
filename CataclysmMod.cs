@@ -3,6 +3,10 @@ using CalamityMod.Items.Placeables.Ores;
 using CalamityMod.Items.Weapons.Ranged;
 using CalamityMod.Items.Weapons.Rogue;
 using CataclysmMod.Common.Configs;
+using CataclysmMod.Content.Items;
+using CataclysmMod.Content.Items.Accessories;
+using CataclysmMod.Content.Items.Weapons;
+using CataclysmMod.Content.Projectiles;
 using CataclysmMod.Utilities;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -26,7 +30,25 @@ namespace CataclysmMod
             };
         }
 
-        public override void Load() => LoadIL();
+        public override void Load()
+        {
+            CalamityChangesConfig.Instance = ModContent.GetInstance<CalamityChangesConfig>();
+
+            if (CalamityChangesConfig.Instance.sulphurousShell)
+                AddItem("SulphurousShell", new SulphurousShell());
+
+            if (CalamityChangesConfig.Instance.grandSharkRepellent)
+                AddItem("GrandSharkRepellent", new GrandSharkRepellent());
+
+            if (CalamityChangesConfig.Instance.daggerOfDecree)
+            {
+                AddItem("DaggerofDecree", new DaggerofDecree());
+                AddProjectile("DecreeDaggerProj", new DecreeDaggerProj());
+                AddProjectile("DecreeDaggerSplitproj", new DecreeDaggerSplitProj());
+            }
+
+            LoadIL();
+        }
 
         public override void Unload() => UnloadIL();
 
