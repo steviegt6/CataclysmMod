@@ -19,3 +19,5 @@ Current features:
 - The Wizard now sells Guide Voodoo Dolls.
 - Removed Death mode changes to the Torrential Tear.
 - Abyss Mines from the Slime God all explode once the Slime God has been defeated.
+
+- Sulphurskin Potion sell price reduced so people can't easily make tons of money.

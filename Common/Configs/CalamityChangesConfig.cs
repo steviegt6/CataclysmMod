@@ -85,6 +85,11 @@ namespace CataclysmMod.Common.Configs
         [DefaultValue(true)]
         public bool torrentialTearNerfRemoval;
 
+        [Label("Sulphurskin Potion Sell Price Nerf")]
+        [Tooltip("Reduce the sell price of Sulphurskin Potions so you can't easily sell them to make tons of money.")]
+        [DefaultValue(true)]
+        public bool sulphurSkinPotionPriceNerf;
+
         // NPC Changes
         [Header("NPC Changes")]
         [Label("Anomura Fungus Spawning")]
