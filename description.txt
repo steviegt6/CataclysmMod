@@ -21,3 +21,4 @@ Current features:
 - Abyss Mines from the Slime God all explode once the Slime God has been defeated.
 
 - Sulphurskin Potion sell price reduced so people can't easily make tons of money.
+- Boost Cryophobia drop chance and boost Angry Dog spawn rate.

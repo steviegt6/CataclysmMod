@@ -112,6 +112,10 @@ namespace CataclysmMod.Common.Configs
         [DefaultValue(true)]
         public bool abyssMinesExplode;
 
+        [Label("Increase Angry Dog Spawn Rate & Cryophobia Drop Chance")]
+        [DefaultValue(true)]
+        public bool angryDogSpawnBuff;
+
         // Projectile Changes
         [Header("Projectile Changes")]
         [Label("Improved Minion Rotation")]
