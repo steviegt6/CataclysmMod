@@ -14,3 +14,6 @@ Current features:
 - Pickaxes now have consistent tooltips for what ores they can mine.
 - Throwing Bricks are crafted at work benches instead of anvils now.
 - Halley's Inferno uses a rifle scope instead of sniper scope.
+- Ice Clasper, Corvid Harbringer, Herring Staff, Cinder Blossom Staff, and Calamari's Lament's minion rotations are smoother.
+- Steampunker no longer announced that it "has awoken" when first spawning.
+- The Wizard now sells Guide Voodoo Dolls.
