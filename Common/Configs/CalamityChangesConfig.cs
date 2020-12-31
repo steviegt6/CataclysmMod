@@ -93,7 +93,7 @@ namespace CataclysmMod.Common.Configs
         public bool anomuraFungusSpawning;
 
         [Label("Steampunker Spawn Fix")]
-        [Tooltip("Steampunker not longer announces that is \"has awoken\" when spawning.")]
+        [Tooltip("Steampunker no longer announces that is \"has awoken\" when spawning.")]
         [ReloadRequired]
         [DefaultValue(true)]
         public bool steampunkerSpawnFix;
