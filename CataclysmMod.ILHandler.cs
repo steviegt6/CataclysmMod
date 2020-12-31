@@ -1,4 +1,5 @@
-﻿using CataclysmMod.Common.IL;
+﻿using CataclysmMod.Common.Detours;
+using CataclysmMod.Common.IL;
 using Terraria.ModLoader;
 
 namespace CataclysmMod
@@ -15,6 +16,10 @@ namespace CataclysmMod
             IL.CalamityMod.Items.Accessories.FungalClump.UpdateAccessory += FungalClumpDamage.RemoveSummonDamageBonus;
 
             IL.CalamityMod.World.CalamityWorld.PostUpdate += SteampunkerSpawnIL.ModifySteampunkerSpawn;
+
+            /* Detours */
+            // Remove annoying Death mode changes to the Torrential Tear
+            On.CalamityMod.Items.Tools.ClimateChange.TorrentialTear.UseItem += TorrentialTearDetour.RemoveDeathModeCrap;
         }
 
         internal void UnloadIL()
