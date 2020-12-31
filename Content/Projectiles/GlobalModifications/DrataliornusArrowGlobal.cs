@@ -1,4 +1,5 @@
 ﻿using CalamityMod.Projectiles.Ranged;
+using CataclysmMod.Common.Configs;
 using Terraria;
 using Terraria.ModLoader;
 
@@ -8,7 +9,7 @@ namespace CataclysmMod.Content.Projectiles.GlobalModifications
     {
         public override void PostAI(Projectile projectile)
         {
-            if (projectile.type == ModContent.ProjectileType<DrataliornusFlame>())
+            if (CalamityChangesConfig.Instance.drataliornusArrowsThroughBlocks && projectile.type == ModContent.ProjectileType<DrataliornusFlame>())
                 projectile.tileCollide = false;
         }
     }

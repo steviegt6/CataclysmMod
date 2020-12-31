@@ -1,4 +1,5 @@
 ﻿using CalamityMod.World;
+using CataclysmMod.Common.Configs;
 using Microsoft.Xna.Framework;
 using System;
 using Terraria;
@@ -11,6 +12,8 @@ namespace CataclysmMod.Content.Items
     {
         public int use = 0;
         public bool inUse = false;
+
+        public override bool Autoload(ref string name) => CalamityChangesConfig.Instance.sulphurousShell;
 
         public override void SetDefaults()
         {

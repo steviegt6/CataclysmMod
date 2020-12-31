@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using CataclysmMod.Common.Configs;
+using System.Collections.Generic;
 using Terraria.ID;
 using Terraria.ModLoader;
 
@@ -8,7 +9,7 @@ namespace CataclysmMod.Content.NPCs.GlobalModifications
     {
         public override void EditSpawnPool(IDictionary<int, float> pool, NPCSpawnInfo spawnInfo)
         {
-            if (!pool.ContainsKey(NPCID.AnomuraFungus) && spawnInfo.player.ZoneGlowshroom)
+            if (CalamityChangesConfig.Instance.anomuraFungusSpawning && !pool.ContainsKey(NPCID.AnomuraFungus) && spawnInfo.player.ZoneGlowshroom)
                 pool.Add(NPCID.AnomuraFungus, 0.1f);
         }
     }

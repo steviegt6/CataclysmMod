@@ -10,6 +10,8 @@ namespace CataclysmMod.Content.Items.GlobalModifications
     {
         public override bool PreDrawInInventory(Item item, SpriteBatch spriteBatch, Vector2 position, Rectangle frame, Color drawColor, Color itemColor, Vector2 origin, float scale)
         {
+            return;
+
             item.rare = item.Calamity().customRarity != CalamityRarity.NoEffect ? (int)item.Calamity().customRarity : item.rare;
 
             if (item.Calamity().customRarity == CalamityRarity.ItemSpecific)

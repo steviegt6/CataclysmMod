@@ -1,5 +1,6 @@
 ﻿using CalamityMod;
 using CalamityMod.Projectiles.Summon;
+using CataclysmMod.Common.Configs;
 using Terraria;
 using Terraria.ModLoader;
 
@@ -17,7 +18,7 @@ namespace CataclysmMod.Content.Projectiles.GlobalModifications
 
         public override void AI(Projectile projectile)
         {
-            if (projectile.type == ModContent.ProjectileType<FungalClumpMinion>())
+            if (CalamityChangesConfig.Instance.fungalClumpTrueDamage && projectile.type == ModContent.ProjectileType<FungalClumpMinion>())
             {
                 if (firstFrame)
                 {

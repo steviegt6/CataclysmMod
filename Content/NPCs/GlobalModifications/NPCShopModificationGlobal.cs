@@ -1,4 +1,5 @@
 ﻿using CalamityMod.NPCs;
+using CataclysmMod.Common.Configs;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -17,6 +18,10 @@ namespace CataclysmMod.Content.NPCs.GlobalModifications
             }
         }
 
-        public void SetupWizardShop(Chest shop, ref int nextSlot) => CalamityGlobalTownNPC.SetShopItem(ref shop, ref nextSlot, ItemID.GuideVoodooDoll, Main.hardMode, Item.sellPrice(gold: 20));
+        public void SetupWizardShop(Chest shop, ref int nextSlot)
+        {
+            if (CalamityChangesConfig.Instance.wizardGuideVoodooDoll)
+                CalamityGlobalTownNPC.SetShopItem(ref shop, ref nextSlot, ItemID.GuideVoodooDoll, Main.hardMode, Item.sellPrice(gold: 20));
+        }
     }
 }

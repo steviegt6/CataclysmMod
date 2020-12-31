@@ -2,8 +2,8 @@ using CalamityMod.Items.Materials;
 using CalamityMod.Items.Placeables.Ores;
 using CalamityMod.Items.Weapons.Ranged;
 using CalamityMod.Items.Weapons.Rogue;
+using CataclysmMod.Common.Configs;
 using CataclysmMod.Utilities;
-using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
 
@@ -38,7 +38,7 @@ namespace CataclysmMod
             finder.AddTile(TileID.Anvils);
             finder.SetResult(ModContent.ItemType<ThrowingBrick>(), 15);
 
-            if (finder.TryFindExactRecipe(out RecipeEditor throwingBrick))
+            if (CalamityChangesConfig.Instance.throwingBrickRecipeChange && finder.TryFindExactRecipe(out RecipeEditor throwingBrick))
             {
                 throwingBrick.DeleteTile(TileID.Anvils);
                 throwingBrick.AddTile(TileID.WorkBenches);
@@ -53,7 +53,7 @@ namespace CataclysmMod
             finder.AddTile(TileID.LunarCraftingStation);
             finder.SetResult(ModContent.ItemType<HalleysInferno>());
 
-            if (finder.TryFindExactRecipe(out RecipeEditor halleysInferno))
+            if (CalamityChangesConfig.Instance.halleysInfernoRecipeChange && finder.TryFindExactRecipe(out RecipeEditor halleysInferno))
             {
                 halleysInferno.DeleteIngredient(ItemID.SniperScope);
                 halleysInferno.AddIngredient(ItemID.RifleScope);
