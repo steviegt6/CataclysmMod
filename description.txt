@@ -22,4 +22,3 @@ Current features:
 - Sulphurskin Potion sell price reduced so people can't easily make tons of money.
 - Boost Cryophobia drop chance and boost Angry Dog spawn rate.
 - Added Dagger of Decree.
-- Fixed issue with loading items.
