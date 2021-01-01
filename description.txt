@@ -1,25 +1,31 @@
 Addon to Calamity.
 
 Current features:
+* General changes:
 - Cavern shrines now use gray bricks, stone, and a gold chest (as opposed to obsidian stuff).
+
+* Item changes:
 - Lore items give you their effects in piggy banks.
-- Added a drop to the Grand Sand Shark that blocks it from spawning as a result of killing 10 sand sharks.
 - Added a new shell from Abyssal Crates that teleports you the the Sulphurous Sea.
-- Fungal Clump now deals true damage and can be affected by all damage modifiers.
-- Anomura Fungus can now spawn in underground mushroom biomes pre-HM.
+- Added a drop to the Grand Sand Shark that blocks it from spawning as a result of killing 10 sand sharks.
+- Added Dagger of Decree, a rare variant of the Cursed Dagger.
 - Buffed spider armor defense.
 - Spider armor gives you the effect of climbing claws.
-- Drataliornus arrows can be shot through blocks.
 - Basher now has 1.2x scale.
 - Pickaxes now have consistent tooltips for what ores they can mine.
+- Fungal Clump now deals true damage and can be affected by all damage modifiers.
 - Throwing Bricks are crafted at work benches instead of anvils now.
 - Halley's Inferno uses a rifle scope instead of sniper scope.
-- Ice Clasper, Corvid Harbringer, Herring Staff, Cinder Blossom Staff, and Calamari's Lament's minion rotations are smoother.
+- Removed Death mode changes to the Torrential Tear.
+- Sulphurskin Potion sell price reduced so people can't easily make tons of money.
+
+* NPC changes:
+- Anomura Fungus can now spawn in underground mushroom biomes pre-HM.
 - Steampunker no longer announced that it "has awoken" when first spawning.
 - The Wizard now sells Guide Voodoo Dolls.
-- Removed Death mode changes to the Torrential Tear.
-- Abyss Mines from the Slime God all explode once the Slime God has been defeated.
-- Sulphurskin Potion sell price reduced so people can't easily make tons of money.
 - Boost Cryophobia drop chance and boost Angry Dog spawn rate.
-- Added Dagger of Decree.
-- Fixed issue with loading items.
+
+* Projectile changes:
+- Ice Clasper, Corvid Harbringer, Herring Staff, Cinder Blossom Staff, and Calamari's Lament's minion rotations are smoother.
+- Drataliornus arrows can be shot through blocks.
+- Abyss Mines from the Slime God all explode once the Slime God has been defeated.

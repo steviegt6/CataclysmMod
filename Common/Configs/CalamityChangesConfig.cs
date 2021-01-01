@@ -86,7 +86,7 @@ namespace CataclysmMod.Common.Configs
         public bool sulphurSkinPotionPriceNerf;
 
         [Label("Dagger of Decree")]
-        [Tooltip("Add the Dagger of Decree, a rare varient of the Cursed Dagger.")]
+        [Tooltip("Add the Dagger of Decree, a rare variant of the Cursed Dagger.")]
         [DefaultValue(true)]
         public bool daggerOfDecree;
 
