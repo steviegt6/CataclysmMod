@@ -1,21 +1,18 @@
-using CalamityMod.Items.Materials;
-using CalamityMod.Items.Placeables.Ores;
-using CalamityMod.Items.Weapons.Ranged;
-using CalamityMod.Items.Weapons.Rogue;
-using CataclysmMod.Common.Configs;
-using CataclysmMod.Content.Items;
-using CataclysmMod.Content.Items.Accessories;
-using CataclysmMod.Content.Items.Weapons;
-using CataclysmMod.Content.Projectiles;
-using CataclysmMod.Utilities;
-using Terraria.ID;
+using CataclysmMod.Common;
+using CataclysmMod.Content.Recipes;
+using System;
+using System.IO;
+using System.Reflection;
 using Terraria.ModLoader;
+using Terraria.ModLoader.IO;
 
 namespace CataclysmMod
 {
-    public partial class CataclysmMod : Mod
+    public class CataclysmMod : Mod
     {
         public static CataclysmMod Instance { get; private set; }
+
+        public Mod Calamity => ModLoader.GetMod("CalamityMod");
 
         public CataclysmMod()
         {
@@ -28,58 +25,24 @@ namespace CataclysmMod
                 AutoloadGores = true,
                 AutoloadSounds = true
             };
+
+            AppDomain.CurrentDomain.AssemblyResolve += (sender, args) =>
+            {
+                if (args.Name.Contains("CalamityMod") && !args.Name.Contains("MMHOOK") && ModLoader.GetMod("CalamityMod") != null)
+                    return ModLoader.GetMod("CalamityMod").Code;
+
+                return null;
+            };
         }
 
-        public override void Load()
+        public override void Load() => ILManager.Load();
+
+        public override void Unload()
         {
-            CalamityChangesConfig.Instance = ModContent.GetInstance<CalamityChangesConfig>();
-
-            if (CalamityChangesConfig.Instance.sulphurousShell)
-                AddItem("SulphurousShell", new SulphurousShell());
-
-            if (CalamityChangesConfig.Instance.grandSharkRepellent)
-                AddItem("GrandSharkRepellent", new GrandSharkRepellent());
-
-            if (CalamityChangesConfig.Instance.daggerOfDecree)
-            {
-                AddItem("DaggerofDecree", new DaggerofDecree());
-                AddProjectile("DecreeDaggerProj", new DecreeDaggerProj());
-                AddProjectile("DecreeDaggerSplitproj", new DecreeDaggerSplitProj());
-            }
-
-            LoadIL();
+            ILManager.Unload();
+            RecipeManager.Unload();
         }
 
-        public override void Unload() => UnloadIL();
-
-        public override void PostAddRecipes()
-        {
-            // Modify Throwing Brick recipe
-            RecipeFinder finder = new RecipeFinder();
-            finder.AddIngredient(ItemID.RedBrick, 5);
-            finder.AddTile(TileID.Anvils);
-            finder.SetResult(ModContent.ItemType<ThrowingBrick>(), 15);
-
-            if (CalamityChangesConfig.Instance.throwingBrickRecipeChange && finder.TryFindExactRecipe(out RecipeEditor throwingBrick))
-            {
-                throwingBrick.DeleteTile(TileID.Anvils);
-                throwingBrick.AddTile(TileID.WorkBenches);
-            }
-
-            // Modify Halley's Inferno recipe
-            finder = new RecipeFinder();
-            finder.AddIngredient(ModContent.ItemType<Lumenite>(), 6);
-            finder.AddIngredient(ModContent.ItemType<RuinousSoul>(), 4);
-            finder.AddIngredient(ModContent.ItemType<ExodiumClusterOre>(), 12);
-            finder.AddIngredient(ItemID.SniperScope);
-            finder.AddTile(TileID.LunarCraftingStation);
-            finder.SetResult(ModContent.ItemType<HalleysInferno>());
-
-            if (CalamityChangesConfig.Instance.halleysInfernoRecipeChange && finder.TryFindExactRecipe(out RecipeEditor halleysInferno))
-            {
-                halleysInferno.DeleteIngredient(ItemID.SniperScope);
-                halleysInferno.AddIngredient(ItemID.RifleScope);
-            }
-        }
+        public override void PostAddRecipes() => RecipeManager.Load();
     }
 }

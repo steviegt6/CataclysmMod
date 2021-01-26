@@ -15,7 +15,7 @@
   </ItemGroup>
   <ItemGroup>
     <Reference Include="CalamityMod">
-      <HintPath>..\..\references\mods\CalamityMod_v1.4.5.7.dll</HintPath>
+      <HintPath>lib\CalamityMod_v1.4.5.7.dll</HintPath>
     </Reference>
     <Reference Include="MMHOOK_CalamityMod_v1.4.5.7">
       <HintPath>lib\MMHOOK_CalamityMod_v1.4.5.7.dll</HintPath>

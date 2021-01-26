@@ -1,15 +1,24 @@
-﻿using Mono.Cecil.Cil;
+﻿using CataclysmMod.Common.Configs;
+using Mono.Cecil.Cil;
 using MonoMod.Cil;
 using System;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
 
-namespace CataclysmMod.Common.IL
+namespace CataclysmMod.Common.ILEdits
 {
-    public static class SteampunkerSpawnIL
+    public class SteampunkerSpawnIL : ILEdit
     {
-        internal static void ModifySteampunkerSpawn(ILContext il)
+        public override string DictKey => "CalamityMod.World.CalamityWorld.PostUpdate";
+
+        public override bool Autoload() => CalamityChangesConfig.Instance.steampunkerSpawnFix && CataclysmMod.Instance.Calamity != null;
+
+        public override void Load() => IL.CalamityMod.World.CalamityWorld.PostUpdate += ModifySteampunkerSpawn;
+
+        public override void Unload() => IL.CalamityMod.World.CalamityWorld.PostUpdate -= ModifySteampunkerSpawn;
+
+        private void ModifySteampunkerSpawn(ILContext il)
         {
             ILCursor c = new ILCursor(il);
 
@@ -25,8 +34,6 @@ namespace CataclysmMod.Common.IL
                 return;
             }
 
-            //c.Index++;
-
             // Remove the entire method call
             c.RemoveRange(3);
 
@@ -36,7 +43,6 @@ namespace CataclysmMod.Common.IL
             c.EmitDelegate<Action<int>>((whoAmI) =>
             {
                 Player player = Main.player[whoAmI];
-
                 NPC.NewNPC((int)player.position.X, (int)player.position.Y, NPCID.Steampunker);
             });
         }

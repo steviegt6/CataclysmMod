@@ -1,13 +1,22 @@
-﻿using Mono.Cecil.Cil;
+﻿using CataclysmMod.Common.Configs;
+using Mono.Cecil.Cil;
 using MonoMod.Cil;
 using ReLogic.OS;
 using Terraria.ModLoader;
 
-namespace CataclysmMod.Common.IL
+namespace CataclysmMod.Common.ILEdits
 {
-    public static class FungalClumpDamage
+    public class FungalClumpDamageIL : ILEdit
     {
-        internal static void RemoveSummonDamageBonus(ILContext il)
+        public override string DictKey => "CalamityMod.Items.Accessories.FungalClump.UpdateAccessory";
+
+        public override bool Autoload() => CalamityChangesConfig.Instance.fungalClumpTrueDamage && CataclysmMod.Instance.Calamity != null;
+
+        public override void Load() => IL.CalamityMod.Items.Accessories.FungalClump.UpdateAccessory += RemoveSummonDamageBonus;
+
+        public override void Unload() => IL.CalamityMod.Items.Accessories.FungalClump.UpdateAccessory -= RemoveSummonDamageBonus;
+
+        private void RemoveSummonDamageBonus(ILContext il)
         {
             // FNA IL for this method seems to be different.
             if (Platform.IsWindows)

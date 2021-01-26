@@ -6,7 +6,9 @@ namespace CataclysmMod.Common.Configs
     [Label("Calamity Changes")]
     public class CalamityChangesConfig : ModConfig
     {
-        public static CalamityChangesConfig Instance { get; internal set; }
+        public static CalamityChangesConfig Instance { get; private set; }
+
+        public override void OnLoaded() => Instance = this;
 
         public override ConfigScope Mode => ConfigScope.ClientSide;
 

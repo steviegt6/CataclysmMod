@@ -1,7 +1,7 @@
 ﻿using CalamityMod;
+using CalamityMod.Items;
 using CalamityMod.Items.Weapons.Rogue;
 using CalamityMod.Projectiles.Rogue;
-using CataclysmMod.Common.Configs;
 using CataclysmMod.Content.Projectiles;
 using Microsoft.Xna.Framework;
 using Terraria;
@@ -14,7 +14,7 @@ namespace CataclysmMod.Content.Items.Weapons
     {
         public override string Texture => "CalamityMod/Items/Weapons/Rogue/CursedDagger";
 
-        public override bool Autoload(ref string name) => false;
+        public override bool Autoload(ref string name) => CataclysmMod.Instance.Calamity != null;
 
         public override void SetStaticDefaults()
         {
@@ -40,7 +40,7 @@ namespace CataclysmMod.Content.Items.Weapons
             item.UseSound = SoundID.Item1;
             item.shoot = ModContent.ProjectileType<CursedDaggerProj>();
             item.shootSpeed = 12f;
-            item.Calamity().rogue = true;
+            item.GetGlobalItem<CalamityGlobalItem>().rogue = true;
 
             item.autoReuse = true;
             item.value = Item.buyPrice(gold: 36);
