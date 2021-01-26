@@ -1,19 +1,18 @@
 ﻿using CalamityMod;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using System.Reflection;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
 
 namespace CataclysmMod.Content.Projectiles
 {
-    public class DecreeDaggerSplitProj : ModProjectile
+    public class DecreeDaggerSplitProj : CalamityCompatProj
     {
         public int splitTime = 0;
 
         public override string Texture => "CalamityMod/Items/Weapons/Rogue/CursedDagger";
-
-        public override bool Autoload(ref string name) => false;
 
         public override void SetStaticDefaults()
         {
@@ -27,7 +26,6 @@ namespace CataclysmMod.Content.Projectiles
         {
             projectile.width = 12;
             projectile.height = 12;
-
             projectile.friendly = true;
             projectile.aiStyle = 2;
             projectile.timeLeft = 600;
@@ -48,7 +46,7 @@ namespace CataclysmMod.Content.Projectiles
                 int weakerProj = Projectile.NewProjectile(projectile.Center, new Vector2(-14f, 14f), Main.rand.NextBool(2) ? ProjectileID.CursedFlameFriendly : ProjectileID.CursedDartFlame, (int)(projectile.damage * 0.5f), projectile.knockBack * 0.5f, projectile.owner);
                 Projectile proj = Main.projectile[weakerProj];
 
-                proj.Calamity().forceRogue = true;
+                projectile.Calamity().forceRogue = true;
                 proj.usesLocalNPCImmunity = true;
                 proj.localNPCHitCooldown = 10;
             }

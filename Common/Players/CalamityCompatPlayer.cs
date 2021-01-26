@@ -4,8 +4,10 @@ using Terraria.ModLoader;
 
 namespace CataclysmMod.Common.Players
 {
-    public class LoreItemPlayer : ModPlayer
+    public class CalamityCompatPlayer : ModPlayer
     {
+        public override bool Autoload(ref string name) => CataclysmMod.Instance.Calamity != null;
+
         public override void PostUpdateEquips()
         {
             if (CalamityChangesConfig.Instance.loreItemsInPiggyBank)

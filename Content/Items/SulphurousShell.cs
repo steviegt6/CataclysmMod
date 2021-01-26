@@ -1,19 +1,15 @@
 ﻿using CalamityMod.World;
-using CataclysmMod.Common.Configs;
 using Microsoft.Xna.Framework;
 using System;
 using Terraria;
 using Terraria.ID;
-using Terraria.ModLoader;
 
 namespace CataclysmMod.Content.Items
 {
-    public class SulphurousShell : ModItem
+    public class SulphurousShell : CalamityCompatItem
     {
         public int use = 0;
         public bool inUse = false;
-
-        public override bool Autoload(ref string name) => false;
 
         public override void SetDefaults()
         {
@@ -66,7 +62,7 @@ namespace CataclysmMod.Content.Items
             }
         }
 
-        public void TeleportSulphurousShell(Player player)
+        private void TeleportSulphurousShell(Player player)
         {
             Vector2 specialPos = Vector2.Zero;
             int abyssSide = -CalamityWorld.abyssSide.ToDirectionInt();
@@ -113,7 +109,7 @@ namespace CataclysmMod.Content.Items
             }
         }
 
-        public bool RequestSulphurousTeleportPosition(Player player, int crawlOffsetX, int startX, out Point landingPoint)
+        private bool RequestSulphurousTeleportPosition(Player player, int crawlOffsetX, int startX, out Point landingPoint)
         {
             landingPoint = default;
 
@@ -197,7 +193,7 @@ namespace CataclysmMod.Content.Items
             return true;
         }
 
-        public bool IsInSolidTilesExtended(Vector2 testPosition, Vector2 playerVelocity, int width, int height, int gravDir)
+        private bool IsInSolidTilesExtended(Vector2 testPosition, Vector2 playerVelocity, int width, int height, int gravDir)
         {
             if (Collision.LavaCollision(testPosition, width, height))
                 return true;
@@ -231,7 +227,7 @@ namespace CataclysmMod.Content.Items
             return false;
         }
 
-        public bool TileIsDangerous(int x, int y)
+        private bool TileIsDangerous(int x, int y)
         {
             Tile tile = Main.tile[x, y];
             if (tile.liquid > 0 && tile.lava())

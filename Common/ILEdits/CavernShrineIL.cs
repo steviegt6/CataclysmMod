@@ -1,13 +1,30 @@
-﻿using Mono.Cecil.Cil;
+﻿using CataclysmMod.Common.Configs;
+using Mono.Cecil.Cil;
 using MonoMod.Cil;
 using Terraria.ID;
 using Terraria.ModLoader;
 
-namespace CataclysmMod.Common.IL
+namespace CataclysmMod.Common.ILEdits
 {
-    public static class CavernShrine
+    public class CavernShrineIL : ILEdit
     {
-        internal static void ChangeCavernShrineChest(ILContext il)
+        public override string DictKey => "CalamityMod.World.SmallBiomesWorldGenerationMethods.PlaceShriesSpecialChest";
+
+        public override bool Autoload() => CalamityChangesConfig.Instance.cavernShrineChanges && CataclysmMod.Instance.Calamity != null;
+
+        public override void Load()
+        {
+            IL.CalamityMod.World.SmallBiomes.PlaceShrines += ChangeCavernShrineBlocks;
+            IL.CalamityMod.World.WorldGenerationMethods.SpecialChest += ChangeCavernShrineChest;
+        }
+
+        public override void Unload()
+        {
+            IL.CalamityMod.World.SmallBiomes.PlaceShrines -= ChangeCavernShrineBlocks;
+            IL.CalamityMod.World.WorldGenerationMethods.SpecialChest -= ChangeCavernShrineChest;
+        }
+
+        private void ChangeCavernShrineChest(ILContext il)
         {
             ILCursor c = new ILCursor(il);
 
@@ -36,7 +53,7 @@ namespace CataclysmMod.Common.IL
             ModContent.GetInstance<CataclysmMod>().Logger.Info("[IL] Finished patching!");
         }
 
-        internal static void ChangeCavernShrineBlocks(ILContext il)
+        private void ChangeCavernShrineBlocks(ILContext il)
         {
             ILCursor c = new ILCursor(il);
 
