@@ -21,7 +21,13 @@ namespace CataclysmMod.Content.Recipes
                 }
 
             foreach (ModCompatRecipe compatRecipe in ModCompatRecipes)
-                compatRecipe.Load();
+                compatRecipe.AddRecipes();
+        }
+
+        public static void ModifyRecipes()
+        {
+            foreach (ModCompatRecipe compatRecipe in ModCompatRecipes)
+                compatRecipe.ModifyRecipes();
         }
 
         public static void Unload()

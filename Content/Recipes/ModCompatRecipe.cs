@@ -4,7 +4,11 @@
     {
         public virtual bool Autoload() => true;
 
-        public virtual void Load()
+        public virtual void AddRecipes()
+        {
+        }
+
+        public virtual void ModifyRecipes()
         {
         }
 

@@ -13,7 +13,7 @@ namespace CataclysmMod.Content.Recipes
     {
         public override bool Autoload() => CataclysmMod.Instance.Calamity != null;
 
-        public override void Load()
+        public override void ModifyRecipes()
         {
             if (CalamityChangesConfig.Instance.throwingBrickRecipeChange)
             {
