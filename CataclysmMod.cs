@@ -43,6 +43,8 @@ namespace CataclysmMod
             RecipeManager.Unload();
         }
 
-        public override void PostAddRecipes() => RecipeManager.Load();
+        public override void AddRecipes() => RecipeManager.Load();
+
+        public override void PostAddRecipes() => RecipeManager.ModifyRecipes();
     }
 }

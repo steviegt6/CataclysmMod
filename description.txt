@@ -1,5 +1,7 @@
-Cataclysm is a mod designed to serve as an addon to other mods.
+You might recognize Cataclysm as one of those humorous Calamity addons that make changes and add content to it. It's not just that anymore, I've decided to focus on encompassing tMod as a whole. This mod is no longer limited to Calamity.
+If you wanna suggest stuff, go to my Discord server and leave it in #suggestions. We advise you to keep youe suggestions in line with the standards of a place like Calamity's, but we'll accept anything, really, however it may impact our decision to implement your suggestion.
 
+Cataclysm is a mod designed to serve as an addon to other mods
 These mods currently include: Calamity
 
 Almost everything added is configurable, so if you want to see all the features, that's a good place to check.

@@ -118,6 +118,10 @@ namespace CataclysmMod.Common.Configs
         [DefaultValue(true)]
         public bool angryDogSpawnBuff;
 
+        [Label("Slime God Inflicts Slimed Instead of Distorted")]
+        [DefaultValue(true)]
+        public bool slimeGodSlimedDebuff;
+
         // Projectile Changes
         [Header("Projectile Changes")]
         [Label("Improved Minion Rotation")]
