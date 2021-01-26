@@ -1,4 +1,4 @@
-displayName = Cataclysm (Calamity Addon)
+displayName = Cataclysm (Read Desc - General Mod Addon)
 author = convicted tomatophile (Stevie)
 version = 1.1.0.0
 homepage = https://discord.com/invite/qrZ4Bpz
