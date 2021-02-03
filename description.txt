@@ -1,7 +1,35 @@
-You might recognize Cataclysm as one of those humorous Calamity addons that make changes and add content to it. It's not just that anymore, I've decided to focus on encompassing tMod as a whole. This mod is no longer limited to Calamity.
-If you wanna suggest stuff, go to my Discord server and leave it in #suggestions. We advise you to keep youe suggestions in line with the standards of a place like Calamity's, but we'll accept anything, really, however it may impact our decision to implement your suggestion.
+Addon to Calamity.
 
-Cataclysm is a mod designed to serve as an addon to other mods
-These mods currently include: Calamity
+1.0.1.0 doesn't add much in terms of visible changes but it does some stuff internally.
+Report any bugs and make suggestions in the Discord.
 
-Almost everything added is configurable, so if you want to see all the features, that's a good place to check.
+Current features:
+* General changes:
+- Cavern shrines now use gray bricks, stone, and a gold chest (as opposed to obsidian stuff).
+
+* Item changes:
+- Lore items give you their effects in piggy banks.
+- Added a new shell from Abyssal Crates that teleports you the the Sulphurous Sea.
+- Added a drop to the Grand Sand Shark that blocks it from spawning as a result of killing 10 sand sharks.
+- Added Dagger of Decree, a rare variant of the Cursed Dagger.
+- Buffed spider armor defense.
+- Spider armor gives you the effect of climbing claws.
+- Basher now has 1.2x scale.
+- Pickaxes now have consistent tooltips for what ores they can mine.
+- Fungal Clump now deals true damage and can be affected by all damage modifiers.
+- Throwing Bricks are crafted at work benches instead of anvils now.
+- Halley's Inferno uses a rifle scope instead of sniper scope.
+- Removed Death mode changes to the Torrential Tear.
+- Sulphurskin Potion sell price reduced so people can't easily make tons of money.
+
+* NPC changes:
+- Anomura Fungus can now spawn in underground mushroom biomes pre-HM.
+- Steampunker no longer announced that it "has awoken" when first spawning.
+- The Wizard now sells Guide Voodoo Dolls.
+- Boost Cryophobia drop chance and boost Angry Dog spawn rate.
+- Slime God inflicts Slimed instead of Distorted.
+
+* Projectile changes:
+- Ice Clasper, Corvid Harbringer, Herring Staff, Cinder Blossom Staff, and Calamari's Lament's minion rotations are smoother.
+- Drataliornus arrows can be shot through blocks.
+- Abyss Mines from the Slime God all explode once the Slime God has been defeated.

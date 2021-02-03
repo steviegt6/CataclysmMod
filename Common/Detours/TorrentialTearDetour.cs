@@ -1,9 +1,6 @@
 ﻿using CalamityMod;
 using CalamityMod.Items.Tools.ClimateChange;
 using CataclysmMod.Common.Configs;
-using MonoMod.RuntimeDetour.HookGen;
-using System;
-using System.Reflection;
 using Terraria;
 
 namespace CataclysmMod.Common.Detours
@@ -12,33 +9,25 @@ namespace CataclysmMod.Common.Detours
     {
         public override string DictKey => "CalamityMod.Items.Tools.ClimateChange.TorrentialTear.UseItem";
 
-        public override bool Autoload() => CalamityChangesConfig.Instance.torrentialTearNerfRemoval && CataclysmMod.Instance.Calamity != null;
+        public override void Load() => On.CalamityMod.Items.Tools.ClimateChange.TorrentialTear.UseItem += RemoveDeathModeCrap;
 
-        public override void Load() => OnTorrentialTearUseItem += RemoveDeathModeCrap;
+        public override void Unload() => On.CalamityMod.Items.Tools.ClimateChange.TorrentialTear.UseItem -= RemoveDeathModeCrap;
 
-        public override void Unload() => OnTorrentialTearUseItem -= RemoveDeathModeCrap;
-
-        private delegate bool OrigDelegateTorrentialTear(object self, object player);
-
-        private delegate bool HookDelegateTorrentialTear(OrigDelegateTorrentialTear orig, object self, object player);
-
-        private event HookDelegateTorrentialTear OnTorrentialTearUseItem
+        private bool RemoveDeathModeCrap(On.CalamityMod.Items.Tools.ClimateChange.TorrentialTear.orig_UseItem orig, TorrentialTear self, object player)
         {
-            add => HookEndpointManager.Add<HookDelegateTorrentialTear>(CataclysmMod.Instance.Calamity.Code.GetType("CalamityMod.Items.Tools.ClimateChange.TorrentialTear").GetMethod("UseItem", BindingFlags.Instance | BindingFlags.Public), value);
+            if (CalamityChangesConfig.Instance.torrentialTearNerfRemoval)
+            {
+                if (!Main.raining)
+                    CalamityUtils.StartRain(torrentialTear: true);
+                else
+                    Main.raining = false;
 
-            remove => HookEndpointManager.Remove<HookDelegateTorrentialTear>(CataclysmMod.Instance.Calamity.Code.GetType("CalamityMod.Items.Tools.ClimateChange.TorrentialTear").GetMethod("UseItem", BindingFlags.Instance | BindingFlags.Public), value);
-        }
+                CalamityNetcode.SyncWorld();
 
-        private bool RemoveDeathModeCrap(OrigDelegateTorrentialTear orig, object self, object player)
-        {
-            if (!Main.raining)
-                CalamityUtils.StartRain(torrentialTear: true);
+                return true;
+            }
             else
-                Main.raining = false;
-
-            CalamityNetcode.SyncWorld();
-
-            return true;
+                return orig(self, player);
         }
     }
 }

@@ -1,7 +1,7 @@
-displayName = Cataclysm (Read Desc - General Mod Addon)
+displayName = Cataclysm (Calamity Addon)
 author = convicted tomatophile (Stevie)
-version = 1.1.0.0
+version = 1.0.1.0
 homepage = https://discord.com/invite/qrZ4Bpz
-weakReferences = CalamityMod@1.4.5.7
+modReferences = CalamityMod@1.4.5.7
 dllReferences = MMHOOK_CalamityMod_v1.4.5.7
 sortAfter = CalamityMod

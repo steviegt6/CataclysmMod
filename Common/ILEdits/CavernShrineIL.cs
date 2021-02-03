@@ -10,7 +10,7 @@ namespace CataclysmMod.Common.ILEdits
     {
         public override string DictKey => "CalamityMod.World.SmallBiomesWorldGenerationMethods.PlaceShriesSpecialChest";
 
-        public override bool Autoload() => CalamityChangesConfig.Instance.cavernShrineChanges && CataclysmMod.Instance.Calamity != null;
+        public override bool Autoload() => CalamityChangesConfig.Instance.cavernShrineChanges;
 
         public override void Load()
         {

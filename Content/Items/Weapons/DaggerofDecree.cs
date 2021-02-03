@@ -14,7 +14,7 @@ namespace CataclysmMod.Content.Items.Weapons
     {
         public override string Texture => "CalamityMod/Items/Weapons/Rogue/CursedDagger";
 
-        public override bool Autoload(ref string name) => CataclysmMod.Instance.Calamity != null;
+        public override bool Autoload(ref string name) => false;
 
         public override void SetStaticDefaults()
         {

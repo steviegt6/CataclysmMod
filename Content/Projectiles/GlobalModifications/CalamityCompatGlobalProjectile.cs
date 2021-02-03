@@ -17,8 +17,6 @@ namespace CataclysmMod.Content.Projectiles.GlobalModifications
 
         public override bool CloneNewInstances => true;
 
-        public override bool Autoload(ref string name) => CataclysmMod.Instance.Calamity != null;
-
         public int defDamage = 0;
         public bool firstFrame = true;
         public float savedRotation;
@@ -39,7 +37,7 @@ namespace CataclysmMod.Content.Projectiles.GlobalModifications
                 if (SummonRotationAdjustments.ContainsKey(projectile.type))
                     savedRotation = projectile.rotation;
 
-                if (CataclysmMod.Instance.Calamity != null && projectile.type == ModContent.ProjectileType<CinderBlossom>())
+                if (projectile.type == ModContent.ProjectileType<CinderBlossom>())
                     savedRotation = projectile.rotation;
             }
 
@@ -63,7 +61,7 @@ namespace CataclysmMod.Content.Projectiles.GlobalModifications
                 {
                     projectile.rotation = savedRotation;
 
-                    if (CataclysmMod.Instance.Calamity != null && projectile.type == ModContent.ProjectileType<PowerfulRaven>())
+                    if (projectile.type == ModContent.ProjectileType<PowerfulRaven>())
                     {
                         projectile.spriteDirection = 1;
                         LerpToRotation(projectile, SummonRotationAdjustments[projectile.type], 0);
@@ -72,10 +70,10 @@ namespace CataclysmMod.Content.Projectiles.GlobalModifications
                         LerpToRotation(projectile, SummonRotationAdjustments[projectile.type]);
                 }
 
-                if (CataclysmMod.Instance.Calamity != null && projectile.type == ModContent.ProjectileType<CinderBlossom>())
+                if (projectile.type == ModContent.ProjectileType<CinderBlossom>())
                     projectile.rotation = savedRotation + (MathHelper.ToRadians(1.5f) + (player.velocity.X / player.maxRunSpeed / 5f * player.direction)) * player.direction;
 
-                if (CataclysmMod.Instance.Calamity != null && projectile.type == ModContent.ProjectileType<CalamariMinion>())
+                if (projectile.type == ModContent.ProjectileType<CalamariMinion>())
                 {
                     projectile.rotation = savedRotation;
 
