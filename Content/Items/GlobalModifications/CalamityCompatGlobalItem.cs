@@ -15,8 +15,6 @@ namespace CataclysmMod.Content.Items.GlobalModifications
 {
     public class CalamityCompatGlobalItem : GlobalItem
     {
-        public override bool Autoload(ref string name) => CataclysmMod.Instance.Calamity != null;
-
         public override void RightClick(Item item, Player player)
         {
             if (CalamityChangesConfig.Instance.sulphurousShell && item.type == ModContent.ItemType<AbyssalCrate>())

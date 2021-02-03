@@ -3,10 +3,11 @@ using Microsoft.Xna.Framework;
 using System;
 using Terraria;
 using Terraria.ID;
+using Terraria.ModLoader;
 
 namespace CataclysmMod.Content.Items
 {
-    public class SulphurousShell : CalamityCompatItem
+    public class SulphurousShell : ModItem
     {
         public int use = 0;
         public bool inUse = false;

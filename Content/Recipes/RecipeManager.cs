@@ -19,7 +19,10 @@ namespace CataclysmMod.Content.Recipes
                     if (compatRecipe.Autoload())
                         ModCompatRecipes.Add(compatRecipe);
                 }
+        }
 
+        public static void AddRecipes()
+        {
             foreach (ModCompatRecipe compatRecipe in ModCompatRecipes)
                 compatRecipe.AddRecipes();
         }
@@ -28,6 +31,12 @@ namespace CataclysmMod.Content.Recipes
         {
             foreach (ModCompatRecipe compatRecipe in ModCompatRecipes)
                 compatRecipe.ModifyRecipes();
+        }
+
+        public static void AddRecipeGroups()
+        {
+            foreach (ModCompatRecipe compatRecipe in ModCompatRecipes)
+                compatRecipe.AddRecipeGroups();
         }
 
         public static void Unload()

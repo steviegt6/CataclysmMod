@@ -12,7 +12,7 @@ namespace CataclysmMod.Common.ILEdits
     {
         public override string DictKey => "CalamityMod.World.CalamityWorld.PostUpdate";
 
-        public override bool Autoload() => CalamityChangesConfig.Instance.steampunkerSpawnFix && CataclysmMod.Instance.Calamity != null;
+        public override bool Autoload() => CalamityChangesConfig.Instance.steampunkerSpawnFix;
 
         public override void Load() => IL.CalamityMod.World.CalamityWorld.PostUpdate += ModifySteampunkerSpawn;
 

@@ -12,6 +12,10 @@
         {
         }
 
+        public virtual void AddRecipeGroups()
+        {
+        }
+
         public virtual void Unload()
         {
         }

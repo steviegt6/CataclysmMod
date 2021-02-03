@@ -15,8 +15,6 @@ namespace CataclysmMod.Content.NPCs.GlobalModifications
 {
     public class CalamityCompatGlobalNPC : GlobalNPC
     {
-        public override bool Autoload(ref string name) => CataclysmMod.Instance.Calamity != null;
-
         public override void NPCLoot(NPC npc)
         {
             switch (npc.type)

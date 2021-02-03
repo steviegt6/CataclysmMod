@@ -1,18 +1,12 @@
 using CataclysmMod.Common;
 using CataclysmMod.Content.Recipes;
-using System;
-using System.IO;
-using System.Reflection;
 using Terraria.ModLoader;
-using Terraria.ModLoader.IO;
 
 namespace CataclysmMod
 {
     public class CataclysmMod : Mod
     {
         public static CataclysmMod Instance { get; private set; }
-
-        public Mod Calamity => ModLoader.GetMod("CalamityMod");
 
         public CataclysmMod()
         {
@@ -25,17 +19,13 @@ namespace CataclysmMod
                 AutoloadGores = true,
                 AutoloadSounds = true
             };
-
-            AppDomain.CurrentDomain.AssemblyResolve += (sender, args) =>
-            {
-                if (args.Name.Contains("CalamityMod") && !args.Name.Contains("MMHOOK") && ModLoader.GetMod("CalamityMod") != null)
-                    return ModLoader.GetMod("CalamityMod").Code;
-
-                return null;
-            };
         }
 
-        public override void Load() => ILManager.Load();
+        public override void Load()
+        {
+            ILManager.Load();
+            RecipeManager.Load();
+        }
 
         public override void Unload()
         {
@@ -43,8 +33,10 @@ namespace CataclysmMod
             RecipeManager.Unload();
         }
 
-        public override void AddRecipes() => RecipeManager.Load();
+        public override void AddRecipes() => RecipeManager.AddRecipes();
 
         public override void PostAddRecipes() => RecipeManager.ModifyRecipes();
+
+        public override void AddRecipeGroups() => RecipeManager.AddRecipeGroups();
     }
 }

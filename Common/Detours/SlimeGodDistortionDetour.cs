@@ -8,6 +8,8 @@ namespace CataclysmMod.Common.Detours
     {
         public override string DictKey => "On.CalamityMod.NPCs.SlimeGod.SlimeGodCore.OnHitPlayer";
 
+        // Don't check for slimeGodSlimedDebuff since we can just call the orig method without the need to reload
+
         public override void Load() => On.CalamityMod.NPCs.SlimeGod.SlimeGodCore.OnHitPlayer += NewOnHitBuff;
 
         public override void Unload() => On.CalamityMod.NPCs.SlimeGod.SlimeGodCore.OnHitPlayer -= NewOnHitBuff;

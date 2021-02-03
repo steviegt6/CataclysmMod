@@ -1,14 +1,13 @@
 ﻿using CalamityMod;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using System.Reflection;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
 
 namespace CataclysmMod.Content.Projectiles
 {
-    public class DecreeDaggerSplitProj : CalamityCompatProj
+    public class DecreeDaggerSplitProj : ModProjectile
     {
         public int splitTime = 0;
 

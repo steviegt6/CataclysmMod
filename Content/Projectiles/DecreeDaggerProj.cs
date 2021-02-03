@@ -1,14 +1,13 @@
 ﻿using CalamityMod;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using System.Reflection;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
 
 namespace CataclysmMod.Content.Projectiles
 {
-    public class DecreeDaggerProj : CalamityCompatProj
+    public class DecreeDaggerProj : ModProjectile
     {
         public override string Texture => "CalamityMod/Items/Weapons/Rogue/CursedDagger";
 

@@ -1,9 +1,10 @@
 ﻿using Terraria;
 using Terraria.ID;
+using Terraria.ModLoader;
 
 namespace CataclysmMod.Content.Items.Accessories
 {
-    public class GrandSharkRepellent : CalamityCompatItem
+    public class GrandSharkRepellent : ModItem
     {
         public override void SetStaticDefaults() => Tooltip.SetDefault("Stops the Grand Sand Shark from spawning when you kill 10 sand sharks\nEquipping this will reset the sand shark counter to 0");
 

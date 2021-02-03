@@ -11,7 +11,7 @@ namespace CataclysmMod.Content.Recipes
 {
     public class CalamityCompatRecipes : ModCompatRecipe
     {
-        public override bool Autoload() => CataclysmMod.Instance.Calamity != null;
+        // public override bool Autoload() => CataclysmMod.Instance.Calamity != null;
 
         public override void ModifyRecipes()
         {

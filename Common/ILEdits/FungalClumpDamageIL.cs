@@ -10,7 +10,7 @@ namespace CataclysmMod.Common.ILEdits
     {
         public override string DictKey => "CalamityMod.Items.Accessories.FungalClump.UpdateAccessory";
 
-        public override bool Autoload() => CalamityChangesConfig.Instance.fungalClumpTrueDamage && CataclysmMod.Instance.Calamity != null;
+        public override bool Autoload() => CalamityChangesConfig.Instance.fungalClumpTrueDamage;
 
         public override void Load() => IL.CalamityMod.Items.Accessories.FungalClump.UpdateAccessory += RemoveSummonDamageBonus;
 
