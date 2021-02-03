@@ -6,10 +6,13 @@ using CalamityMod.NPCs.NormalNPCs;
 using CataclysmMod.Common.Configs;
 using CataclysmMod.Content.Items.Accessories;
 using CataclysmMod.Content.Items.Weapons;
+using Microsoft.Xna.Framework;
+using ReLogic.Graphics;
 using System.Collections.Generic;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
+using Terraria.UI.Chat;
 
 namespace CataclysmMod.Content.NPCs.GlobalModifications
 {
@@ -56,6 +59,22 @@ namespace CataclysmMod.Content.NPCs.GlobalModifications
         {
             if (CalamityChangesConfig.Instance.wizardGuideVoodooDoll)
                 CalamityGlobalTownNPC.SetShopItem(ref shop, ref nextSlot, ItemID.GuideVoodooDoll, Main.hardMode, Item.sellPrice(gold: 20));
+        }
+
+        public override bool? DrawHealthBar(NPC npc, byte hbPosition, ref float scale, ref Vector2 position)
+        {
+            bool shouldDraw = base.DrawHealthBar(npc, hbPosition, ref scale, ref position) ?? true;
+            string ganicText = "";
+
+            if (npc.Organic())
+                ganicText = "Organic";
+            else if (npc.Inorganic())
+                ganicText = "Inorganic";
+
+            if (shouldDraw && !string.IsNullOrEmpty(ganicText) && CalamityChangesConfig.Instance.displayOrganicTextNPCs)
+                ChatManager.DrawColorCodedStringWithShadow(Main.spriteBatch, Main.fontMouseText, ganicText, position - Main.screenPosition - new Vector2(Main.fontMouseText.MeasureString(ganicText).X / 2f, -(Main.fontMouseText.MeasureString(ganicText).Y / 2f)), Lighting.GetColor((int)(npc.position.X / 16), (int)(npc.position.Y / 16)), 0f, Vector2.Zero, Vector2.One);
+
+            return shouldDraw;
         }
     }
 }
