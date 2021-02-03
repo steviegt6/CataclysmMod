@@ -122,6 +122,11 @@ namespace CataclysmMod.Common.Configs
         [DefaultValue(true)]
         public bool slimeGodSlimedDebuff;
 
+        [Label("Specify Whether an NPC is Organic or Inorganic")]
+        [Tooltip("Display text indicating if an NPC is organic or not under their healthbar.")]
+        [DefaultValue(true)]
+        public bool displayOrganicTextNPCs;
+
         // Projectile Changes
         [Header("Projectile Changes")]
         [Label("Improved Minion Rotation")]
