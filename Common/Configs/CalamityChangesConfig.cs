@@ -96,6 +96,10 @@ namespace CataclysmMod.Common.Configs
         [DefaultValue(true)]
         public bool voodooDollStackIncrease;
 
+        [Label("Obsidian Skull + Upgrades Provide Heat Immunity")]
+        [DefaultValue(true)]
+        public bool obsidianSkullHeatImmunity;
+
         // NPC Changes
         [Header("NPC Changes")]
         [Label("Anomura Fungus Spawning")]

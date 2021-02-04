@@ -4,6 +4,7 @@ using CalamityMod.Items.Potions;
 using CalamityMod.Items.Tools;
 using CalamityMod.Items.Weapons.Melee;
 using CataclysmMod.Common.Configs;
+using CataclysmMod.Common.Players;
 using CataclysmMod.Utilities;
 using System.Collections.Generic;
 using System.Linq;
@@ -109,6 +110,21 @@ namespace CataclysmMod.Content.Items.GlobalModifications
                         player.setBonus += "\nYou can stick to walls like a spider";
                         player.spikedBoots = 3;
                     }
+                    break;
+            }
+        }
+
+        public override void UpdateAccessory(Item item, Player player, bool hideVisual)
+        {
+            switch (item.type)
+            {
+                case ItemID.ObsidianHorseshoe:
+                case ItemID.ObsidianShield:
+                case ItemID.AnkhShield:
+                case ItemID.ObsidianWaterWalkingBoots:
+                case ItemID.LavaWaders:
+                case ItemID.ObsidianSkull:
+                    player.GetModPlayer<CalamityCompatPlayer>().obsidianSkullIsFunny = true;
                     break;
             }
         }

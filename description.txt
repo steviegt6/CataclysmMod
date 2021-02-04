@@ -21,7 +21,8 @@ Current features:
 - Halley's Inferno uses a rifle scope instead of sniper scope.
 - Removed Death mode changes to the Torrential Tear.
 - Sulphurskin Potion sell price reduced so people can't easily make tons of money.
-- Voodoo doll max stack increased to 20
+- Voodoo doll max stack increased to 20.
+- Obsidian Skull + upgrades provide heat immunity.
 
 * NPC changes:
 - Anomura Fungus can now spawn in underground mushroom biomes pre-HM.
@@ -30,7 +31,7 @@ Current features:
 - Boost Cryophobia drop chance and boost Angry Dog spawn rate.
 - Slime God inflicts Slimed instead of Distorted.
 - You can toggle an option to see whether an NPC is organic or inorganic.
-- Travelling Merchant has a 10% chance of dropping a Pulse Bow on death
+- Travelling Merchant has a 10% chance of dropping a Pulse Bow on death.
 
 * Projectile changes:
 - Ice Clasper, Corvid Harbringer, Herring Staff, Cinder Blossom Staff, and Calamari's Lament's minion rotations are smoother.

@@ -6,6 +6,10 @@ namespace CataclysmMod.Common.Players
 {
     public class CalamityCompatPlayer : ModPlayer
     {
+        public bool obsidianSkullIsFunny = false;
+
+        public override void ResetEffects() => obsidianSkullIsFunny = false;
+
         public override void PostUpdateEquips()
         {
             if (CalamityChangesConfig.Instance.loreItemsInPiggyBank)
