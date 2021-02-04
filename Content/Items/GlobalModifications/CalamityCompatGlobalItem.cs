@@ -54,6 +54,9 @@ namespace CataclysmMod.Content.Items.GlobalModifications
 
             if (CalamityChangesConfig.Instance.sulphurSkinPotionPriceNerf && item.type == ModContent.ItemType<SulphurskinPotion>())
                 item.value = Item.sellPrice(silver: 2);
+
+            if (CalamityChangesConfig.Instance.infinityDontConsumeAmmo && item.type == ModContent.ItemType<Infinity>())
+                item.damage = 25;
         }
 
         public override void ModifyTooltips(Item item, List<TooltipLine> tooltips)
