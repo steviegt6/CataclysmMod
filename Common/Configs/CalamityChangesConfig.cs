@@ -139,6 +139,10 @@ namespace CataclysmMod.Common.Configs
         [DefaultValue(true)]
         public bool pulseBowDrop;
 
+        [Label("More NPCs Drop Shark Fins")]
+        [DefaultValue(true)]
+        public bool npcsDropSharkFins = true;
+
         // Projectile Changes
         [Header("Projectile Changes")]
         [Label("Improved Minion Rotation")]

@@ -1,8 +1,11 @@
 ﻿using CalamityMod;
 using CalamityMod.Items.Weapons.Magic;
 using CalamityMod.NPCs;
+using CalamityMod.NPCs.Abyss;
+using CalamityMod.NPCs.Astral;
 using CalamityMod.NPCs.GreatSandShark;
 using CalamityMod.NPCs.NormalNPCs;
+using CalamityMod.NPCs.SulphurousSea;
 using CataclysmMod.Common.Configs;
 using CataclysmMod.Content.Items.Accessories;
 using CataclysmMod.Content.Items.Weapons;
@@ -31,6 +34,24 @@ namespace CataclysmMod.Content.NPCs.GlobalModifications
                     if (CalamityChangesConfig.Instance.pulseBowDrop)
                         DropHelper.DropItemCondition(npc, ItemID.PulseBow, Main.hardMode && Main.rand.NextBool(10));
                     break;
+            }
+
+            if (CalamityChangesConfig.Instance.npcsDropSharkFins)
+            {
+                if (npc.type == ModContent.NPCType<Frogfish>())
+                    DropHelper.DropItemChance(npc, ItemID.SharkFin, 1f / 3f);
+
+                if (npc.type == ModContent.NPCType<Catfish>())
+                    DropHelper.DropItemChance(npc, ItemID.SharkFin, 2f / 3f);
+
+                if (npc.type == ModContent.NPCType<DevilFish>() || npc.type == ModContent.NPCType<DevilFishAlt>())
+                    DropHelper.DropItemChance(npc, ItemID.SharkFin, 0.75f, 1, 3);
+
+                if (npc.type == ModContent.NPCType<FusionFeeder>())
+                    DropHelper.DropItemChance(npc, ItemID.SharkFin, 0.125f);
+
+                if (npc.type == ModContent.NPCType<Sunskater>())
+                    DropHelper.DropItemChance(npc, ItemID.SharkFin, 0.10f);
             }
 
             if (CalamityChangesConfig.Instance.angryDogSpawnBuff && npc.type == ModContent.NPCType<AngryDog>())
