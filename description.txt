@@ -21,6 +21,7 @@ Current features:
 - Halley's Inferno uses a rifle scope instead of sniper scope.
 - Removed Death mode changes to the Torrential Tear.
 - Sulphurskin Potion sell price reduced so people can't easily make tons of money.
+- Voodoo doll max stack increased to 20
 
 * NPC changes:
 - Anomura Fungus can now spawn in underground mushroom biomes pre-HM.

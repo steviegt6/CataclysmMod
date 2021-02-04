@@ -39,6 +39,12 @@ namespace CataclysmMod.Content.Items.GlobalModifications
                     if (CalamityChangesConfig.Instance.spiderArmorBuff)
                         item.defense += 1;
                     break;
+
+                case ItemID.GuideVoodooDoll:
+                case ItemID.ClothierVoodooDoll:
+                    if (item.maxStack < 20 && CalamityChangesConfig.Instance.voodooDollStackIncrease)
+                        item.maxStack = 20;
+                    break;
             }
 
             if (CalamityChangesConfig.Instance.basherScale && item.type == ModContent.ItemType<Basher>())

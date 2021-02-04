@@ -92,6 +92,10 @@ namespace CataclysmMod.Common.Configs
         [DefaultValue(true)]
         public bool daggerOfDecree;
 
+        [Label("Voodoo Dools Stack to 20")]
+        [DefaultValue(true)]
+        public bool voodooDollStackIncrease;
+
         // NPC Changes
         [Header("NPC Changes")]
         [Label("Anomura Fungus Spawning")]
