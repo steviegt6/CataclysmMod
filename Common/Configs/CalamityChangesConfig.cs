@@ -149,5 +149,9 @@ namespace CataclysmMod.Common.Configs
         [Tooltip("Give minions (ice clasper, corvid harbringer, herring staff, cinder blossom staff, and calamari lament's minions more interesting rotation.")]
         [DefaultValue(true)]
         public bool smootherMinionRotation;
+
+        [Label("Fungal Clump Emits Light")]
+        [DefaultValue(true)]
+        public bool fungalClumpEmitsLight;
     }
 }

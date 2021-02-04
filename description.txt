@@ -38,3 +38,4 @@ Current features:
 - Ice Clasper, Corvid Harbringer, Herring Staff, Cinder Blossom Staff, and Calamari's Lament's minion rotations are smoother.
 - Drataliornus arrows can be shot through blocks.
 - Abyss Mines from the Slime God all explode once the Slime God has been defeated.
+- Fungal Clump emits light.

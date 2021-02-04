@@ -106,24 +106,30 @@ namespace CataclysmMod.Content.Projectiles.GlobalModifications
 
         public override void AI(Projectile projectile)
         {
-            if (CalamityChangesConfig.Instance.fungalClumpTrueDamage && projectile.type == ModContent.ProjectileType<FungalClumpMinion>())
+            if (projectile.type == ModContent.ProjectileType<FungalClumpMinion>())
             {
-                if (firstFrame)
+                if (CalamityChangesConfig.Instance.fungalClumpTrueDamage)
                 {
-                    defDamage = projectile.damage;
-                    firstFrame = false;
+                    if (firstFrame)
+                    {
+                        defDamage = projectile.damage;
+                        firstFrame = false;
+                    }
+
+                    Player player = Main.player[projectile.owner];
+
+                    float damageIncrease = 5f * (player.allDamage - 1f);
+                    damageIncrease += player.meleeDamage - 1f;
+                    damageIncrease += player.rangedDamage - 1f;
+                    damageIncrease += player.magicDamage - 1f;
+                    damageIncrease += player.minionDamage - 1f;
+                    damageIncrease += player.Calamity().throwingDamage - 1f;
+
+                    projectile.damage = (int)(damageIncrease + defDamage);
                 }
 
-                Player player = Main.player[projectile.owner];
-
-                float damageIncrease = 5f * (player.allDamage - 1f);
-                damageIncrease += player.meleeDamage - 1f;
-                damageIncrease += player.rangedDamage - 1f;
-                damageIncrease += player.magicDamage - 1f;
-                damageIncrease += player.minionDamage - 1f;
-                damageIncrease += player.Calamity().throwingDamage - 1f;
-
-                projectile.damage = (int)(damageIncrease + defDamage);
+                if (CalamityChangesConfig.Instance.fungalClumpEmitsLight)
+                    Lighting.AddLight(projectile.position, 22f / 200f, 54f / 255f, 125f / 255f);
             }
         }
 
