@@ -100,6 +100,10 @@ namespace CataclysmMod.Common.Configs
         [DefaultValue(true)]
         public bool obsidianSkullHeatImmunity;
 
+        [Label("Infinity (weapon) Never Consumes Ammo")]
+        [DefaultValue(true)]
+        public bool infinityDontConsumeAmmo;
+
         // NPC Changes
         [Header("NPC Changes")]
         [Label("Anomura Fungus Spawning")]

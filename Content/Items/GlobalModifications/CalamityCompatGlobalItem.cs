@@ -3,6 +3,7 @@ using CalamityMod.Items.Fishing.SulphurCatches;
 using CalamityMod.Items.Potions;
 using CalamityMod.Items.Tools;
 using CalamityMod.Items.Weapons.Melee;
+using CalamityMod.Items.Weapons.Ranged;
 using CataclysmMod.Common.Configs;
 using CataclysmMod.Common.Players;
 using CataclysmMod.Utilities;
@@ -127,6 +128,14 @@ namespace CataclysmMod.Content.Items.GlobalModifications
                     player.GetModPlayer<CalamityCompatPlayer>().obsidianSkullIsFunny = true;
                     break;
             }
+        }
+
+        public override bool ConsumeAmmo(Item item, Player player)
+        {
+            if (item.type == ModContent.ItemType<Infinity>() && CalamityChangesConfig.Instance.infinityDontConsumeAmmo)
+                return false;
+
+            return base.ConsumeAmmo(item, player);
         }
     }
 }
