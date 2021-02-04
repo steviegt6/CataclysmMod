@@ -127,6 +127,10 @@ namespace CataclysmMod.Common.Configs
         [DefaultValue(true)]
         public bool displayOrganicTextNPCs;
 
+        [Label("Travelling Merchant Has a 10% Chance to Drop Pulse Bow in Hardmode")]
+        [DefaultValue(true)]
+        public bool pulseBowDrop;
+
         // Projectile Changes
         [Header("Projectile Changes")]
         [Label("Improved Minion Rotation")]

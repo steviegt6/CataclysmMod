@@ -29,6 +29,7 @@ Current features:
 - Boost Cryophobia drop chance and boost Angry Dog spawn rate.
 - Slime God inflicts Slimed instead of Distorted.
 - You can toggle an option to see whether an NPC is organic or inorganic.
+- Travelling Merchant has a 10% chance of dropping a Pulse Bow on death
 
 * Projectile changes:
 - Ice Clasper, Corvid Harbringer, Herring Staff, Cinder Blossom Staff, and Calamari's Lament's minion rotations are smoother.

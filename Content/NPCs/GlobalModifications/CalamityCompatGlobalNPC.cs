@@ -26,6 +26,11 @@ namespace CataclysmMod.Content.NPCs.GlobalModifications
                     if (CalamityChangesConfig.Instance.daggerOfDecree)
                         DropHelper.DropItemChance(npc, ModContent.ItemType<DaggerofDecree>(), Main.expertMode ? 100 : 150);
                     break;
+
+                case NPCID.TravellingMerchant:
+                    if (CalamityChangesConfig.Instance.pulseBowDrop)
+                        DropHelper.DropItemCondition(npc, ItemID.PulseBow, Main.hardMode && Main.rand.NextBool(10));
+                    break;
             }
 
             if (CalamityChangesConfig.Instance.angryDogSpawnBuff && npc.type == ModContent.NPCType<AngryDog>())
@@ -63,7 +68,6 @@ namespace CataclysmMod.Content.NPCs.GlobalModifications
 
         public override bool? DrawHealthBar(NPC npc, byte hbPosition, ref float scale, ref Vector2 position)
         {
-            bool shouldDraw = base.DrawHealthBar(npc, hbPosition, ref scale, ref position) ?? true;
             string ganicText = "";
 
             if (npc.Organic())
@@ -71,10 +75,10 @@ namespace CataclysmMod.Content.NPCs.GlobalModifications
             else if (npc.Inorganic())
                 ganicText = "Inorganic";
 
-            if (shouldDraw && !string.IsNullOrEmpty(ganicText) && CalamityChangesConfig.Instance.displayOrganicTextNPCs)
+            if (!string.IsNullOrEmpty(ganicText) && CalamityChangesConfig.Instance.displayOrganicTextNPCs)
                 ChatManager.DrawColorCodedStringWithShadow(Main.spriteBatch, Main.fontMouseText, ganicText, position - Main.screenPosition - new Vector2(Main.fontMouseText.MeasureString(ganicText).X / 2f, -(Main.fontMouseText.MeasureString(ganicText).Y / 2f)), Lighting.GetColor((int)(npc.position.X / 16), (int)(npc.position.Y / 16)), 0f, Vector2.Zero, Vector2.One);
 
-            return shouldDraw;
+            return base.DrawHealthBar(npc, hbPosition, ref scale, ref position);
         }
     }
 }
