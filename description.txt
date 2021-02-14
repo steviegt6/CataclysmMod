@@ -9,7 +9,7 @@ Current features:
 
 * Item changes:
 - Lore items give you their effects in piggy banks.
-- Added a new shell from Abyssal Crates that teleports you the the Sulphurous Sea.
+- Added a new shell from Abyssal Crates that teleports you to the Sulphurous Sea.
 - Added a drop to the Grand Sand Shark that blocks it from spawning as a result of killing 10 sand sharks.
 - Added Dagger of Decree, a rare variant of the Cursed Dagger.
 - Buffed spider armor defense.
