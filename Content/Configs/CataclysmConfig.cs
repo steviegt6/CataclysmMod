@@ -3,10 +3,10 @@ using Terraria.ModLoader.Config;
 
 namespace CataclysmMod.Content.Configs
 {
-    [Label("Calamity Changes")]
-    public class CalamityChangesConfig : ModConfig
+    [Label("Cataclysm Config")]
+    public class CataclysmConfig : ModConfig
     {
-        public static CalamityChangesConfig Instance { get; private set; }
+        public static CataclysmConfig Instance { get; private set; }
 
         public override void OnLoaded() => Instance = this;
 
@@ -70,7 +70,7 @@ namespace CataclysmMod.Content.Configs
         [DefaultValue(true)]
         public bool throwingBrickRecipeChange;
 
-        [Label("Halley's Infero Recipe Change")]
+        [Label("Halley's Inferno Recipe Change")]
         [Tooltip("Halley's Inferno uses a rifle scope instead of a sniper scope.")]
         [ReloadRequired]
         [DefaultValue(true)]
@@ -92,7 +92,7 @@ namespace CataclysmMod.Content.Configs
         [DefaultValue(true)]
         public bool daggerOfDecree;
 
-        [Label("Voodoo Dools Stack to 20")]
+        [Label("Voodoo Dolls Stack to 20")]
         [DefaultValue(true)]
         public bool voodooDollStackIncrease;
 
@@ -117,7 +117,7 @@ namespace CataclysmMod.Content.Configs
         [DefaultValue(true)]
         public bool steampunkerSpawnFix;
 
-        [Label("Wizard Sells Guide Voodoo Dools")]
+        [Label("Wizard Sells Guide Voodoo Dolls")]
         [DefaultValue(true)]
         public bool wizardGuideVoodooDoll;
 
@@ -139,7 +139,7 @@ namespace CataclysmMod.Content.Configs
         [DefaultValue(true)]
         public bool displayOrganicTextNPCs;
 
-        [Label("Travelling Merchant Has a 10% Chance to Drop Pulse Bow in Hardmode")]
+        [Label("Traveling Merchant Has a 10% Chance to Drop Pulse Bow in Hardmode")]
         [DefaultValue(true)]
         public bool pulseBowDrop;
 

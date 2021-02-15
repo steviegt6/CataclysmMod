@@ -15,7 +15,7 @@ namespace CataclysmMod.Content.Recipes
 
         public override void ModifyRecipes()
         {
-            if (CalamityChangesConfig.Instance.throwingBrickRecipeChange)
+            if (CataclysmConfig.Instance.throwingBrickRecipeChange)
             {
                 RecipeFinder finder = new RecipeFinder();
                 finder.AddIngredient(ItemID.RedBrick, 5);
@@ -29,7 +29,7 @@ namespace CataclysmMod.Content.Recipes
                 }
             }
 
-            if (CalamityChangesConfig.Instance.halleysInfernoRecipeChange)
+            if (CataclysmConfig.Instance.halleysInfernoRecipeChange)
             {
                 RecipeFinder finder = new RecipeFinder();
                 finder.AddIngredient(ModContent.ItemType<Lumenite>(), 6);

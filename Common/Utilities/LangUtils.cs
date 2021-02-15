@@ -5,9 +5,7 @@ namespace CataclysmMod.Common.Utilities
 {
     public static class LangUtils
     {
-        internal static string GetCalamityTextValue(string key) => GetModTextValue($"Calamity.{key}");
-
-        internal static string GetModTextValue(string key) => GetModTextValue(CataclysmMod.Instance, key);
+        internal static string GetCataclysmTextValue(string key) => GetModTextValue(CataclysmMod.Instance, key);
 
         internal static LocalizedText GetModText(string key) => GetModText(CataclysmMod.Instance, key);
 

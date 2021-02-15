@@ -1,4 +1,5 @@
-﻿using CalamityMod;
+﻿using System.Collections.Generic;
+using CalamityMod;
 using CalamityMod.Items.Weapons.Magic;
 using CalamityMod.NPCs;
 using CalamityMod.NPCs.Abyss;
@@ -6,12 +7,10 @@ using CalamityMod.NPCs.Astral;
 using CalamityMod.NPCs.GreatSandShark;
 using CalamityMod.NPCs.NormalNPCs;
 using CalamityMod.NPCs.SulphurousSea;
+using CataclysmMod.Content.Configs;
 using CataclysmMod.Content.Items.Accessories;
 using CataclysmMod.Content.Items.Weapons;
 using Microsoft.Xna.Framework;
-using ReLogic.Graphics;
-using System.Collections.Generic;
-using CataclysmMod.Content.Configs;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -26,17 +25,17 @@ namespace CataclysmMod.Content.NPCs.GlobalModifications
             switch (npc.type)
             {
                 case NPCID.Clinger:
-                    if (CalamityChangesConfig.Instance.daggerOfDecree)
+                    if (CataclysmConfig.Instance.daggerOfDecree)
                         DropHelper.DropItemChance(npc, ModContent.ItemType<DaggerofDecree>(), Main.expertMode ? 100 : 150);
                     break;
 
                 case NPCID.TravellingMerchant:
-                    if (CalamityChangesConfig.Instance.pulseBowDrop)
+                    if (CataclysmConfig.Instance.pulseBowDrop)
                         DropHelper.DropItemCondition(npc, ItemID.PulseBow, Main.hardMode && Main.rand.NextBool(10));
                     break;
             }
 
-            if (CalamityChangesConfig.Instance.npcsDropSharkFins)
+            if (CataclysmConfig.Instance.npcsDropSharkFins)
             {
                 if (npc.type == ModContent.NPCType<Frogfish>())
                     DropHelper.DropItemChance(npc, ItemID.SharkFin, 1f / 3f);
@@ -54,20 +53,20 @@ namespace CataclysmMod.Content.NPCs.GlobalModifications
                     DropHelper.DropItemChance(npc, ItemID.SharkFin, 0.10f);
             }
 
-            if (CalamityChangesConfig.Instance.angryDogSpawnBuff && npc.type == ModContent.NPCType<AngryDog>())
-                DropHelper.DropItemCondition(npc, ModContent.ItemType<Cryophobia>(), CalamityChangesConfig.Instance.angryDogSpawnBuff, 0.15f);
+            if (CataclysmConfig.Instance.angryDogSpawnBuff && npc.type == ModContent.NPCType<AngryDog>())
+                DropHelper.DropItemCondition(npc, ModContent.ItemType<Cryophobia>(), CataclysmConfig.Instance.angryDogSpawnBuff, 0.15f);
 
-            if (CalamityChangesConfig.Instance.grandSharkRepellent && npc.type == ModContent.NPCType<GreatSandShark>() && Main.rand.NextBool(3))
+            if (CataclysmConfig.Instance.grandSharkRepellent && npc.type == ModContent.NPCType<GreatSandShark>() && Main.rand.NextBool(3))
                 Item.NewItem(npc.Hitbox, ModContent.ItemType<GrandSharkRepellent>());
         }
 
         public override void EditSpawnPool(IDictionary<int, float> pool, NPCSpawnInfo spawnInfo)
         {
-            foreach (int npc in pool.Values)
-                if (CalamityChangesConfig.Instance.angryDogSpawnBuff && npc == ModContent.NPCType<AngryDog>())
+            foreach (int npc in pool.Keys)
+                if (CataclysmConfig.Instance.angryDogSpawnBuff && npc == ModContent.NPCType<AngryDog>())
                     pool[npc] = 0.024f;
 
-            if (CalamityChangesConfig.Instance.anomuraFungusSpawning && !pool.ContainsKey(NPCID.AnomuraFungus) && spawnInfo.player.ZoneGlowshroom)
+            if (CataclysmConfig.Instance.anomuraFungusSpawning && !pool.ContainsKey(NPCID.AnomuraFungus) && spawnInfo.player.ZoneGlowshroom)
                 pool.Add(NPCID.AnomuraFungus, 0.1f);
         }
 
@@ -83,7 +82,7 @@ namespace CataclysmMod.Content.NPCs.GlobalModifications
 
         public void SetupWizardShop(Chest shop, ref int nextSlot)
         {
-            if (CalamityChangesConfig.Instance.wizardGuideVoodooDoll)
+            if (CataclysmConfig.Instance.wizardGuideVoodooDoll)
                 CalamityGlobalTownNPC.SetShopItem(ref shop, ref nextSlot, ItemID.GuideVoodooDoll, Main.hardMode, Item.sellPrice(gold: 20));
         }
 
@@ -96,7 +95,7 @@ namespace CataclysmMod.Content.NPCs.GlobalModifications
             else if (npc.Inorganic())
                 ganicText = "Inorganic";
 
-            if (!string.IsNullOrEmpty(ganicText) && CalamityChangesConfig.Instance.displayOrganicTextNPCs)
+            if (!string.IsNullOrEmpty(ganicText) && CataclysmConfig.Instance.displayOrganicTextNPCs)
                 ChatManager.DrawColorCodedStringWithShadow(Main.spriteBatch, Main.fontMouseText, ganicText, position - Main.screenPosition - new Vector2(Main.fontMouseText.MeasureString(ganicText).X / 2f, -(Main.fontMouseText.MeasureString(ganicText).Y / 2f)), Lighting.GetColor((int)(npc.position.X / 16), (int)(npc.position.Y / 16)), 0f, Vector2.Zero, Vector2.One);
 
             return base.DrawHealthBar(npc, hbPosition, ref scale, ref position);

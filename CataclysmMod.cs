@@ -6,8 +6,6 @@ namespace CataclysmMod
 {
     public class CataclysmMod : Mod
     {
-        public static CataclysmMod Instance { get; private set; }
-
         public CataclysmMod()
         {
             Instance = this;
@@ -20,6 +18,8 @@ namespace CataclysmMod
                 AutoloadSounds = true
             };
         }
+
+        public static CataclysmMod Instance { get; private set; }
 
         public override void Load()
         {

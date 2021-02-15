@@ -1,24 +1,27 @@
 ﻿using CalamityMod.Items.LoreItems;
 using CataclysmMod.Content.Configs;
+using Terraria;
 using Terraria.ModLoader;
 
 namespace CataclysmMod.Content.Players
 {
     public class CalamityCompatPlayer : ModPlayer
     {
-        public bool obsidianSkullIsFunny = false;
+        public bool playerHasObsidianSkullOrTree;
 
-        public override void ResetEffects() => obsidianSkullIsFunny = false;
+        public override void ResetEffects() => playerHasObsidianSkullOrTree = false;
 
         public override void PostUpdateEquips()
         {
-            if (CalamityChangesConfig.Instance.loreItemsInPiggyBank)
-                for (int i = 0; i < player.bank.item.Length; i++)
-                    if (player.bank.item[i].modItem is LoreItem)
-                    {
-                        player.bank.item[i].favorited = true;
-                        ItemLoader.UpdateInventory(player.bank.item[i], player);
-                    }
+            if (!CataclysmConfig.Instance.loreItemsInPiggyBank)
+                return;
+
+            foreach (Item item in player.bank.item)
+                if (item.modItem is LoreItem)
+                {
+                    item.favorited = true;
+                    ItemLoader.UpdateInventory(item, player);
+                }
         }
     }
 }

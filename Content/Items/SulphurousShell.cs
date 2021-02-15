@@ -1,16 +1,15 @@
-﻿using CalamityMod.World;
+﻿using System;
+using CalamityMod.World;
 using Microsoft.Xna.Framework;
-using System;
 using Terraria;
 using Terraria.ID;
-using Terraria.ModLoader;
 
 namespace CataclysmMod.Content.Items
 {
-    public class SulphurousShell : ModItem
+    public class SulphurousShell : CataclysmItem
     {
-        public int use = 0;
-        public bool inUse = false;
+        public int use;
+        public bool inUse;
 
         public override void SetDefaults()
         {
@@ -88,11 +87,11 @@ namespace CataclysmMod.Content.Items
 
                 player.velocity = Vector2.Zero;
 
-                if (Main.netMode == NetmodeID.Server)
-                {
-                    RemoteClient.CheckSection(player.whoAmI, player.position);
-                    NetMessage.SendData(MessageID.Teleport, -1, -1, null, 0, player.whoAmI, specialPos.X, specialPos.Y, 5);
-                }
+                if (Main.netMode != NetmodeID.Server)
+                    return;
+
+                RemoteClient.CheckSection(player.whoAmI, player.position);
+                NetMessage.SendData(MessageID.Teleport, -1, -1, null, 0, player.whoAmI, specialPos.X, specialPos.Y, 5);
             }
             else
             {
@@ -102,11 +101,11 @@ namespace CataclysmMod.Content.Items
 
                 player.velocity = Vector2.Zero;
 
-                if (Main.netMode == NetmodeID.Server)
-                {
-                    RemoteClient.CheckSection(player.whoAmI, player.position);
-                    NetMessage.SendData(MessageID.Teleport, -1, -1, null, 0, player.whoAmI, position.X, position.Y, 5, 1);
-                }
+                if (Main.netMode != NetmodeID.Server)
+                    return;
+
+                RemoteClient.CheckSection(player.whoAmI, player.position);
+                NetMessage.SendData(MessageID.Teleport, -1, -1, null, 0, player.whoAmI, position.X, position.Y, 5, 1);
             }
         }
 
@@ -194,7 +193,7 @@ namespace CataclysmMod.Content.Items
             return true;
         }
 
-        private bool IsInSolidTilesExtended(Vector2 testPosition, Vector2 playerVelocity, int width, int height, int gravDir)
+        private static bool IsInSolidTilesExtended(Vector2 testPosition, Vector2 playerVelocity, int width, int height, int gravDir)
         {
             if (Collision.LavaCollision(testPosition, width, height))
                 return true;
@@ -228,7 +227,7 @@ namespace CataclysmMod.Content.Items
             return false;
         }
 
-        private bool TileIsDangerous(int x, int y)
+        private static bool TileIsDangerous(int x, int y)
         {
             Tile tile = Main.tile[x, y];
             if (tile.liquid > 0 && tile.lava())

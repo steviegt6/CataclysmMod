@@ -13,12 +13,8 @@ namespace CataclysmMod.Content.Recipes
 
             foreach (Type type in CataclysmMod.Instance.Code.GetTypes())
                 if (!type.IsAbstract && type.GetConstructor(new Type[] { }) != null && type.IsSubclassOf(typeof(ModCompatRecipe)))
-                {
-                    ModCompatRecipe compatRecipe = Activator.CreateInstance(type) as ModCompatRecipe;
-
-                    if (compatRecipe.Autoload())
+                    if (Activator.CreateInstance(type) is ModCompatRecipe compatRecipe && compatRecipe.Autoload())
                         ModCompatRecipes.Add(compatRecipe);
-                }
         }
 
         public static void AddRecipes()

@@ -9,7 +9,7 @@ namespace CataclysmMod.Content.Projectiles
 {
     public class DecreeDaggerSplitProj : ModProjectile
     {
-        public int splitTime = 0;
+        public int splitTime;
 
         public override string Texture => "CalamityMod/Items/Weapons/Rogue/CursedDagger";
 

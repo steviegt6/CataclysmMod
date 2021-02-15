@@ -63,8 +63,8 @@ namespace CataclysmMod.Content.Items.Weapons
 
                 return false;
             }
-            else
-                Main.projectile[Projectile.NewProjectile(position, new Vector2(speedX, speedY).RotatedBy(MathHelper.ToRadians(15)), ModContent.ProjectileType<DecreeDaggerProj>(), damage, knockBack, player.whoAmI)].Calamity().stealthStrike = player.Calamity().StealthStrikeAvailable();
+
+            Main.projectile[Projectile.NewProjectile(position, new Vector2(speedX, speedY).RotatedBy(MathHelper.ToRadians(15)), ModContent.ProjectileType<DecreeDaggerProj>(), damage, knockBack, player.whoAmI)].Calamity().stealthStrike = player.Calamity().StealthStrikeAvailable();
 
             return true;
         }

@@ -1,4 +1,6 @@
-﻿using CataclysmMod.Content.Configs;
+﻿using CataclysmMod.Common.Utilities;
+using CataclysmMod.Content.Configs;
+using IL.CalamityMod.Items.Accessories;
 using Mono.Cecil.Cil;
 using MonoMod.Cil;
 using ReLogic.OS;
@@ -10,15 +12,15 @@ namespace CataclysmMod.Common.MonoMod.ILEdits
     {
         public override string DictKey => "CalamityMod.Items.Accessories.FungalClump.UpdateAccessory";
 
-        public override bool Autoload() => CalamityChangesConfig.Instance.fungalClumpTrueDamage;
+        public override bool Autoload() => CataclysmConfig.Instance.fungalClumpTrueDamage;
 
-        public override void Load() => IL.CalamityMod.Items.Accessories.FungalClump.UpdateAccessory += RemoveSummonDamageBonus;
+        public override void Load() => FungalClump.UpdateAccessory += RemoveSummonDamageBonus;
 
-        public override void Unload() => IL.CalamityMod.Items.Accessories.FungalClump.UpdateAccessory -= RemoveSummonDamageBonus;
+        public override void Unload() => FungalClump.UpdateAccessory -= RemoveSummonDamageBonus;
 
-        private void RemoveSummonDamageBonus(ILContext il)
+        private static void RemoveSummonDamageBonus(ILContext il)
         {
-            // FNA IL for this method seems to be different.
+            // TODO: FNA IL for this method seems to be different.
             if (Platform.IsWindows)
             {
                 ILCursor c = new ILCursor(il);
@@ -51,7 +53,7 @@ namespace CataclysmMod.Common.MonoMod.ILEdits
                  */
                 if (!c.TryGotoNext(i => i.MatchLdcR4(10)))
                 {
-                    ModContent.GetInstance<CataclysmMod>().Logger.Warn("[IL] Unable to match ldc.r4 \"10\"!");
+                    ILLogger.LogILError("ldc.r4", "10");
                     return;
                 }
 
@@ -71,10 +73,10 @@ namespace CataclysmMod.Common.MonoMod.ILEdits
                  */
                 c.RemoveRange(4);
 
-                ModContent.GetInstance<CataclysmMod>().Logger.Info("[IL] Finished patching!");
+                ILLogger.LogILCompletion("CalamityMod.Items.Accessories.FungalClump.UpdateAccsesory");
             }
             else
-                ModContent.GetInstance<CataclysmMod>().Logger.Warn("[IL] Linux or Mac OS detected, skipping Funal Clump IL editing...");
+                ModContent.GetInstance<CataclysmMod>().Logger.Warn("[IL] Linux or Mac OS detected, skipping Fungal Clump IL editing...");
         }
     }
 }

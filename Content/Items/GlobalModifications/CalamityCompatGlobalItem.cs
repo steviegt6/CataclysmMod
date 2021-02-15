@@ -1,11 +1,11 @@
-﻿using CalamityMod;
+﻿using System.Collections.Generic;
+using System.Linq;
+using CalamityMod;
 using CalamityMod.Items.Fishing.SulphurCatches;
 using CalamityMod.Items.Potions;
 using CalamityMod.Items.Tools;
 using CalamityMod.Items.Weapons.Melee;
 using CalamityMod.Items.Weapons.Ranged;
-using System.Collections.Generic;
-using System.Linq;
 using CataclysmMod.Common.Utilities;
 using CataclysmMod.Content.Configs;
 using CataclysmMod.Content.Players;
@@ -19,7 +19,7 @@ namespace CataclysmMod.Content.Items.GlobalModifications
     {
         public override void RightClick(Item item, Player player)
         {
-            if (CalamityChangesConfig.Instance.sulphurousShell && item.type == ModContent.ItemType<AbyssalCrate>())
+            if (CataclysmConfig.Instance.sulphurousShell && item.type == ModContent.ItemType<AbyssalCrate>())
                 DropHelper.DropItemChance(player, ModContent.ItemType<SulphurousShell>(), 0.1f, 1, 1);
         }
 
@@ -28,34 +28,34 @@ namespace CataclysmMod.Content.Items.GlobalModifications
             switch (item.type)
             {
                 case ItemID.SpiderMask:
-                    if (CalamityChangesConfig.Instance.spiderArmorBuff)
+                    if (CataclysmConfig.Instance.spiderArmorBuff)
                         item.defense += 3;
                     break;
 
                 case ItemID.SpiderBreastplate:
-                    if (CalamityChangesConfig.Instance.spiderArmorBuff)
+                    if (CataclysmConfig.Instance.spiderArmorBuff)
                         item.defense += 2;
                     break;
 
                 case ItemID.SpiderGreaves:
-                    if (CalamityChangesConfig.Instance.spiderArmorBuff)
+                    if (CataclysmConfig.Instance.spiderArmorBuff)
                         item.defense += 1;
                     break;
 
                 case ItemID.GuideVoodooDoll:
                 case ItemID.ClothierVoodooDoll:
-                    if (item.maxStack < 20 && CalamityChangesConfig.Instance.voodooDollStackIncrease)
+                    if (item.maxStack < 20 && CataclysmConfig.Instance.voodooDollStackIncrease)
                         item.maxStack = 20;
                     break;
             }
 
-            if (CalamityChangesConfig.Instance.basherScale && item.type == ModContent.ItemType<Basher>())
+            if (CataclysmConfig.Instance.basherScale && item.type == ModContent.ItemType<Basher>())
                 item.scale = 1.2f;
 
-            if (CalamityChangesConfig.Instance.sulphurSkinPotionPriceNerf && item.type == ModContent.ItemType<SulphurskinPotion>())
+            if (CataclysmConfig.Instance.sulphurSkinPotionPriceNerf && item.type == ModContent.ItemType<SulphurskinPotion>())
                 item.value = Item.sellPrice(silver: 2);
 
-            if (CalamityChangesConfig.Instance.infinityDontConsumeAmmo && item.type == ModContent.ItemType<Infinity>())
+            if (CataclysmConfig.Instance.infinityDontConsumeAmmo && item.type == ModContent.ItemType<Infinity>())
                 item.damage = 25;
         }
 
@@ -63,35 +63,35 @@ namespace CataclysmMod.Content.Items.GlobalModifications
         {
             TooltipLine tooltip = tooltips.FirstOrDefault(x => x.Name == "Tooltip0" && x.mod == "Terraria");
 
-            if (CalamityChangesConfig.Instance.pickaxeTooltips)
+            if (CataclysmConfig.Instance.pickaxeTooltips)
             {
                 if (tooltip != null)
                 {
                     if (item.type == ItemID.DeathbringerPickaxe || item.type == ItemID.NightmarePickaxe)
-                        tooltip.text += "\n" + LangUtils.GetCalamityTextValue("Tooltips.MineAerialite");
+                        tooltip.text += "\n" + LangUtils.GetCataclysmTextValue("Tooltips.MineAerialite");
 
                     if (item.type == ItemID.Picksaw)
-                        tooltip.text += "\n" + LangUtils.GetCalamityTextValue("Tooltips.MineAstral");
+                        tooltip.text += "\n" + LangUtils.GetCataclysmTextValue("Tooltips.MineAstral");
 
                     if (item.type == ModContent.ItemType<FlamebeakHampick>())
-                        tooltip.text += "\n" + LangUtils.GetCalamityTextValue("Tooltips.MineScoriaAstral");
+                        tooltip.text += "\n" + LangUtils.GetCataclysmTextValue("Tooltips.MineScoriaAstral");
 
                     if (item.type == ItemID.SolarFlarePickaxe || item.type == ItemID.VortexPickaxe || item.type == ItemID.NebulaPickaxe || item.type == ItemID.StardustPickaxe || item.type == ModContent.ItemType<GallantPickaxe>())
-                        tooltip.text += "\n" + LangUtils.GetCalamityTextValue("Tooltips.MineExodium");
+                        tooltip.text += "\n" + LangUtils.GetCataclysmTextValue("Tooltips.MineExodium");
                 }
                 else
                 {
                     if (item.type == ItemID.GoldPickaxe || item.type == ItemID.PlatinumPickaxe)
-                        tooltips.Add(new TooltipLine(mod, $"{mod.Name}:PickSeaPrism", LangUtils.GetCalamityTextValue("Tooltips.MineSeaPrism")));
+                        tooltips.Add(new TooltipLine(mod, $"{mod.Name}:PickSeaPrism", LangUtils.GetCataclysmTextValue("Tooltips.MineSeaPrism")));
 
                     if (item.type == ItemID.AdamantitePickaxe || item.type == ItemID.TitaniumPickaxe)
-                        tooltips.Add(new TooltipLine(mod, $"{mod.Name}:PickCryonicCharred", LangUtils.GetCalamityTextValue("Tooltips.MineCryonicCharred")));
+                        tooltips.Add(new TooltipLine(mod, $"{mod.Name}:PickCryonicCharred", LangUtils.GetCataclysmTextValue("Tooltips.MineCryonicCharred")));
 
                     if (item.type == ItemID.PickaxeAxe || item.type == ItemID.Drax || item.type == ItemID.ChlorophytePickaxe)
-                        tooltips.Add(new TooltipLine(mod, $"{mod.Name}:PickPerennial", LangUtils.GetCalamityTextValue("Tooltips.Perennial")));
+                        tooltips.Add(new TooltipLine(mod, $"{mod.Name}:PickPerennial", LangUtils.GetCataclysmTextValue("Tooltips.Perennial")));
 
                     if (item.type == ItemID.SolarFlarePickaxe || item.type == ItemID.VortexPickaxe || item.type == ItemID.NebulaPickaxe || item.type == ItemID.StardustPickaxe)
-                        tooltips.Add(new TooltipLine(mod, $"{mod.Name}:PickExodium", LangUtils.GetCalamityTextValue("Tooltips.MineExodium")));
+                        tooltips.Add(new TooltipLine(mod, $"{mod.Name}:PickExodium", LangUtils.GetCataclysmTextValue("Tooltips.MineExodium")));
                 }
             }
         }
@@ -109,7 +109,7 @@ namespace CataclysmMod.Content.Items.GlobalModifications
             switch (set)
             {
                 case "Cataclysm:SpiderArmor":
-                    if (CalamityChangesConfig.Instance.spiderArmorBuff)
+                    if (CataclysmConfig.Instance.spiderArmorBuff)
                     {
                         player.setBonus += "\nYou can stick to walls like a spider";
                         player.spikedBoots = 3;
@@ -128,14 +128,14 @@ namespace CataclysmMod.Content.Items.GlobalModifications
                 case ItemID.ObsidianWaterWalkingBoots:
                 case ItemID.LavaWaders:
                 case ItemID.ObsidianSkull:
-                    player.GetModPlayer<CalamityCompatPlayer>().obsidianSkullIsFunny = true;
+                    player.GetModPlayer<CalamityCompatPlayer>().playerHasObsidianSkullOrTree = true;
                     break;
             }
         }
 
         public override bool ConsumeAmmo(Item item, Player player)
         {
-            if (item.type == ModContent.ItemType<Infinity>() && CalamityChangesConfig.Instance.infinityDontConsumeAmmo)
+            if (item.type == ModContent.ItemType<Infinity>() && CataclysmConfig.Instance.infinityDontConsumeAmmo)
                 return false;
 
             return base.ConsumeAmmo(item, player);

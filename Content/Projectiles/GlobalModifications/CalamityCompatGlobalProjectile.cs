@@ -1,11 +1,11 @@
-﻿using CalamityMod;
+﻿using System.Collections.Generic;
+using CalamityMod;
 using CalamityMod.NPCs.SlimeGod;
 using CalamityMod.Projectiles.Boss;
 using CalamityMod.Projectiles.Ranged;
 using CalamityMod.Projectiles.Summon;
-using Microsoft.Xna.Framework;
-using System.Collections.Generic;
 using CataclysmMod.Content.Configs;
+using Microsoft.Xna.Framework;
 using Terraria;
 using Terraria.ModLoader;
 
@@ -17,7 +17,7 @@ namespace CataclysmMod.Content.Projectiles.GlobalModifications
 
         public override bool CloneNewInstances => true;
 
-        public int defDamage = 0;
+        public int defDamage;
         public bool firstFrame = true;
         public float savedRotation;
 
@@ -32,7 +32,7 @@ namespace CataclysmMod.Content.Projectiles.GlobalModifications
                 { ModContent.ProjectileType<HerringMinion>(), 0.25f }
             };
 
-            if (CalamityChangesConfig.Instance.smootherMinionRotation)
+            if (CataclysmConfig.Instance.smootherMinionRotation)
             {
                 if (SummonRotationAdjustments.ContainsKey(projectile.type))
                     savedRotation = projectile.rotation;
@@ -41,7 +41,7 @@ namespace CataclysmMod.Content.Projectiles.GlobalModifications
                     savedRotation = projectile.rotation;
             }
 
-            if (CalamityChangesConfig.Instance.abyssMinesExplode && projectile.type == ModContent.ProjectileType<AbyssMine>())
+            if (CataclysmConfig.Instance.abyssMinesExplode && projectile.type == ModContent.ProjectileType<AbyssMine>())
                 if (!NPC.AnyNPCs(ModContent.NPCType<SlimeGodCore>()) && !NPC.AnyNPCs(ModContent.NPCType<SlimeGod>()) && !NPC.AnyNPCs(ModContent.NPCType<SlimeGodSplit>()) && !NPC.AnyNPCs(ModContent.NPCType<SlimeGodRun>()))
                     projectile.Kill();
 
@@ -50,12 +50,12 @@ namespace CataclysmMod.Content.Projectiles.GlobalModifications
 
         public override void PostAI(Projectile projectile)
         {
-            if (CalamityChangesConfig.Instance.drataliornusArrowsThroughBlocks && projectile.type == ModContent.ProjectileType<DrataliornusFlame>())
+            if (CataclysmConfig.Instance.drataliornusArrowsThroughBlocks && projectile.type == ModContent.ProjectileType<DrataliornusFlame>())
                 projectile.tileCollide = false;
 
             Player player = Main.player[projectile.owner];
 
-            if (CalamityChangesConfig.Instance.smootherMinionRotation)
+            if (CataclysmConfig.Instance.smootherMinionRotation)
             {
                 if (SummonRotationAdjustments.ContainsKey(projectile.type))
                 {
@@ -108,7 +108,7 @@ namespace CataclysmMod.Content.Projectiles.GlobalModifications
         {
             if (projectile.type == ModContent.ProjectileType<FungalClumpMinion>())
             {
-                if (CalamityChangesConfig.Instance.fungalClumpTrueDamage)
+                if (CataclysmConfig.Instance.fungalClumpTrueDamage)
                 {
                     if (firstFrame)
                     {
@@ -128,7 +128,7 @@ namespace CataclysmMod.Content.Projectiles.GlobalModifications
                     projectile.damage = (int)(damageIncrease + defDamage);
                 }
 
-                if (CalamityChangesConfig.Instance.fungalClumpEmitsLight)
+                if (CataclysmConfig.Instance.fungalClumpEmitsLight)
                     Lighting.AddLight(projectile.position, 22f / 200f, 54f / 255f, 125f / 255f);
             }
         }

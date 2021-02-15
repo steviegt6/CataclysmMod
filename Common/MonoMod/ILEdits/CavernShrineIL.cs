@@ -1,30 +1,31 @@
-﻿using CataclysmMod.Content.Configs;
+﻿using CataclysmMod.Common.Utilities;
+using CataclysmMod.Content.Configs;
+using IL.CalamityMod.World;
 using Mono.Cecil.Cil;
 using MonoMod.Cil;
 using Terraria.ID;
-using Terraria.ModLoader;
 
 namespace CataclysmMod.Common.MonoMod.ILEdits
 {
     public class CavernShrineIL : ILEdit
     {
-        public override string DictKey => "CalamityMod.World.SmallBiomesWorldGenerationMethods.PlaceShriesSpecialChest";
+        public override string DictKey => "CalamityMod.World.SmallBiomesWorldGenerationMethods.PlaceShrinesSpecialChest";
 
-        public override bool Autoload() => CalamityChangesConfig.Instance.cavernShrineChanges;
+        public override bool Autoload() => CataclysmConfig.Instance.cavernShrineChanges;
 
         public override void Load()
         {
-            IL.CalamityMod.World.SmallBiomes.PlaceShrines += ChangeCavernShrineBlocks;
-            IL.CalamityMod.World.WorldGenerationMethods.SpecialChest += ChangeCavernShrineChest;
+            SmallBiomes.PlaceShrines += ChangeCavernShrineBlocks;
+            WorldGenerationMethods.SpecialChest += ChangeCavernShrineChest;
         }
 
         public override void Unload()
         {
-            IL.CalamityMod.World.SmallBiomes.PlaceShrines -= ChangeCavernShrineBlocks;
-            IL.CalamityMod.World.WorldGenerationMethods.SpecialChest -= ChangeCavernShrineChest;
+            SmallBiomes.PlaceShrines -= ChangeCavernShrineBlocks;
+            WorldGenerationMethods.SpecialChest -= ChangeCavernShrineChest;
         }
 
-        private void ChangeCavernShrineChest(ILContext il)
+        private static void ChangeCavernShrineChest(ILContext il)
         {
             ILCursor c = new ILCursor(il);
 
@@ -40,7 +41,7 @@ namespace CataclysmMod.Common.MonoMod.ILEdits
              */
             if (!c.TryGotoNext(i => i.MatchLdcI4(44)))
             {
-                ModContent.GetInstance<CataclysmMod>().Logger.Warn("[IL] Unable to match ldc.i4.s \"44\"!");
+                ILLogger.LogILError("ldc.i4.s", "44");
                 return;
             }
 
@@ -50,10 +51,10 @@ namespace CataclysmMod.Common.MonoMod.ILEdits
             c.Emit(OpCodes.Pop);
             c.Emit(OpCodes.Ldc_I4, 1);
 
-            ModContent.GetInstance<CataclysmMod>().Logger.Info("[IL] Finished patching!");
+            ILLogger.LogILCompletion("IL.CalamityMod.World.WorldGenerationMethods.SpecialChest");
         }
 
-        private void ChangeCavernShrineBlocks(ILContext il)
+        private static void ChangeCavernShrineBlocks(ILContext il)
         {
             ILCursor c = new ILCursor(il);
 
@@ -68,7 +69,7 @@ namespace CataclysmMod.Common.MonoMod.ILEdits
              */
             if (!c.TryGotoNext(i => i.MatchLdcI4(75)))
             {
-                ModContent.GetInstance<CataclysmMod>().Logger.Warn("[IL] Unable to match ldc.i4.s \"75\"! (1)");
+                ILLogger.LogILError("ldc.i4.s", "75", 1 + 1);
                 return;
             }
 
@@ -91,7 +92,7 @@ namespace CataclysmMod.Common.MonoMod.ILEdits
             // Repeat the previous IL as there's a second call
             if (!c.TryGotoNext(i => i.MatchLdcI4(75)))
             {
-                ModContent.GetInstance<CataclysmMod>().Logger.Warn("[IL] Unable to match ldc.i4.s \"75\"! (2)");
+                ILLogger.LogILError("ldc.i4.s", "75", 2 + 1);
                 return;
             }
 
@@ -111,7 +112,7 @@ namespace CataclysmMod.Common.MonoMod.ILEdits
             c.Emit(OpCodes.Pop);
             c.Emit(OpCodes.Ldc_I4, (int)WallID.GrayBrick);
 
-            ModContent.GetInstance<CataclysmMod>().Logger.Info("[IL] Finished patching!");
+            ILLogger.LogILCompletion("IL.CalamityMod.World.SmallBiomes.PlaceShrines");
         }
     }
 }

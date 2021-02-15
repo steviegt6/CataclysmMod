@@ -1,10 +1,11 @@
 ﻿using System;
+using CataclysmMod.Common.Utilities;
 using CataclysmMod.Content.Configs;
+using IL.CalamityMod.World;
 using Mono.Cecil.Cil;
 using MonoMod.Cil;
 using Terraria;
 using Terraria.ID;
-using Terraria.ModLoader;
 
 namespace CataclysmMod.Common.MonoMod.ILEdits
 {
@@ -12,25 +13,25 @@ namespace CataclysmMod.Common.MonoMod.ILEdits
     {
         public override string DictKey => "CalamityMod.World.CalamityWorld.PostUpdate";
 
-        public override bool Autoload() => CalamityChangesConfig.Instance.steampunkerSpawnFix;
+        public override bool Autoload() => CataclysmConfig.Instance.steampunkerSpawnFix;
 
-        public override void Load() => IL.CalamityMod.World.CalamityWorld.PostUpdate += ModifySteampunkerSpawn;
+        public override void Load() => CalamityWorld.PostUpdate += ModifySteampunkerSpawn;
 
-        public override void Unload() => IL.CalamityMod.World.CalamityWorld.PostUpdate -= ModifySteampunkerSpawn;
+        public override void Unload() => CalamityWorld.PostUpdate -= ModifySteampunkerSpawn;
 
-        private void ModifySteampunkerSpawn(ILContext il)
+        private static void ModifySteampunkerSpawn(ILContext il)
         {
             ILCursor c = new ILCursor(il);
 
             if (!c.TryGotoNext(x => x.MatchLdcI4(NPCID.Steampunker)))
             {
-                ModContent.GetInstance<CataclysmMod>().Logger.Warn($"[IL] Unable to match ldc.i4 \"178\"!");
+                ILLogger.LogILError("ldc.i4", "178");
                 return;
             }
 
             if (!c.TryGotoNext(x => x.MatchLdloc(0)))
             {
-                ModContent.GetInstance<CataclysmMod>().Logger.Warn($"[IL] Unable to match ldloc.0!");
+                ILLogger.LogILError("ldloc", "0");
                 return;
             }
 
@@ -40,11 +41,13 @@ namespace CataclysmMod.Common.MonoMod.ILEdits
             c.Emit(OpCodes.Ldloc_0); // num
 
             // Insert our own method call
-            c.EmitDelegate<Action<int>>((whoAmI) =>
+            c.EmitDelegate<Action<int>>(whoAmI =>
             {
                 Player player = Main.player[whoAmI];
                 NPC.NewNPC((int)player.position.X, (int)player.position.Y, NPCID.Steampunker);
             });
+
+            ILLogger.LogILCompletion("CalamityMod.World.CalamityWorld.PostUpdate");
         }
     }
 }

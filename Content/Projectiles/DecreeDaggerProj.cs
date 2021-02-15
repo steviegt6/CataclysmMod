@@ -97,9 +97,11 @@ namespace CataclysmMod.Content.Projectiles
             {
                 projectile.ai[0] += 0.1f;
 
+                // ReSharper disable once CompareOfFloatsByEqualityOperator
                 if (projectile.velocity.X != oldVelocity.X)
                     projectile.velocity.X = 0f - oldVelocity.X;
 
+                // ReSharper disable once CompareOfFloatsByEqualityOperator
                 if (projectile.velocity.Y != oldVelocity.Y)
                     projectile.velocity.Y = 0f - oldVelocity.Y;
             }
