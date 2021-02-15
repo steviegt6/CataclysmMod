@@ -3,7 +3,7 @@ using CataclysmMod.Content.Configs;
 using Terraria;
 using Terraria.ModLoader;
 
-namespace CataclysmMod.Content.Players
+namespace CataclysmMod.Content.GlobalModifications.Players
 {
     public class CalamityCompatPlayer : ModPlayer
     {

@@ -9,7 +9,8 @@ using Microsoft.Xna.Framework;
 using Terraria;
 using Terraria.ModLoader;
 
-namespace CataclysmMod.Content.Projectiles.GlobalModifications
+// TODO: Split into separate files in its own folder?
+namespace CataclysmMod.Content.GlobalModifications
 {
     public class CalamityCompatGlobalProjectile : GlobalProjectile
     {

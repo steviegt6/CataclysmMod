@@ -16,7 +16,8 @@ using Terraria.ID;
 using Terraria.ModLoader;
 using Terraria.UI.Chat;
 
-namespace CataclysmMod.Content.NPCs.GlobalModifications
+// TODO: Split into separate files in its own folder?
+namespace CataclysmMod.Content.GlobalModifications
 {
     public class CalamityCompatGlobalNPC : GlobalNPC
     {

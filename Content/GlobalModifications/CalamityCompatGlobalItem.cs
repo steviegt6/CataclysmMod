@@ -8,12 +8,14 @@ using CalamityMod.Items.Weapons.Melee;
 using CalamityMod.Items.Weapons.Ranged;
 using CataclysmMod.Common.Utilities;
 using CataclysmMod.Content.Configs;
-using CataclysmMod.Content.Players;
+using CataclysmMod.Content.GlobalModifications.Players;
+using CataclysmMod.Content.Items;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
 
-namespace CataclysmMod.Content.Items.GlobalModifications
+// TODO: Split into separate files in its own folder?
+namespace CataclysmMod.Content.GlobalModifications
 {
     public class CalamityCompatGlobalItem : GlobalItem
     {

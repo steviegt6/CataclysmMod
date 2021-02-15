@@ -3,7 +3,7 @@ using System.Reflection;
 using CalamityMod.CalPlayer;
 using CataclysmMod.Common.Utilities;
 using CataclysmMod.Content.Configs;
-using CataclysmMod.Content.Players;
+using CataclysmMod.Content.GlobalModifications.Players;
 using Mono.Cecil.Cil;
 using MonoMod.Cil;
 using MonoMod.RuntimeDetour.HookGen;
