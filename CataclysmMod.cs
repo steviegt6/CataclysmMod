@@ -1,5 +1,4 @@
 using CataclysmMod.Common;
-using CataclysmMod.Content.Recipes;
 using Terraria.ModLoader;
 
 namespace CataclysmMod

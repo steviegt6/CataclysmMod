@@ -1,12 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using CalamityMod.Items.Materials;
+﻿using CalamityMod.Items.Materials;
 using CalamityMod.Items.Placeables.Ores;
 using CalamityMod.Items.Weapons.Ranged;
 using CalamityMod.Items.Weapons.Rogue;
 using CataclysmMod.Common.Utilities;
 using CataclysmMod.Content.Configs;
-using CataclysmMod.Content.Recipes;
 using Terraria.ID;
 using Terraria.ModLoader;
 
