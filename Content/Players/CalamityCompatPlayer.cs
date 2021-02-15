@@ -1,8 +1,8 @@
 ﻿using CalamityMod.Items.LoreItems;
-using CataclysmMod.Common.Configs;
+using CataclysmMod.Content.Configs;
 using Terraria.ModLoader;
 
-namespace CataclysmMod.Common.Players
+namespace CataclysmMod.Content.Players
 {
     public class CalamityCompatPlayer : ModPlayer
     {

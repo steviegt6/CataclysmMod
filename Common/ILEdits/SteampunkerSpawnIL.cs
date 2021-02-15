@@ -1,7 +1,7 @@
-﻿using CataclysmMod.Common.Configs;
-using Mono.Cecil.Cil;
+﻿using Mono.Cecil.Cil;
 using MonoMod.Cil;
 using System;
+using CataclysmMod.Content.Configs;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;

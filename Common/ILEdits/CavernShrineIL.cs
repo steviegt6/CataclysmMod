@@ -1,4 +1,4 @@
-﻿using CataclysmMod.Common.Configs;
+﻿using CataclysmMod.Content.Configs;
 using Mono.Cecil.Cil;
 using MonoMod.Cil;
 using Terraria.ID;

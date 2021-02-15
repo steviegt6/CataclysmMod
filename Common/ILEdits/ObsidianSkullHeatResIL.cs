@@ -1,11 +1,11 @@
 ﻿using CalamityMod.CalPlayer;
-using CataclysmMod.Common.Configs;
-using CataclysmMod.Common.Players;
 using Mono.Cecil.Cil;
 using MonoMod.Cil;
 using MonoMod.RuntimeDetour.HookGen;
 using System;
 using System.Reflection;
+using CataclysmMod.Content.Configs;
+using CataclysmMod.Content.Players;
 using Terraria;
 
 namespace CataclysmMod.Common.ILEdits

@@ -1,6 +1,6 @@
 ﻿using CalamityMod;
 using CalamityMod.Items.Tools.ClimateChange;
-using CataclysmMod.Common.Configs;
+using CataclysmMod.Content.Configs;
 using Terraria;
 
 namespace CataclysmMod.Common.Detours

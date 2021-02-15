@@ -3,9 +3,9 @@ using CalamityMod.NPCs.SlimeGod;
 using CalamityMod.Projectiles.Boss;
 using CalamityMod.Projectiles.Ranged;
 using CalamityMod.Projectiles.Summon;
-using CataclysmMod.Common.Configs;
 using Microsoft.Xna.Framework;
 using System.Collections.Generic;
+using CataclysmMod.Content.Configs;
 using Terraria;
 using Terraria.ModLoader;
 

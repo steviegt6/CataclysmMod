@@ -2,8 +2,8 @@
 using CalamityMod.Items.Placeables.Ores;
 using CalamityMod.Items.Weapons.Ranged;
 using CalamityMod.Items.Weapons.Rogue;
-using CataclysmMod.Common.Configs;
 using CataclysmMod.Common.Utilities;
+using CataclysmMod.Content.Configs;
 using Terraria.ID;
 using Terraria.ModLoader;
 

@@ -1,4 +1,4 @@
-﻿using CataclysmMod.Common.Configs;
+﻿using CataclysmMod.Content.Configs;
 using Terraria;
 using Terraria.ID;
 

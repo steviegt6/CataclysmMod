@@ -1,7 +1,7 @@
 ﻿using System.ComponentModel;
 using Terraria.ModLoader.Config;
 
-namespace CataclysmMod.Common.Configs
+namespace CataclysmMod.Content.Configs
 {
     [Label("Calamity Changes")]
     public class CalamityChangesConfig : ModConfig
