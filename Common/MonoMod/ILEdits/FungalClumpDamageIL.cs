@@ -4,7 +4,7 @@ using MonoMod.Cil;
 using ReLogic.OS;
 using Terraria.ModLoader;
 
-namespace CataclysmMod.Common.ILEdits
+namespace CataclysmMod.Common.MonoMod.ILEdits
 {
     public class FungalClumpDamageIL : ILEdit
     {

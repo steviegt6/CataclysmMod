@@ -1,4 +1,4 @@
-﻿namespace CataclysmMod.Common.ILEdits
+﻿namespace CataclysmMod.Common.MonoMod
 {
     public abstract class ILEdit
     {

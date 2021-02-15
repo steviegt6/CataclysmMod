@@ -1,14 +1,14 @@
-﻿using CalamityMod.CalPlayer;
+﻿using System;
+using System.Reflection;
+using CalamityMod.CalPlayer;
+using CataclysmMod.Content.Configs;
+using CataclysmMod.Content.Players;
 using Mono.Cecil.Cil;
 using MonoMod.Cil;
 using MonoMod.RuntimeDetour.HookGen;
-using System;
-using System.Reflection;
-using CataclysmMod.Content.Configs;
-using CataclysmMod.Content.Players;
 using Terraria;
 
-namespace CataclysmMod.Common.ILEdits
+namespace CataclysmMod.Common.MonoMod.ILEdits
 {
     public class ObsidianSkullHeatResIL : ILEdit
     {

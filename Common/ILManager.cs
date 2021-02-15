@@ -1,7 +1,7 @@
 ﻿using CataclysmMod.Common.Detours;
-using CataclysmMod.Common.ILEdits;
 using System;
 using System.Collections.Generic;
+using CataclysmMod.Common.MonoMod;
 
 namespace CataclysmMod.Common
 {

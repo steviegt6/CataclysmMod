@@ -1,12 +1,12 @@
-﻿using Mono.Cecil.Cil;
-using MonoMod.Cil;
-using System;
+﻿using System;
 using CataclysmMod.Content.Configs;
+using Mono.Cecil.Cil;
+using MonoMod.Cil;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
 
-namespace CataclysmMod.Common.ILEdits
+namespace CataclysmMod.Common.MonoMod.ILEdits
 {
     public class SteampunkerSpawnIL : ILEdit
     {
