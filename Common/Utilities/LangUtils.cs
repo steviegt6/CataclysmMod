@@ -1,7 +1,7 @@
 ﻿using Terraria.Localization;
 using Terraria.ModLoader;
 
-namespace CataclysmMod.Utilities
+namespace CataclysmMod.Common.Utilities
 {
     public static class LangUtils
     {

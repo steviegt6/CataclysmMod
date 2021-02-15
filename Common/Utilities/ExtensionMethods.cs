@@ -1,7 +1,7 @@
 ﻿using System;
 using Terraria.ModLoader;
 
-namespace CataclysmMod.Utilities
+namespace CataclysmMod.Common.Utilities
 {
     public static class ExtensionMethods
     {
