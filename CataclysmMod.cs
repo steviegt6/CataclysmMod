@@ -21,22 +21,14 @@ namespace CataclysmMod
 
         public static CataclysmMod Instance { get; private set; }
 
-        public override void Load()
-        {
-            ILManager.Load();
-            RecipeManager.Load();
-        }
+        public override void Load() => ILManager.Load();
 
-        public override void Unload()
-        {
-            ILManager.Unload();
-            RecipeManager.Unload();
-        }
+        public override void Unload() => ILManager.Unload();
 
-        public override void AddRecipes() => RecipeManager.AddRecipes();
+        public override void AddRecipes() => RecipeHandler.AddRecipes();
 
-        public override void PostAddRecipes() => RecipeManager.ModifyRecipes();
+        public override void PostAddRecipes() => RecipeHandler.ModifyRecipes();
 
-        public override void AddRecipeGroups() => RecipeManager.AddRecipeGroups();
+        public override void AddRecipeGroups() => RecipeHandler.AddRecipeGroups();
     }
 }

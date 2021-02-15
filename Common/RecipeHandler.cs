@@ -1,19 +1,24 @@
-﻿using CalamityMod.Items.Materials;
+﻿using System;
+using System.Collections.Generic;
+using CalamityMod.Items.Materials;
 using CalamityMod.Items.Placeables.Ores;
 using CalamityMod.Items.Weapons.Ranged;
 using CalamityMod.Items.Weapons.Rogue;
 using CataclysmMod.Common.Utilities;
 using CataclysmMod.Content.Configs;
+using CataclysmMod.Content.Recipes;
 using Terraria.ID;
 using Terraria.ModLoader;
 
-namespace CataclysmMod.Content.Recipes
+namespace CataclysmMod.Common
 {
-    public class CalamityCompatRecipes : ModCompatRecipe
+    public static class RecipeHandler
     {
-        // public override bool Autoload() => CataclysmMod.Instance.Calamity != null;
+        public static void AddRecipes()
+        {
+        }
 
-        public override void ModifyRecipes()
+        public static void ModifyRecipes()
         {
             if (CataclysmConfig.Instance.throwingBrickRecipeChange)
             {
@@ -45,6 +50,10 @@ namespace CataclysmMod.Content.Recipes
                     halleysInferno.AddIngredient(ItemID.RifleScope);
                 }
             }
+        }
+
+        public static void AddRecipeGroups()
+        {
         }
     }
 }
