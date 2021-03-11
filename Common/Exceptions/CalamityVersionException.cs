@@ -55,8 +55,10 @@ namespace CataclysmMod.Common.Exceptions
                 {
                     case ExceptionType.OutdatedCalamity:
                         return "https://mirror.sgkoi.dev/tModLoader/download.php?Down=mods/CalamityMod.tmod";
+
                     case ExceptionType.OutdatedCataclysm:
                         return "https://mirror.sgkoi.dev/tModLoader/download.php?Down=mods/CataclysmMod.tmod";
+
                     default:
                         throw new ArgumentOutOfRangeException();
                 }

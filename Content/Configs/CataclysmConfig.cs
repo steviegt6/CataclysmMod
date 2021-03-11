@@ -141,7 +141,7 @@ namespace CataclysmMod.Content.Configs
         [Label("Wizard Sells Guide Voodoo Dolls")] [DefaultValue(true)]
         public bool wizardGuideVoodooDoll;
 
-        public static CataclysmConfig Instance { get; private set; }
+        public static CataclysmConfig Instance { get; internal set; }
 
         public override ConfigScope Mode => ConfigScope.ClientSide;
 
