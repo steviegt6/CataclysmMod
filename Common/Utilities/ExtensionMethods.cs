@@ -7,7 +7,7 @@ namespace CataclysmMod.Common.Utilities
     public static class ExtensionMethods
     {
         /// <summary>
-        /// Attempts to find a recipe according to the provided <see cref="RecipeFinder"/>.
+        ///     Attempts to find a recipe according to the provided <see cref="RecipeFinder" />.
         /// </summary>
         /// <param name="finder"></param>
         /// <param name="editor"></param>
@@ -27,7 +27,7 @@ namespace CataclysmMod.Common.Utilities
         }
 
         /// <summary>
-        /// Creates an <see cref="ILCursor"/> with an <see cref="ILContext"/>.
+        ///     Creates an <see cref="ILCursor" /> with an <see cref="ILContext" />.
         /// </summary>
         public static void CreateCursor(this ILContext context, out ILCursor c) => c = new ILCursor(context);
     }

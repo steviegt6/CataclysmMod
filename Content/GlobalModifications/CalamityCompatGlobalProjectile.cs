@@ -14,23 +14,22 @@ namespace CataclysmMod.Content.GlobalModifications
 {
     public class CalamityCompatGlobalProjectile : GlobalProjectile
     {
-        public override bool InstancePerEntity => true;
-
-        public override bool CloneNewInstances => true;
+        public static Dictionary<int, float> SummonRotationAdjustments;
 
         public int defDamage;
         public bool firstFrame = true;
         public float savedRotation;
+        public override bool InstancePerEntity => true;
 
-        public static Dictionary<int, float> SummonRotationAdjustments;
+        public override bool CloneNewInstances => true;
 
         public override bool PreAI(Projectile projectile)
         {
             SummonRotationAdjustments = new Dictionary<int, float>
             {
-                { ModContent.ProjectileType<IceClasperMinion>(), 0.15f },
-                { ModContent.ProjectileType<PowerfulRaven>(), 0.25f },
-                { ModContent.ProjectileType<HerringMinion>(), 0.25f }
+                {ModContent.ProjectileType<IceClasperMinion>(), 0.15f},
+                {ModContent.ProjectileType<PowerfulRaven>(), 0.25f},
+                {ModContent.ProjectileType<HerringMinion>(), 0.25f}
             };
 
             if (CataclysmConfig.Instance.smootherMinionRotation)
@@ -43,7 +42,9 @@ namespace CataclysmMod.Content.GlobalModifications
             }
 
             if (CataclysmConfig.Instance.abyssMinesExplode && projectile.type == ModContent.ProjectileType<AbyssMine>())
-                if (!NPC.AnyNPCs(ModContent.NPCType<SlimeGodCore>()) && !NPC.AnyNPCs(ModContent.NPCType<SlimeGod>()) && !NPC.AnyNPCs(ModContent.NPCType<SlimeGodSplit>()) && !NPC.AnyNPCs(ModContent.NPCType<SlimeGodRun>()))
+                if (!NPC.AnyNPCs(ModContent.NPCType<SlimeGodCore>()) && !NPC.AnyNPCs(ModContent.NPCType<SlimeGod>()) &&
+                    !NPC.AnyNPCs(ModContent.NPCType<SlimeGodSplit>()) &&
+                    !NPC.AnyNPCs(ModContent.NPCType<SlimeGodRun>()))
                     projectile.Kill();
 
             return base.PreAI(projectile);
@@ -51,7 +52,8 @@ namespace CataclysmMod.Content.GlobalModifications
 
         public override void PostAI(Projectile projectile)
         {
-            if (CataclysmConfig.Instance.drataliornusArrowsThroughBlocks && projectile.type == ModContent.ProjectileType<DrataliornusFlame>())
+            if (CataclysmConfig.Instance.drataliornusArrowsThroughBlocks &&
+                projectile.type == ModContent.ProjectileType<DrataliornusFlame>())
                 projectile.tileCollide = false;
 
             Player player = Main.player[projectile.owner];
@@ -68,11 +70,15 @@ namespace CataclysmMod.Content.GlobalModifications
                         LerpToRotation(projectile, SummonRotationAdjustments[projectile.type], 0);
                     }
                     else
+                    {
                         LerpToRotation(projectile, SummonRotationAdjustments[projectile.type]);
+                    }
                 }
 
                 if (projectile.type == ModContent.ProjectileType<CinderBlossom>())
-                    projectile.rotation = savedRotation + (MathHelper.ToRadians(1.5f) + (player.velocity.X / player.maxRunSpeed / 5f * player.direction)) * player.direction;
+                    projectile.rotation = savedRotation +
+                                          (MathHelper.ToRadians(1.5f) + player.velocity.X / player.maxRunSpeed / 5f *
+                                              player.direction) * player.direction;
 
                 if (projectile.type == ModContent.ProjectileType<CalamariMinion>())
                 {
@@ -84,13 +90,11 @@ namespace CataclysmMod.Content.GlobalModifications
                         target = Main.npc[player.MinionAttackTargetNPC];
                     else
                         foreach (NPC npc in Main.npc)
-                        {
                             if (npc.CanBeChasedBy(projectile))
                             {
                                 target = npc;
                                 break;
                             }
-                        }
 
                     if (target != null)
                     {
@@ -99,7 +103,8 @@ namespace CataclysmMod.Content.GlobalModifications
                         wantedRotation.Normalize();
                         wantedRotation *= 12f;
 
-                        projectile.rotation = projectile.rotation.AngleTowards(wantedRotation.ToRotation() - MathHelper.PiOver2, 0.2f);
+                        projectile.rotation =
+                            projectile.rotation.AngleTowards(wantedRotation.ToRotation() - MathHelper.PiOver2, 0.2f);
                     }
                 }
             }
@@ -126,7 +131,7 @@ namespace CataclysmMod.Content.GlobalModifications
                     damageIncrease += player.minionDamage - 1f;
                     damageIncrease += player.Calamity().throwingDamage - 1f;
 
-                    projectile.damage = (int)(damageIncrease + defDamage);
+                    projectile.damage = (int) (damageIncrease + defDamage);
                 }
 
                 if (CataclysmConfig.Instance.fungalClumpEmitsLight)
@@ -134,6 +139,8 @@ namespace CataclysmMod.Content.GlobalModifications
             }
         }
 
-        public static void LerpToRotation(Projectile projectile, float amount, float adjustment = MathHelper.PiOver2) => projectile.rotation = projectile.rotation.AngleTowards(projectile.velocity.ToRotation() - adjustment, amount);
+        public static void LerpToRotation(Projectile projectile, float amount, float adjustment = MathHelper.PiOver2) =>
+            projectile.rotation =
+                projectile.rotation.AngleTowards(projectile.velocity.ToRotation() - adjustment, amount);
     }
 }

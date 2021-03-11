@@ -54,7 +54,8 @@ namespace CataclysmMod.Content.GlobalModifications
             if (CataclysmConfig.Instance.basherScale && item.type == ModContent.ItemType<Basher>())
                 item.scale = 1.2f;
 
-            if (CataclysmConfig.Instance.sulphurSkinPotionPriceNerf && item.type == ModContent.ItemType<SulphurskinPotion>())
+            if (CataclysmConfig.Instance.sulphurSkinPotionPriceNerf &&
+                item.type == ModContent.ItemType<SulphurskinPotion>())
                 item.value = Item.sellPrice(silver: 2);
 
             if (CataclysmConfig.Instance.infinityDontConsumeAmmo && item.type == ModContent.ItemType<Infinity>())
@@ -78,29 +79,38 @@ namespace CataclysmMod.Content.GlobalModifications
                     if (item.type == ModContent.ItemType<FlamebeakHampick>())
                         tooltip.text += "\n" + LangUtils.GetCataclysmTextValue("Tooltips.MineScoriaAstral");
 
-                    if (item.type == ItemID.SolarFlarePickaxe || item.type == ItemID.VortexPickaxe || item.type == ItemID.NebulaPickaxe || item.type == ItemID.StardustPickaxe || item.type == ModContent.ItemType<GallantPickaxe>())
+                    if (item.type == ItemID.SolarFlarePickaxe || item.type == ItemID.VortexPickaxe ||
+                        item.type == ItemID.NebulaPickaxe || item.type == ItemID.StardustPickaxe ||
+                        item.type == ModContent.ItemType<GallantPickaxe>())
                         tooltip.text += "\n" + LangUtils.GetCataclysmTextValue("Tooltips.MineExodium");
                 }
                 else
                 {
                     if (item.type == ItemID.GoldPickaxe || item.type == ItemID.PlatinumPickaxe)
-                        tooltips.Add(new TooltipLine(mod, $"{mod.Name}:PickSeaPrism", LangUtils.GetCataclysmTextValue("Tooltips.MineSeaPrism")));
+                        tooltips.Add(new TooltipLine(mod, $"{mod.Name}:PickSeaPrism",
+                            LangUtils.GetCataclysmTextValue("Tooltips.MineSeaPrism")));
 
                     if (item.type == ItemID.AdamantitePickaxe || item.type == ItemID.TitaniumPickaxe)
-                        tooltips.Add(new TooltipLine(mod, $"{mod.Name}:PickCryonicCharred", LangUtils.GetCataclysmTextValue("Tooltips.MineCryonicCharred")));
+                        tooltips.Add(new TooltipLine(mod, $"{mod.Name}:PickCryonicCharred",
+                            LangUtils.GetCataclysmTextValue("Tooltips.MineCryonicCharred")));
 
-                    if (item.type == ItemID.PickaxeAxe || item.type == ItemID.Drax || item.type == ItemID.ChlorophytePickaxe)
-                        tooltips.Add(new TooltipLine(mod, $"{mod.Name}:PickPerennial", LangUtils.GetCataclysmTextValue("Tooltips.Perennial")));
+                    if (item.type == ItemID.PickaxeAxe || item.type == ItemID.Drax ||
+                        item.type == ItemID.ChlorophytePickaxe)
+                        tooltips.Add(new TooltipLine(mod, $"{mod.Name}:PickPerennial",
+                            LangUtils.GetCataclysmTextValue("Tooltips.Perennial")));
 
-                    if (item.type == ItemID.SolarFlarePickaxe || item.type == ItemID.VortexPickaxe || item.type == ItemID.NebulaPickaxe || item.type == ItemID.StardustPickaxe)
-                        tooltips.Add(new TooltipLine(mod, $"{mod.Name}:PickExodium", LangUtils.GetCataclysmTextValue("Tooltips.MineExodium")));
+                    if (item.type == ItemID.SolarFlarePickaxe || item.type == ItemID.VortexPickaxe ||
+                        item.type == ItemID.NebulaPickaxe || item.type == ItemID.StardustPickaxe)
+                        tooltips.Add(new TooltipLine(mod, $"{mod.Name}:PickExodium",
+                            LangUtils.GetCataclysmTextValue("Tooltips.MineExodium")));
                 }
             }
         }
 
         public override string IsArmorSet(Item head, Item body, Item legs)
         {
-            if (head.type == ItemID.SpiderMask && body.type == ItemID.SpiderBreastplate && legs.type == ItemID.SpiderGreaves)
+            if (head.type == ItemID.SpiderMask && body.type == ItemID.SpiderBreastplate &&
+                legs.type == ItemID.SpiderGreaves)
                 return "Cataclysm:SpiderArmor";
 
             return base.IsArmorSet(head, body, legs);
@@ -116,6 +126,7 @@ namespace CataclysmMod.Content.GlobalModifications
                         player.setBonus += "\nYou can stick to walls like a spider";
                         player.spikedBoots = 3;
                     }
+
                     break;
             }
         }

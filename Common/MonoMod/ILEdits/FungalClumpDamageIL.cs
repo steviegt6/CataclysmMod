@@ -76,7 +76,10 @@ namespace CataclysmMod.Common.MonoMod.ILEdits
                 ILLogger.LogILCompletion("CalamityMod.Items.Accessories.FungalClump.UpdateAccsesory");
             }
             else
-                ModContent.GetInstance<CataclysmMod>().Logger.Warn("[IL] Linux or Mac OS detected, skipping Fungal Clump IL editing...");
+            {
+                ModContent.GetInstance<CataclysmMod>().Logger
+                    .Warn("[IL] Linux or Mac OS detected, skipping Fungal Clump IL editing...");
+            }
         }
     }
 }

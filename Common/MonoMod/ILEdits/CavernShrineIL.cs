@@ -9,7 +9,8 @@ namespace CataclysmMod.Common.MonoMod.ILEdits
 {
     public class CavernShrineIL : ILEdit
     {
-        public override string DictKey => "CalamityMod.World.SmallBiomesWorldGenerationMethods.PlaceShrinesSpecialChest";
+        public override string DictKey =>
+            "CalamityMod.World.SmallBiomesWorldGenerationMethods.PlaceShrinesSpecialChest";
 
         public override bool Autoload() => CataclysmConfig.Instance.cavernShrineChanges;
 
@@ -87,7 +88,7 @@ namespace CataclysmMod.Common.MonoMod.ILEdits
             c.Index++;
 
             c.Emit(OpCodes.Pop);
-            c.Emit(OpCodes.Ldc_I4, (int)WallID.GrayBrick);
+            c.Emit(OpCodes.Ldc_I4, (int) WallID.GrayBrick);
 
             // Repeat the previous IL as there's a second call
             if (!c.TryGotoNext(i => i.MatchLdcI4(75)))
@@ -110,7 +111,7 @@ namespace CataclysmMod.Common.MonoMod.ILEdits
             c.Index++;
 
             c.Emit(OpCodes.Pop);
-            c.Emit(OpCodes.Ldc_I4, (int)WallID.GrayBrick);
+            c.Emit(OpCodes.Ldc_I4, (int) WallID.GrayBrick);
 
             ILLogger.LogILCompletion("IL.CalamityMod.World.SmallBiomes.PlaceShrines");
         }

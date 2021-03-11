@@ -1,10 +1,14 @@
+using System;
 using CataclysmMod.Common;
+using CataclysmMod.Common.Exceptions;
 using Terraria.ModLoader;
 
 namespace CataclysmMod
 {
     public class CataclysmMod : Mod
     {
+        public static readonly Version ExpectedCalamityVersion = new Version();
+
         public CataclysmMod()
         {
             Instance = this;
@@ -20,7 +24,11 @@ namespace CataclysmMod
 
         public static CataclysmMod Instance { get; private set; }
 
-        public override void Load() => ILManager.Load();
+        public override void Load()
+        {
+            CalamityVersionException.ThrowErrorOnIncorrectVersion(ModLoader.GetMod("CalamityMod"), ExpectedCalamityVersion);
+            ILManager.Load();
+        }
 
         public override void Unload() => ILManager.Unload();
 

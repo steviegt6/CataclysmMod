@@ -1,4 +1,5 @@
-﻿using CalamityMod;
+﻿using System;
+using CalamityMod;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Terraria;
@@ -21,8 +22,7 @@ namespace CataclysmMod.Content.Projectiles
 
         public override void SetDefaults()
         {
-            projectile.width = 12;
-            projectile.height = 12;
+            projectile.width = projectile.height = 12;
 
             projectile.friendly = true;
             projectile.penetrate = 5;
@@ -30,18 +30,22 @@ namespace CataclysmMod.Content.Projectiles
             projectile.timeLeft = 600;
             projectile.Calamity().rogue = true;
             projectile.localNPCHitCooldown = 10;
+
             aiType = 48;
         }
 
         public override void AI()
         {
             if (Main.rand.NextBool(4))
-                Dust.NewDust(projectile.position + projectile.velocity, projectile.width, projectile.height, 75, projectile.velocity.X * 0.5f, projectile.velocity.Y * 0.5f);
+                Dust.NewDust(projectile.position + projectile.velocity, projectile.width, projectile.height, 75,
+                    projectile.velocity.X * 0.5f, projectile.velocity.Y * 0.5f);
 
-            if (projectile.Calamity().stealthStrike && projectile.timeLeft % 8 == 0 && projectile.owner == Main.myPlayer)
+            if (projectile.Calamity().stealthStrike && projectile.timeLeft % 8 == 0 &&
+                projectile.owner == Main.myPlayer)
             {
-                int weakerProj = Projectile.NewProjectile(projectile.Center, new Vector2(-14f, 14f), Main.rand.NextBool(2) ? ProjectileID.CursedFlameFriendly : ProjectileID.CursedDartFlame, (int)(projectile.damage * 0.5f), projectile.knockBack * 0.5f, projectile.owner);
-                Projectile proj = Main.projectile[weakerProj];
+                Projectile proj = Projectile.NewProjectileDirect(projectile.Center, new Vector2(-14f, 14f),
+                    Main.rand.NextBool(2) ? ProjectileID.CursedFlameFriendly : ProjectileID.CursedDartFlame,
+                    (int) (projectile.damage * 0.5f), projectile.knockBack * 0.5f, projectile.owner);
 
                 proj.Calamity().stealthStrike = true;
                 proj.usesLocalNPCImmunity = true;
@@ -54,37 +58,50 @@ namespace CataclysmMod.Content.Projectiles
             for (int i = 0; i < 200; i++)
                 if (Main.npc[i].CanBeChasedBy(projectile))
                 {
-                    float offset = (Main.npc[i].width / 2f) + (Main.npc[i].height / 2f);
-                    bool special = projectile.Calamity().stealthStrike || Collision.CanHit(projectile.Center, 1, 1, Main.npc[i].Center, 1, 1);
+                    float offset = Main.npc[i].width / 2f + Main.npc[i].height / 2f;
+                    bool special = projectile.Calamity().stealthStrike ||
+                                   Collision.CanHit(projectile.Center, 1, 1, Main.npc[i].Center, 1, 1);
 
-                    if (Vector2.Distance(Main.npc[i].Center, projectile.Center) < offset + offset && special)
-                    {
-                        center = Main.npc[i].Center;
-                        doSpecial = true;
-                        break;
-                    }
+                    if (!(Vector2.Distance(Main.npc[i].Center, projectile.Center) < offset + offset) || !special)
+                        continue;
+
+                    center = Main.npc[i].Center;
+                    doSpecial = true;
+                    break;
                 }
 
-            if (doSpecial)
-            {
-                projectile.extraUpdates = 1;
-                Vector2 direction = projectile.DirectionTo(center);
+            if (!doSpecial)
+                return;
 
-                if (direction.HasNaNs())
-                    direction = Vector2.UnitX;
+            Vector2 direction = projectile.DirectionTo(center);
 
-                projectile.velocity = (projectile.velocity * 20f + direction * 12f) / 21f;
-            }
+            projectile.extraUpdates = 1;
+
+            if (direction.HasNaNs())
+                direction = Vector2.UnitX;
+
+            projectile.velocity = (projectile.velocity * 20f + direction * 12f) / 21f;
         }
 
         public override void Kill(int timeLeft)
         {
             for (int i = 0; i < 10; i++)
-                Dust.NewDust(projectile.position + projectile.velocity, projectile.width, projectile.height, 75, projectile.oldVelocity.X * 0.5f, projectile.oldVelocity.Y * 0.5f);
+                Dust.NewDust(projectile.position + projectile.velocity, projectile.width, projectile.height, 75,
+                    projectile.oldVelocity.X * 0.5f, projectile.oldVelocity.Y * 0.5f);
 
-            if (projectile.Calamity().stealthStrike)
-                for (int i = 0; i < 2; i++)
-                    Projectile.NewProjectile(projectile.position, new Vector2(Main.rand.Next(1, 5) * (Main.rand.NextBool() ? 1 : -1), Main.rand.Next(1, 5) * (Main.rand.NextBool() ? 1 : -1)), ModContent.ProjectileType<DecreeDaggerSplitProj>(), projectile.damage, projectile.knockBack, projectile.owner);
+            if (!projectile.Calamity().stealthStrike)
+                return;
+
+            for (int i = 0; i < 2; i++)
+                Projectile.NewProjectile(projectile.position,
+                    new Vector2(Main.rand.Next(1, 5) * (Main.rand.NextBool()
+                            ? 1
+                            : -1),
+                        Main.rand.Next(1, 5) * (Main.rand.NextBool()
+                            ? 1
+                            : -1)),
+                    ModContent.ProjectileType<DecreeDaggerSplitProj>(), projectile.damage, projectile.knockBack,
+                    projectile.owner);
         }
 
         public override bool OnTileCollide(Vector2 oldVelocity)
@@ -92,17 +109,17 @@ namespace CataclysmMod.Content.Projectiles
             projectile.penetrate--;
 
             if (projectile.penetrate <= 0)
+            {
                 projectile.Kill();
+            }
             else
             {
                 projectile.ai[0] += 0.1f;
 
-                // ReSharper disable once CompareOfFloatsByEqualityOperator
-                if (projectile.velocity.X != oldVelocity.X)
+                if (Math.Abs(projectile.velocity.X - oldVelocity.X) > 0f)
                     projectile.velocity.X = 0f - oldVelocity.X;
 
-                // ReSharper disable once CompareOfFloatsByEqualityOperator
-                if (projectile.velocity.Y != oldVelocity.Y)
+                if (Math.Abs(projectile.velocity.Y - oldVelocity.Y) > 0f)
                     projectile.velocity.Y = 0f - oldVelocity.Y;
             }
 
@@ -112,13 +129,20 @@ namespace CataclysmMod.Content.Projectiles
         public override bool PreDraw(SpriteBatch spriteBatch, Color lightColor)
         {
             Texture2D projTex = Main.projectileTexture[projectile.type];
-            spriteBatch.Draw(projTex, projectile.Center - Main.screenPosition, null, projectile.GetAlpha(lightColor), projectile.rotation, projTex.Size() / 2f, projectile.scale, SpriteEffects.None, 0f);
+            spriteBatch.Draw(projTex, projectile.Center - Main.screenPosition, null, projectile.GetAlpha(lightColor),
+                projectile.rotation, projTex.Size() / 2f, projectile.scale, SpriteEffects.None, 0f);
 
             return false;
         }
 
-        public override void OnHitNPC(NPC target, int damage, float knockback, bool crit) => target.AddBuff(39, projectile.Calamity().stealthStrike ? 600 : 120);
+        public override void OnHitNPC(NPC target, int damage, float knockback, bool crit) =>
+            target.AddBuff(39, projectile.Calamity().stealthStrike
+                ? 600
+                : 120);
 
-        public override void OnHitPvp(Player target, int damage, bool crit) => target.AddBuff(39, projectile.Calamity().stealthStrike ? 600 : 120);
+        public override void OnHitPvp(Player target, int damage, bool crit) =>
+            target.AddBuff(39, projectile.Calamity().stealthStrike
+                ? 600
+                : 120);
     }
 }

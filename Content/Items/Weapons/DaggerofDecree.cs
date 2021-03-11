@@ -14,15 +14,13 @@ namespace CataclysmMod.Content.Items.Weapons
     {
         public override string Texture => "CalamityMod/Items/Weapons/Rogue/CursedDagger";
 
-        public override bool Autoload(ref string name) => false;
-
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Dagger of Decree");
             Tooltip.SetDefault("Throws two daggers, with the top dagger having homing and splitting capabilities" +
-                "\nStealth strikes cause the top dagger to split into two more on death," +
-                "\ngives the bottom dagger higher pierce, " +
-                "\nand both daggers become showered in cursed fireballs");
+                               "\nStealth strikes cause the top dagger to split into two more on death," +
+                               "\ngives the bottom dagger higher pierce, " +
+                               "\nand both daggers become showered in cursed fireballs");
         }
 
         public override void SafeSetDefaults()
@@ -31,40 +29,60 @@ namespace CataclysmMod.Content.Items.Weapons
             item.height = 34;
 
             item.damage = 26;
-            item.noMelee = true;
-            item.noUseGraphic = true;
-            item.useAnimation = 18;
-            item.useTime = 18;
+            item.noMelee = item.noUseGraphic = true;
+            item.useAnimation = item.useTime = 18;
             item.useStyle = ItemUseStyleID.SwingThrow;
             item.knockBack = 5f;
             item.UseSound = SoundID.Item1;
             item.shoot = ModContent.ProjectileType<CursedDaggerProj>();
             item.shootSpeed = 12f;
             item.GetGlobalItem<CalamityGlobalItem>().rogue = true;
-
             item.autoReuse = true;
             item.value = Item.buyPrice(gold: 36);
             item.rare = ItemRarityID.Pink;
             item.Calamity().customRarity = CalamityRarity.RareVariant;
         }
 
-        public override bool Shoot(Player player, ref Vector2 position, ref float speedX, ref float speedY, ref int type, ref int damage, ref float knockBack)
+        public override bool Shoot(Player player, ref Vector2 position, ref float speedX, ref float speedY,
+            ref int type, ref int damage, ref float knockBack)
         {
             if (player.Calamity().StealthStrikeAvailable())
             {
-                int normDagger = Projectile.NewProjectile(position, new Vector2(speedX, speedY) * (player.Calamity().StealthStrikeAvailable() ? 1.25f : 1f), type, damage, knockBack, player.whoAmI);
-                Main.projectile[normDagger].Calamity().stealthStrike = player.Calamity().StealthStrikeAvailable();
-                Main.projectile[normDagger].usesLocalNPCImmunity = true;
-                Main.projectile[normDagger].penetrate += player.Calamity().StealthStrikeAvailable() ? 1 : 0;
+                Projectile normDagger = Projectile.NewProjectileDirect(position,
+                    new Vector2(speedX, speedY) * (player.Calamity().StealthStrikeAvailable()
+                        ? 1.25f
+                        : 1f),
+                    type,
+                    damage,
+                    knockBack,
+                    player.whoAmI);
+                normDagger.Calamity().stealthStrike = player.Calamity().StealthStrikeAvailable();
+                normDagger.usesLocalNPCImmunity = true;
+                normDagger.penetrate += player.Calamity().StealthStrikeAvailable()
+                    ? 1
+                    : 0;
 
-                int specDagger = Projectile.NewProjectile(position, new Vector2(speedX, speedY).RotatedBy(MathHelper.ToRadians(15)), ModContent.ProjectileType<DecreeDaggerProj>(), damage, knockBack, player.whoAmI);
-                Main.projectile[specDagger].Calamity().stealthStrike = player.Calamity().StealthStrikeAvailable();
-                Main.projectile[specDagger].usesLocalNPCImmunity = true;
+                Projectile specDagger = Projectile.NewProjectileDirect(position,
+                    new Vector2(speedX, speedY).RotatedBy(MathHelper.ToRadians(15)),
+                    ModContent.ProjectileType<DecreeDaggerProj>(),
+                    damage,
+                    knockBack,
+                    player.whoAmI);
+                specDagger.Calamity().stealthStrike = player.Calamity().StealthStrikeAvailable();
+                specDagger.usesLocalNPCImmunity = true;
 
                 return false;
             }
 
-            Main.projectile[Projectile.NewProjectile(position, new Vector2(speedX, speedY).RotatedBy(MathHelper.ToRadians(15)), ModContent.ProjectileType<DecreeDaggerProj>(), damage, knockBack, player.whoAmI)].Calamity().stealthStrike = player.Calamity().StealthStrikeAvailable();
+            Main.projectile[
+                Projectile.NewProjectile(
+                    position, 
+                    new Vector2(speedX, speedY).RotatedBy(MathHelper.ToRadians(15)),
+                    ModContent.ProjectileType<DecreeDaggerProj>(),
+                    damage, 
+                    knockBack, 
+                    player.whoAmI)
+            ].Calamity().stealthStrike = player.Calamity().StealthStrikeAvailable();
 
             return true;
         }

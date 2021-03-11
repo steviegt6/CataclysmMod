@@ -42,10 +42,11 @@ namespace CataclysmMod.Common.MonoMod.ILEdits
 
             // Insert our own method call
             c.EmitDelegate<Action<int>>(whoAmI =>
-            {
-                Player player = Main.player[whoAmI];
-                NPC.NewNPC((int)player.position.X, (int)player.position.Y, NPCID.Steampunker);
-            });
+                                        {
+                                            Player player = Main.player[whoAmI];
+                                            NPC.NewNPC((int) player.position.X, (int) player.position.Y,
+                                                NPCID.Steampunker);
+                                        });
 
             ILLogger.LogILCompletion("CalamityMod.World.CalamityWorld.PostUpdate");
         }

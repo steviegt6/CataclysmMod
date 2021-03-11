@@ -13,7 +13,8 @@ namespace CataclysmMod.Common.MonoMod.ILEdits
 
         public override void Unload() => TorrentialTear.UseItem -= RemoveDeathModeCrap;
 
-        private static bool RemoveDeathModeCrap(TorrentialTear.orig_UseItem orig, CalamityMod.Items.Tools.ClimateChange.TorrentialTear self, object player)
+        private static bool RemoveDeathModeCrap(TorrentialTear.orig_UseItem orig,
+            CalamityMod.Items.Tools.ClimateChange.TorrentialTear self, object player)
         {
             if (!CataclysmConfig.Instance.torrentialTearNerfRemoval)
                 return orig(self, player);

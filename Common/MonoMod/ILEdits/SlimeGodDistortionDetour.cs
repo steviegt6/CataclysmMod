@@ -15,7 +15,8 @@ namespace CataclysmMod.Common.MonoMod.ILEdits
 
         public override void Unload() => SlimeGodCore.OnHitPlayer -= NewOnHitBuff;
 
-        private static void NewOnHitBuff(SlimeGodCore.orig_OnHitPlayer orig, CalamityMod.NPCs.SlimeGod.SlimeGodCore self, object player, int damage, bool crit)
+        private static void NewOnHitBuff(SlimeGodCore.orig_OnHitPlayer orig,
+            CalamityMod.NPCs.SlimeGod.SlimeGodCore self, object player, int damage, bool crit)
         {
             if (player is Player vanillaPlayer && CataclysmConfig.Instance.slimeGodSlimedDebuff)
                 vanillaPlayer.AddBuff(BuffID.Slimed, 60 * 2);
