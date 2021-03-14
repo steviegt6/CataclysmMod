@@ -6,12 +6,6 @@ namespace CataclysmMod.Content.GlobalModifications.Items
 {
     public class AmmoConsumptionAdjustmentItem : GlobalItem
     {
-        public override bool ConsumeAmmo(Item item, Player player)
-        {
-            if (item.type == ModContent.ItemType<Infinity>())
-                return false;
-
-            return base.ConsumeAmmo(item, player);
-        }
+        public override bool ConsumeAmmo(Item item, Player player) => item.type != ModContent.ItemType<Infinity>() && base.ConsumeAmmo(item, player);
     }
 }
