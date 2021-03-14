@@ -1,5 +1,4 @@
 ﻿using CalamityMod.Items.LoreItems;
-using CataclysmMod.Content.Configs;
 using Terraria;
 using Terraria.ModLoader;
 
@@ -13,9 +12,6 @@ namespace CataclysmMod.Content.GlobalModifications.Players
 
         public override void PostUpdateEquips()
         {
-            if (!CataclysmConfig.Instance.loreItemsInPiggyBank)
-                return;
-
             foreach (Item item in player.bank.item)
                 if (item.modItem is LoreItem)
                 {

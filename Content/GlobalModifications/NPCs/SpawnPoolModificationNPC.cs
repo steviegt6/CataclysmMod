@@ -11,7 +11,7 @@ namespace CataclysmMod.Content.GlobalModifications.NPCs
         {
             foreach (int npc in pool.Keys)
                 if (npc == ModContent.NPCType<AngryDog>())
-                    pool[npc] = 0.024f;
+                    pool[npc] = 0.024f; // twice the normal chance
 
             if (!pool.ContainsKey(NPCID.AnomuraFungus) && spawnInfo.player.ZoneGlowshroom)
                 pool.Add(NPCID.AnomuraFungus, 0.1f);
