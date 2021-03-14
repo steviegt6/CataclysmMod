@@ -81,6 +81,10 @@ namespace CataclysmMod.Content.GlobalModifications.Items
 
             if (item.type == ModContent.ItemType<RampartofDeities>() || item.type == ModContent.ItemType<DeificAmulet>())
                 tooltips.Add(new TooltipLine(mod, $"{mod.Name}:BandRegen", "Provides life regeneration"));
+
+            if (item.type == ModContent.ItemType<Sponge>() || item.type == ModContent.ItemType<TheAbsorber>())
+                tooltips.Add(new TooltipLine(mod, $"{mod.Name}:RoverDrive", "Activates a protective shield that grants 10 defense for 10 seconds" +
+                                                                            "\nThe shield then dissipates and recharges for 20 seconds before being reactivated"));
         }
     }
 }
