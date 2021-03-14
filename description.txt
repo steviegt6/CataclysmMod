@@ -20,6 +20,7 @@ Current features:
 - Voodoo doll max stack increased to 20.
 - Obsidian Skull + upgrades provide heat immunity.
 - Infinity no longer consumes ammo.
+- Rampart of Deities and Deific Amulet have the same life regenration as a Band of Regeneration.
 
 * NPC changes:
 - Anomura Fungus can now spawn in underground mushroom biomes pre-HM.
