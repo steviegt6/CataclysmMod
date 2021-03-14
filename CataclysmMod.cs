@@ -1,12 +1,16 @@
+using System;
 using CataclysmMod.Common;
-using CataclysmMod.Content.Recipes;
+using CataclysmMod.Common.Exceptions;
+using CataclysmMod.Content.Configs;
+using CataclysmMod.Content.GlobalModifications.Items;
+using CataclysmMod.Content.GlobalModifications.Projectiles;
 using Terraria.ModLoader;
 
 namespace CataclysmMod
 {
     public class CataclysmMod : Mod
     {
-        public static CataclysmMod Instance { get; private set; }
+        public static readonly Version ExpectedCalamityVersion = new Version(1, 4, 5, 7);
 
         public CataclysmMod()
         {
@@ -21,22 +25,29 @@ namespace CataclysmMod
             };
         }
 
+        public static CataclysmMod Instance { get; private set; }
+
         public override void Load()
         {
+            CalamityVersionException.ThrowErrorOnIncorrectVersion(ModLoader.GetMod("CalamityMod"),
+                ExpectedCalamityVersion);
             ILManager.Load();
-            RecipeManager.Load();
+            SummonRotationAdjustmentsGlobalProj.Initialize();
+            AbyssalMinesExplosionGlobalProj.Initialize();
+            ArmorSetDatabase.Initialize();
         }
 
         public override void Unload()
         {
             ILManager.Unload();
-            RecipeManager.Unload();
+            CataclysmConfig.Instance = null;
+            Instance = null;
         }
 
-        public override void AddRecipes() => RecipeManager.AddRecipes();
+        public override void AddRecipes() => RecipeHandler.AddRecipes();
 
-        public override void PostAddRecipes() => RecipeManager.ModifyRecipes();
+        public override void PostAddRecipes() => RecipeHandler.ModifyRecipes();
 
-        public override void AddRecipeGroups() => RecipeManager.AddRecipeGroups();
+        public override void AddRecipeGroups() => RecipeHandler.AddRecipeGroups();
     }
 }
