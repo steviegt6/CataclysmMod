@@ -1,7 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using CalamityMod.Projectiles.Summon;
-using CataclysmMod.Content.Configs;
 using Microsoft.Xna.Framework;
 using Terraria;
 using Terraria.ModLoader;
@@ -38,8 +37,7 @@ namespace CataclysmMod.Content.GlobalModifications.Projectiles
 
         public override bool PreAI(Projectile projectile)
         {
-            if (CataclysmConfig.Instance.smootherMinionRotation &&
-                SummonRotationAdjustments.ContainsKey(projectile.type))
+            if (SummonRotationAdjustments.ContainsKey(projectile.type))
                 _savedRotation = projectile.rotation;
 
             return base.PreAI(projectile);
@@ -49,8 +47,7 @@ namespace CataclysmMod.Content.GlobalModifications.Projectiles
         {
             Player player = Main.player[projectile.owner];
 
-            if (!CataclysmConfig.Instance.smootherMinionRotation ||
-                !SummonRotationAdjustments.ContainsKey(projectile.type))
+            if (!SummonRotationAdjustments.ContainsKey(projectile.type))
                 return;
 
             RotationData data = SummonRotationAdjustments[projectile.type];

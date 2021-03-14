@@ -2,7 +2,6 @@
 using System.Linq;
 using CalamityMod.NPCs.SlimeGod;
 using CalamityMod.Projectiles.Boss;
-using CataclysmMod.Content.Configs;
 using Terraria;
 using Terraria.ModLoader;
 
@@ -32,7 +31,7 @@ namespace CataclysmMod.Content.GlobalModifications.Projectiles
 
         public override bool PreAI(Projectile projectile)
         {
-            if (!CataclysmConfig.Instance.abyssMinesExplode || !AbyssMines.Contains(projectile.type))
+            if (!AbyssMines.Contains(projectile.type))
                 return base.PreAI(projectile);
 
             bool slimeGodAlive = false;

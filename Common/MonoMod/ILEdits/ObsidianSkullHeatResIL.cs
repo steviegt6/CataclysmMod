@@ -2,7 +2,6 @@
 using System.Reflection;
 using CalamityMod.CalPlayer;
 using CataclysmMod.Common.Utilities;
-using CataclysmMod.Content.Configs;
 using CataclysmMod.Content.GlobalModifications.Players;
 using Mono.Cecil.Cil;
 using MonoMod.Cil;
@@ -51,9 +50,7 @@ namespace CataclysmMod.Common.MonoMod.ILEdits
             // ReSharper disable once RedundantAssignment
             c.EmitDelegate<Action<bool, Player>>((funnyLavaHeatRes, player) =>
                                                  {
-                                                     if (player.GetModPlayer<CalamityCompatPlayer>()
-                                                             .playerHasObsidianSkullOrTree &&
-                                                         CataclysmConfig.Instance.obsidianSkullHeatImmunity)
+                                                     if (player.GetModPlayer<CalamityCompatPlayer>().playerHasObsidianSkullOrTree)
                                                          // ReSharper disable once RedundantAssignment
                                                          funnyLavaHeatRes = true;
                                                  });

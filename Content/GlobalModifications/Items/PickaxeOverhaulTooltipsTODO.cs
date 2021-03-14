@@ -2,7 +2,6 @@
 using System.Linq;
 using CalamityMod.Items.Tools;
 using CataclysmMod.Common.Utilities;
-using CataclysmMod.Content.Configs;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -15,9 +14,6 @@ namespace CataclysmMod.Content.GlobalModifications.Items
         public override void ModifyTooltips(Item item, List<TooltipLine> tooltips)
         {
             TooltipLine tooltip = tooltips.FirstOrDefault(x => x.Name == "Tooltip0" && x.mod == "Terraria");
-
-            if (!CataclysmConfig.Instance.pickaxeTooltips)
-                return;
 
             if (tooltip != null)
             {

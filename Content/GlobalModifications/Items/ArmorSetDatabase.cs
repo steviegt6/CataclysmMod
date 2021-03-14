@@ -1,6 +1,5 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
-using CataclysmMod.Content.Configs;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -33,12 +32,8 @@ namespace CataclysmMod.Content.GlobalModifications.Items
             switch (set)
             {
                 case "SpiderArmor":
-                    if (CataclysmConfig.Instance.spiderArmorBuff)
-                    {
-                        player.setBonus += "\nYou can stick to walls like a spider";
-                        player.spikedBoots = 3;
-                    }
-
+                    player.setBonus += "\nYou can stick to walls like a spider";
+                    player.spikedBoots = 3;
                     break;
             }
         }
