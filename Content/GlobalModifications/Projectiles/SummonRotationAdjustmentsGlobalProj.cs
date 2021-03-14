@@ -10,21 +10,6 @@ namespace CataclysmMod.Content.GlobalModifications.Projectiles
 {
     public class SummonRotationAdjustmentsGlobalProj : GlobalProjectile
     {
-        public readonly struct RotationData
-        {
-            public readonly float rotationAmount;
-            public readonly float rotationAdjustment;
-            public readonly int spriteDirectionOverride;
-
-            public RotationData(float rotationAmount, float rotationAdjustment = MathHelper.PiOver2,
-                int spriteDirectionOverride = 0)
-            {
-                this.rotationAmount = rotationAmount;
-                this.rotationAdjustment = rotationAdjustment;
-                this.spriteDirectionOverride = spriteDirectionOverride;
-            }
-        }
-
         public static Dictionary<int, RotationData> SummonRotationAdjustments;
 
         private float _savedRotation;
@@ -101,6 +86,21 @@ namespace CataclysmMod.Content.GlobalModifications.Projectiles
 
                 projectile.rotation =
                     projectile.rotation.AngleTowards(wantedRotation.ToRotation() - MathHelper.PiOver2, 0.2f);
+            }
+        }
+
+        public readonly struct RotationData
+        {
+            public readonly float rotationAmount;
+            public readonly float rotationAdjustment;
+            public readonly int spriteDirectionOverride;
+
+            public RotationData(float rotationAmount, float rotationAdjustment = MathHelper.PiOver2,
+                int spriteDirectionOverride = 0)
+            {
+                this.rotationAmount = rotationAmount;
+                this.rotationAdjustment = rotationAdjustment;
+                this.spriteDirectionOverride = spriteDirectionOverride;
             }
         }
     }

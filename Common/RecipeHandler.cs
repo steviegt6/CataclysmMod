@@ -11,9 +11,7 @@ namespace CataclysmMod.Common
 {
     public static class RecipeHandler
     {
-        public static void AddRecipes()
-        {
-        }
+        public static void AddRecipes() { }
 
         public static void ModifyRecipes()
         {
@@ -49,8 +47,6 @@ namespace CataclysmMod.Common
             }
         }
 
-        public static void AddRecipeGroups()
-        {
-        }
+        public static void AddRecipeGroups() { }
     }
 }

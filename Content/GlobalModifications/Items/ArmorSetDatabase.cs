@@ -9,22 +9,6 @@ namespace CataclysmMod.Content.GlobalModifications.Items
 {
     public class ArmorSetDatabase : GlobalItem
     {
-        public readonly struct ArmorSetData
-        {
-            public readonly int headType;
-            public readonly int bodyType;
-            public readonly int legsType;
-            public readonly string armorSetID;
-
-            public ArmorSetData(int headType, int bodyType, int legsType, string armorSetID)
-            {
-                this.headType = headType;
-                this.bodyType = bodyType;
-                this.legsType = legsType;
-                this.armorSetID = armorSetID;
-            }
-        }
-
         public static List<ArmorSetData> ArmorSets;
 
         internal static void Initialize()
@@ -54,7 +38,24 @@ namespace CataclysmMod.Content.GlobalModifications.Items
                         player.setBonus += "\nYou can stick to walls like a spider";
                         player.spikedBoots = 3;
                     }
+
                     break;
+            }
+        }
+
+        public readonly struct ArmorSetData
+        {
+            public readonly int headType;
+            public readonly int bodyType;
+            public readonly int legsType;
+            public readonly string armorSetID;
+
+            public ArmorSetData(int headType, int bodyType, int legsType, string armorSetID)
+            {
+                this.headType = headType;
+                this.bodyType = bodyType;
+                this.legsType = legsType;
+                this.armorSetID = armorSetID;
             }
         }
     }

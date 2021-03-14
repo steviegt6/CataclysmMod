@@ -5,10 +5,11 @@ namespace CataclysmMod.Common.Exceptions
 {
     internal sealed class CalamityVersionException : Exception
     {
-        internal enum ExceptionType
+        internal CalamityVersionException(Version calamityVersion, Version expectedVersion, ExceptionType outdatedType)
         {
-            OutdatedCalamity,
-            OutdatedCataclysm
+            CalamityVersion = calamityVersion;
+            ExpectedVersion = expectedVersion;
+            OutdatedType = outdatedType;
         }
 
         public Version CalamityVersion { get; }
@@ -16,13 +17,6 @@ namespace CataclysmMod.Common.Exceptions
         public Version ExpectedVersion { get; }
 
         public ExceptionType OutdatedType { get; }
-
-        internal CalamityVersionException(Version calamityVersion, Version expectedVersion, ExceptionType outdatedType)
-        {
-            CalamityVersion = calamityVersion;
-            ExpectedVersion = expectedVersion;
-            OutdatedType = outdatedType;
-        }
 
         public override string Message
         {
@@ -77,6 +71,12 @@ namespace CataclysmMod.Common.Exceptions
             // Throw an error if the version of Calamity is more recent than what was expected
             if (CataclysmMod.ExpectedCalamityVersion < calamityVersion)
                 throw new CalamityVersionException(calamityVersion, null, ExceptionType.OutdatedCataclysm);
+        }
+
+        internal enum ExceptionType
+        {
+            OutdatedCalamity,
+            OutdatedCataclysm
         }
     }
 }
