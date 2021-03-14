@@ -8,7 +8,7 @@ using Terraria.ModLoader;
 
 namespace CataclysmMod.Content.GlobalModifications.Items
 {
-    public class PickaxeOverhaulTooltipsTODO : GlobalItem
+    public class PickaxeTooltipsAdditionsItem : GlobalItem
     {
         private readonly struct PickaxeTooltipReplacementData
         {
