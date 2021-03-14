@@ -1,8 +1,5 @@
 Addon to Calamity.
 
-1.0.1.0 doesn't add much in terms of visible changes but it does some stuff internally.
-Report any bugs and make suggestions in the Discord.
-
 Current features:
 * General changes:
 - Cavern shrines now use gray bricks, stone, and a gold chest (as opposed to obsidian stuff).
@@ -16,7 +13,6 @@ Current features:
 - Spider armor gives you the effect of climbing claws.
 - Basher now has 1.2x scale.
 - Pickaxes now have consistent tooltips for what ores they can mine.
-- Fungal Clump now deals true damage and can be affected by all damage modifiers.
 - Throwing Bricks are crafted at work benches instead of anvils now.
 - Halley's Inferno uses a rifle scope instead of sniper scope.
 - Removed Death mode changes to the Torrential Tear.
@@ -27,12 +23,11 @@ Current features:
 
 * NPC changes:
 - Anomura Fungus can now spawn in underground mushroom biomes pre-HM.
-- Steampunker no longer announced that it "has awoken" when first spawning.
 - The Wizard now sells Guide Voodoo Dolls.
 - Boost Cryophobia drop chance and boost Angry Dog spawn rate.
 - Slime God inflicts Slimed instead of Distorted.
 - You can toggle an option to see whether an NPC is organic or inorganic.
-- Travelling Merchant has a 10% chance of dropping a Pulse Bow on death.
+- Travelling Merchant has a 10% chance of dropping a Pulse Bow on death post-Plantera.
 - Various NPCs drop shark fins.
 
 * Projectile changes:

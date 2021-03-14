@@ -35,7 +35,7 @@ namespace CataclysmMod
             SummonRotationAdjustmentsGlobalProj.Initialize();
             AbyssalMinesExplosionGlobalProj.Initialize();
             ArmorSetDatabase.Initialize();
-            PickaxeTooltipsAdditionsItem.Initialize();
+            TooltipModificationsItem.Initialize();
         }
 
         public override void Unload()

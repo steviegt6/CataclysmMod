@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using CalamityMod.Items.Accessories;
 using CalamityMod.Items.Tools;
 using CataclysmMod.Common.Utilities;
 using Terraria;
@@ -8,7 +9,7 @@ using Terraria.ModLoader;
 
 namespace CataclysmMod.Content.GlobalModifications.Items
 {
-    public class PickaxeTooltipsAdditionsItem : GlobalItem
+    public class TooltipModificationsItem : GlobalItem
     {
         private readonly struct PickaxeTooltipReplacementData
         {
@@ -77,6 +78,9 @@ namespace CataclysmMod.Content.GlobalModifications.Items
                     tooltips.Add(new TooltipLine(mod, $"{mod.Name}:PickExodium", "Capable of mining Exodium Clusters"));
                     break;
             }
+
+            if (item.type == ModContent.ItemType<RampartofDeities>() || item.type == ModContent.ItemType<DeificAmulet>())
+                tooltips.Add(new TooltipLine(mod, $"{mod.Name}:BandRegen", "Provides life regeneration"));
         }
     }
 }

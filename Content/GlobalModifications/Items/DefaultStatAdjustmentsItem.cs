@@ -1,4 +1,5 @@
-﻿using CalamityMod.Items.Potions;
+﻿using CalamityMod.Items.Accessories;
+using CalamityMod.Items.Potions;
 using CalamityMod.Items.Weapons.Melee;
 using CalamityMod.Items.Weapons.Ranged;
 using Terraria;
@@ -40,6 +41,9 @@ namespace CataclysmMod.Content.GlobalModifications.Items
 
             if (item.type == ModContent.ItemType<Infinity>())
                 item.damage = 25;
+
+            if (item.type == ModContent.ItemType<RampartofDeities>() || item.type == ModContent.ItemType<DeificAmulet>())
+                item.lifeRegen += 2;
         }
     }
 }
