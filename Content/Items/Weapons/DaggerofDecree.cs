@@ -27,7 +27,6 @@ namespace CataclysmMod.Content.Items.Weapons
         {
             item.width = 24;
             item.height = 34;
-
             item.damage = 26;
             item.noMelee = item.noUseGraphic = true;
             item.useAnimation = item.useTime = 18;
@@ -48,42 +47,33 @@ namespace CataclysmMod.Content.Items.Weapons
         {
             if (player.Calamity().StealthStrikeAvailable())
             {
-                Projectile normDagger = Projectile.NewProjectileDirect(position,
-                    new Vector2(speedX, speedY) * (player.Calamity().StealthStrikeAvailable()
-                        ? 1.25f
-                        : 1f),
-                    type,
-                    damage,
-                    knockBack,
-                    player.whoAmI);
+                Vector2 velocity = new Vector2(speedX, speedY);
+                velocity *= player.Calamity().StealthStrikeAvailable() ? 1.25f : 1f;
+
+                Projectile normDagger =
+                    Projectile.NewProjectileDirect(position, velocity, type, damage, knockBack, player.whoAmI);
                 normDagger.Calamity().stealthStrike = player.Calamity().StealthStrikeAvailable();
                 normDagger.usesLocalNPCImmunity = true;
                 normDagger.penetrate += player.Calamity().StealthStrikeAvailable()
                     ? 1
                     : 0;
 
-                Projectile specDagger = Projectile.NewProjectileDirect(position,
-                    new Vector2(speedX, speedY).RotatedBy(MathHelper.ToRadians(15)),
-                    ModContent.ProjectileType<DecreeDaggerProj>(),
-                    damage,
-                    knockBack,
-                    player.whoAmI);
+                velocity = new Vector2(speedX, speedY);
+                velocity = velocity.RotatedBy(MathHelper.ToRadians(15));
+
+                Projectile specDagger = Projectile.NewProjectileDirect(position, velocity,
+                    ModContent.ProjectileType<DecreeDaggerProj>(), damage, knockBack, player.whoAmI);
                 specDagger.Calamity().stealthStrike = player.Calamity().StealthStrikeAvailable();
                 specDagger.usesLocalNPCImmunity = true;
-
                 return false;
             }
 
-            Main.projectile[
-                Projectile.NewProjectile(
-                    position, 
-                    new Vector2(speedX, speedY).RotatedBy(MathHelper.ToRadians(15)),
-                    ModContent.ProjectileType<DecreeDaggerProj>(),
-                    damage, 
-                    knockBack, 
-                    player.whoAmI)
-            ].Calamity().stealthStrike = player.Calamity().StealthStrikeAvailable();
+            Vector2 newVelocity = new Vector2(speedX, speedY);
+            newVelocity = newVelocity.RotatedBy(MathHelper.ToRadians(15));
 
+            Main.projectile[
+                Projectile.NewProjectile(position, newVelocity, ModContent.ProjectileType<DecreeDaggerProj>(), damage,
+                    knockBack, player.whoAmI)].Calamity().stealthStrike = player.Calamity().StealthStrikeAvailable();
             return true;
         }
     }

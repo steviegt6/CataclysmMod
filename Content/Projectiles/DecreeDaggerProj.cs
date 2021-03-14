@@ -23,30 +23,36 @@ namespace CataclysmMod.Content.Projectiles
         public override void SetDefaults()
         {
             projectile.width = projectile.height = 12;
-
             projectile.friendly = true;
             projectile.penetrate = 5;
             projectile.aiStyle = 2;
             projectile.timeLeft = 600;
             projectile.Calamity().rogue = true;
             projectile.localNPCHitCooldown = 10;
-
             aiType = 48;
         }
 
         public override void AI()
         {
             if (Main.rand.NextBool(4))
-                Dust.NewDust(projectile.position + projectile.velocity, projectile.width, projectile.height, 75,
-                    projectile.velocity.X * 0.5f, projectile.velocity.Y * 0.5f);
+            {
+                Vector2 spawnPos = projectile.position + projectile.velocity;
+                Vector2 spawnVelocity = new Vector2(projectile.velocity.X * 0.5f,
+                    projectile.velocity.Y * 0.5f);
+
+                Dust.NewDust(spawnPos, projectile.width, projectile.height, 75, spawnVelocity.X, spawnVelocity.Y);
+            }
 
             if (projectile.Calamity().stealthStrike && projectile.timeLeft % 8 == 0 &&
                 projectile.owner == Main.myPlayer)
             {
-                Projectile proj = Projectile.NewProjectileDirect(projectile.Center, new Vector2(-14f, 14f),
-                    Main.rand.NextBool(2) ? ProjectileID.CursedFlameFriendly : ProjectileID.CursedDartFlame,
-                    (int) (projectile.damage * 0.5f), projectile.knockBack * 0.5f, projectile.owner);
+                Vector2 velocity = new Vector2(-14f, 14f);
+                int type = Main.rand.NextBool(2)
+                    ? ProjectileID.CursedFlameFriendly
+                    : ProjectileID.CursedDartFlame;
 
+                Projectile proj = Projectile.NewProjectileDirect(projectile.Center, velocity, type,
+                    (int) (projectile.damage * 0.5f), projectile.knockBack * 0.5f, projectile.owner);
                 proj.Calamity().stealthStrike = true;
                 proj.usesLocalNPCImmunity = true;
                 proj.localNPCHitCooldown = 10;
@@ -55,17 +61,17 @@ namespace CataclysmMod.Content.Projectiles
             Vector2 center = projectile.Center;
             bool doSpecial = false;
 
-            for (int i = 0; i < 200; i++)
-                if (Main.npc[i].CanBeChasedBy(projectile))
+            foreach (NPC npc in Main.npc)
+                if (npc.CanBeChasedBy(projectile))
                 {
-                    float offset = Main.npc[i].width / 2f + Main.npc[i].height / 2f;
+                    float offset = npc.width / 2f + npc.height / 2f;
                     bool special = projectile.Calamity().stealthStrike ||
-                                   Collision.CanHit(projectile.Center, 1, 1, Main.npc[i].Center, 1, 1);
+                                   Collision.CanHit(projectile.Center, 1, 1, npc.Center, 1, 1);
 
-                    if (!(Vector2.Distance(Main.npc[i].Center, projectile.Center) < offset + offset) || !special)
+                    if (!(Vector2.Distance(npc.Center, projectile.Center) < offset + offset) || !special)
                         continue;
 
-                    center = Main.npc[i].Center;
+                    center = npc.Center;
                     doSpecial = true;
                     break;
                 }
@@ -86,22 +92,30 @@ namespace CataclysmMod.Content.Projectiles
         public override void Kill(int timeLeft)
         {
             for (int i = 0; i < 10; i++)
-                Dust.NewDust(projectile.position + projectile.velocity, projectile.width, projectile.height, 75,
-                    projectile.oldVelocity.X * 0.5f, projectile.oldVelocity.Y * 0.5f);
+            {
+                Vector2 spawnPos = projectile.position + projectile.velocity;
+                Vector2 spawnVelocity = new Vector2(projectile.oldVelocity.X * 0.5f,
+                    projectile.oldVelocity.Y * 0.5f);
+
+                Dust.NewDust(spawnPos, projectile.width, projectile.height, 75, spawnVelocity.X, spawnVelocity.Y);
+            }
 
             if (!projectile.Calamity().stealthStrike)
                 return;
 
             for (int i = 0; i < 2; i++)
-                Projectile.NewProjectile(projectile.position,
-                    new Vector2(Main.rand.Next(1, 5) * (Main.rand.NextBool()
-                            ? 1
-                            : -1),
-                        Main.rand.Next(1, 5) * (Main.rand.NextBool()
-                            ? 1
-                            : -1)),
+            {
+                Vector2 velocity = new Vector2(Main.rand.Next(1, 5) * (Main.rand.NextBool()
+                        ? 1
+                        : -1),
+                    Main.rand.Next(1, 5) * (Main.rand.NextBool()
+                        ? 1
+                        : -1));
+
+                Projectile.NewProjectile(projectile.position, velocity,
                     ModContent.ProjectileType<DecreeDaggerSplitProj>(), projectile.damage, projectile.knockBack,
                     projectile.owner);
+            }
         }
 
         public override bool OnTileCollide(Vector2 oldVelocity)
@@ -109,17 +123,15 @@ namespace CataclysmMod.Content.Projectiles
             projectile.penetrate--;
 
             if (projectile.penetrate <= 0)
-            {
                 projectile.Kill();
-            }
             else
             {
                 projectile.ai[0] += 0.1f;
 
-                if (Math.Abs(projectile.velocity.X - oldVelocity.X) > 0f)
+                if (Math.Abs(projectile.velocity.X - oldVelocity.X) > 0.1f)
                     projectile.velocity.X = 0f - oldVelocity.X;
 
-                if (Math.Abs(projectile.velocity.Y - oldVelocity.Y) > 0f)
+                if (Math.Abs(projectile.velocity.Y - oldVelocity.Y) > 0.1f)
                     projectile.velocity.Y = 0f - oldVelocity.Y;
             }
 
@@ -129,9 +141,11 @@ namespace CataclysmMod.Content.Projectiles
         public override bool PreDraw(SpriteBatch spriteBatch, Color lightColor)
         {
             Texture2D projTex = Main.projectileTexture[projectile.type];
-            spriteBatch.Draw(projTex, projectile.Center - Main.screenPosition, null, projectile.GetAlpha(lightColor),
-                projectile.rotation, projTex.Size() / 2f, projectile.scale, SpriteEffects.None, 0f);
+            Vector2 drawPos = projectile.Center - Main.screenPosition;
+            Vector2 drawOrigin = projTex.Size() / 2f;
 
+            spriteBatch.Draw(projTex, drawPos, null, projectile.GetAlpha(lightColor), projectile.rotation, drawOrigin,
+                projectile.scale, SpriteEffects.None, 0f);
             return false;
         }
 

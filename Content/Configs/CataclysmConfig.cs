@@ -39,7 +39,7 @@ namespace CataclysmMod.Content.Configs
 
         [Label("Specify Whether an NPC is Organic or Inorganic")]
         [Tooltip("Display text indicating if an NPC is organic or not under their healthbar.")]
-        [DefaultValue(true)]
+        [DefaultValue(false)]
         public bool displayOrganicTextNPCs;
 
         [Label("Drataliornus Arrows")]
@@ -49,9 +49,6 @@ namespace CataclysmMod.Content.Configs
 
         [Label("Fungal Clump Emits Light")] [DefaultValue(true)]
         public bool fungalClumpEmitsLight;
-
-        [Label("Fungal Clump Deals True Damage")] [ReloadRequired] [DefaultValue(true)]
-        public bool fungalClumpTrueDamage;
 
         [Label("Grand Shark Repellent")]
         [Tooltip("Add the Grand Shark Repellent, an accessory which stands the Grand Sand Shark from spawning.")]

@@ -24,13 +24,11 @@ namespace CataclysmMod.Content.Projectiles
         public override void SetDefaults()
         {
             projectile.width = projectile.height = 12;
-
             projectile.friendly = true;
             projectile.aiStyle = 2;
             projectile.timeLeft = 600;
             projectile.localNPCHitCooldown = 10;
             aiType = 48;
-
             projectile.Calamity().rogue = true;
         }
 
@@ -43,30 +41,21 @@ namespace CataclysmMod.Content.Projectiles
                 Vector2 spawnPos = projectile.position + projectile.velocity;
                 Vector2 spawnSpeed = new Vector2(projectile.velocity.X * 0.5f, projectile.velocity.Y * 0.5f);
 
-                Dust.NewDust(spawnPos,
-                    projectile.width, 
-                    projectile.height, 
-                    75,
-                    spawnSpeed.X,
-                    spawnSpeed.Y);
+                Dust.NewDust(spawnPos, projectile.width, projectile.height, 75, spawnSpeed.X, spawnSpeed.Y);
             }
 
-            if (projectile.Calamity().stealthStrike
-                && projectile.timeLeft % 8 == 0
-                && projectile.owner == Main.myPlayer)
+            if (projectile.Calamity().stealthStrike && projectile.timeLeft % 8 == 0 &&
+                projectile.owner == Main.myPlayer)
             {
-                Projectile stealthStrikeExtra = Projectile.NewProjectileDirect(projectile.Center,
-                    new Vector2(-14f, 14f), 
-                    Main.rand.NextBool(2) 
-                        ? ProjectileID.CursedFlameFriendly 
-                        : ProjectileID.CursedDartFlame, 
-                    (int)(projectile.damage * 0.5f), 
-                    projectile.knockBack * 0.5f, 
-                    projectile.owner);
+                Vector2 velocity = new Vector2(-14f, 14f);
+                int type = Main.rand.NextBool(2)
+                    ? ProjectileID.CursedFlameFriendly
+                    : ProjectileID.CursedDartFlame;
 
+                Projectile stealthStrikeExtra = Projectile.NewProjectileDirect(projectile.Center, velocity, type,
+                    (int) (projectile.damage * 0.5f), projectile.knockBack * 0.5f, projectile.owner);
                 stealthStrikeExtra.usesLocalNPCImmunity = true;
                 stealthStrikeExtra.localNPCHitCooldown = 10;
-
                 projectile.Calamity().forceRogue = true;
             }
 
@@ -74,24 +63,17 @@ namespace CataclysmMod.Content.Projectiles
             bool doSpecial = false;
 
             foreach (NPC npc in Main.npc)
-                if (npc.CanBeChasedBy(projectile)
-                    && splitTime >= 120)
+                if (npc.CanBeChasedBy(projectile) && splitTime >= 120)
                 {
                     float offset = npc.width / 2f + npc.height / 2f;
-                    bool special = projectile.Calamity().stealthStrike
-                                   || Collision.CanHit(projectile.Center, 
-                                       1, 
-                                       1, 
-                                       npc.Center, 
-                                       1, 
-                                       1);
+                    bool special = projectile.Calamity().stealthStrike ||
+                                   Collision.CanHit(projectile.Center, 1, 1, npc.Center, 1, 1);
 
                     if (!(Vector2.Distance(npc.Center, projectile.Center) < offset + offset) || !special)
                         continue;
 
                     center = npc.Center;
                     doSpecial = true;
-
                     break;
                 }
 
@@ -115,12 +97,7 @@ namespace CataclysmMod.Content.Projectiles
                 Vector2 spawnPos = projectile.position + projectile.velocity;
                 Vector2 spawnSpeed = new Vector2(projectile.oldVelocity.X * 0.5f, projectile.oldVelocity.Y * 0.5f);
 
-                Dust.NewDust(spawnPos,
-                    projectile.width, 
-                    projectile.height, 
-                    75,
-                    spawnSpeed.X,
-                    spawnSpeed.Y);
+                Dust.NewDust(spawnPos, projectile.width, projectile.height, 75, spawnSpeed.X, spawnSpeed.Y);
             }
         }
 
@@ -132,16 +109,8 @@ namespace CataclysmMod.Content.Projectiles
             Vector2 drawPos = projectile.Center - Main.screenPosition;
             Vector2 drawOrigin = projTex.Size() / 2f;
 
-            spriteBatch.Draw(projTex,
-                drawPos, 
-                null, 
-                projectile.GetAlpha(lightColor),
-                projectile.rotation, 
-                drawOrigin,
-                projectile.scale,
-                SpriteEffects.None, 
-                0f);
-
+            spriteBatch.Draw(projTex, drawPos, null, projectile.GetAlpha(lightColor), projectile.rotation, drawOrigin,
+                projectile.scale, SpriteEffects.None, 0f);
             return false;
         }
 

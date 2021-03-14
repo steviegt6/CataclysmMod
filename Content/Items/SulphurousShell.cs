@@ -25,7 +25,6 @@ namespace CataclysmMod.Content.Items
         public override bool UseItem(Player player)
         {
             inUse = true;
-
             return true;
         }
 
@@ -43,9 +42,7 @@ namespace CataclysmMod.Content.Items
                                    Vector2.UnitY.RotatedBy(player.itemAnimation * (Math.PI * 2f) / 30f) *
                                    new Vector2(15f, 0f);
 
-                Dust wateryDust = Dust.NewDustPerfect(
-                    spawnPos, 
-                    DustID.BlueCrystalShard);
+                Dust wateryDust = Dust.NewDustPerfect(spawnPos, DustID.BlueCrystalShard);
                 wateryDust.velocity.Y = -4.5f;
                 wateryDust.velocity.X *= 1.5f;
                 wateryDust.scale = 0.8f;
@@ -63,6 +60,7 @@ namespace CataclysmMod.Content.Items
                 case NetmodeID.SinglePlayer:
                     TeleportSulphurousShell(player);
                     break;
+
                 case NetmodeID.MultiplayerClient when player.whoAmI == Main.myPlayer:
                     try
                     {
@@ -72,7 +70,8 @@ namespace CataclysmMod.Content.Items
                     {
                         Main.NewText(
                             "Exception thrown whilst attempting to teleport you to the Sulphurous Sea! Error has been logged.");
-                        CataclysmMod.Instance.Logger.Error("Error thrown whilst attempting to use the Sulphurous Shell.",
+                        CataclysmMod.Instance.Logger.Error(
+                            "Error thrown whilst attempting to use the Sulphurous Shell.",
                             e);
                     }
 
@@ -87,7 +86,9 @@ namespace CataclysmMod.Content.Items
         {
             Vector2 specialPos = Vector2.Zero;
             int abyssSide = -CalamityWorld.abyssSide.ToDirectionInt();
-            int startX = CalamityWorld.abyssSide ? 200 : Main.maxTilesX - 200;
+            int startX = CalamityWorld.abyssSide
+                ? 200
+                : Main.maxTilesX - 200;
             bool specialTeleport = true;
 
             if (!RequestSulphurousTeleportPosition(player, -abyssSide, startX, out Point landingPoint))
@@ -100,12 +101,12 @@ namespace CataclysmMod.Content.Items
             }
 
             if (specialTeleport)
-                specialPos = landingPoint.ToWorldCoordinates(8f, 16f) - new Vector2(player.width / 2, player.height);
+                specialPos = landingPoint.ToWorldCoordinates(8f,
+                    16f) - new Vector2(player.width / 2f, player.height);
 
             if (specialTeleport)
             {
                 player.Teleport(specialPos, 5);
-
                 player.velocity = Vector2.Zero;
 
                 if (Main.netMode != NetmodeID.Server)
@@ -132,10 +133,12 @@ namespace CataclysmMod.Content.Items
             out Point landingPoint)
         {
             landingPoint = default;
-
-            Point point = new Point(startX, 50);
-            Vector2 halfPlayer = new Vector2(player.width * 0.5f, player.height);
-            bool tileIsSloped = WorldGen.SolidOrSlopedTile(Main.tile[point.X, point.Y]);
+            Point point = new Point(startX,
+                50);
+            Vector2 halfPlayer = new Vector2(player.width * 0.5f,
+                player.height);
+            bool tileIsSloped = WorldGen.SolidOrSlopedTile(Main.tile[point.X,
+                point.Y]);
 
             int loop1 = 0;
             int loop2 = 0;
@@ -143,7 +146,6 @@ namespace CataclysmMod.Content.Items
             while (loop1 < 10000 && loop2 < 10000)
             {
                 loop1++;
-
                 Tile topTile = Main.tile[point.X, point.Y];
                 Tile bottomTile = Main.tile[point.X, point.Y + 1];
                 bool slopedOrLiquidTop = WorldGen.SolidOrSlopedTile(topTile) || topTile.liquid > 0;
@@ -156,7 +158,6 @@ namespace CataclysmMod.Content.Items
                         point.Y += 1;
                     else
                         point.Y += -1;
-
                     continue;
                 }
 
@@ -166,7 +167,6 @@ namespace CataclysmMod.Content.Items
                         point.Y += 1;
                     else
                         point.Y += -1;
-
                     continue;
                 }
 
@@ -211,7 +211,6 @@ namespace CataclysmMod.Content.Items
                 return false;
 
             landingPoint = point;
-
             return true;
         }
 
@@ -244,9 +243,11 @@ namespace CataclysmMod.Content.Items
                    vector;
         }
 
-        private static bool TileIsDangerous(int x, int y)
+        private static bool TileIsDangerous(int x,
+            int y)
         {
             Tile tile = Main.tile[x, y];
+
             if (tile.liquid > 0 && tile.lava())
                 return true;
 

@@ -2,6 +2,8 @@ using System;
 using CataclysmMod.Common;
 using CataclysmMod.Common.Exceptions;
 using CataclysmMod.Content.Configs;
+using CataclysmMod.Content.GlobalModifications.Items;
+using CataclysmMod.Content.GlobalModifications.Projectiles;
 using Terraria.ModLoader;
 
 namespace CataclysmMod
@@ -27,8 +29,12 @@ namespace CataclysmMod
 
         public override void Load()
         {
-            CalamityVersionException.ThrowErrorOnIncorrectVersion(ModLoader.GetMod("CalamityMod"), ExpectedCalamityVersion);
+            CalamityVersionException.ThrowErrorOnIncorrectVersion(ModLoader.GetMod("CalamityMod"),
+                ExpectedCalamityVersion);
             ILManager.Load();
+            SummonRotationAdjustmentsGlobalProj.Initialize();
+            AbyssalMinesExplosionGlobalProj.Initialize();
+            ArmorSetDatabase.Initialize();
         }
 
         public override void Unload()
