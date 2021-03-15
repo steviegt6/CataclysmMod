@@ -1,6 +1,6 @@
 displayName = Cataclysm (Calamity Addon)
 author = convicted tomatophile (Stevie)
-version = 1.2.0.0
+version = 1.0.2.0
 homepage = https://discord.com/invite/qrZ4Bpz
 modReferences = CalamityMod@1.4.5.7
 dllReferences = MMHOOK_CalamityMod_v1.4.5.7
