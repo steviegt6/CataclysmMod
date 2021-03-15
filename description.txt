@@ -31,6 +31,7 @@ Current features:
 - You can toggle an option to see whether an NPC is organic or inorganic.
 - Travelling Merchant has a 10% chance of dropping a Pulse Bow on death post-Plantera.
 - Various NPCs drop shark fins.
+- Mech bosses can drop small amounts of Dubious Plating and Mysterious Circuitry.
 
 * Projectile changes:
 - Ice Clasper, Corvid Harbringer, Herring Staff, Cinder Blossom Staff, and Calamari's Lament's minion rotations are smoother.

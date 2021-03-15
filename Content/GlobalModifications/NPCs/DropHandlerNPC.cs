@@ -1,5 +1,7 @@
 ﻿using CalamityMod;
+using CalamityMod.Items.Materials;
 using CalamityMod.Items.Weapons.Magic;
+using CalamityMod.NPCs;
 using CalamityMod.NPCs.Abyss;
 using CalamityMod.NPCs.Astral;
 using CalamityMod.NPCs.GreatSandShark;
@@ -15,6 +17,40 @@ namespace CataclysmMod.Content.GlobalModifications.NPCs
 {
     public class DropHandlerNPC : GlobalNPC
     {
+        public override bool PreNPCLoot(NPC npc)
+        {
+            switch (npc.type)
+            {
+                case NPCID.Spazmatism:
+                case NPCID.Retinazer:
+                case NPCID.TheDestroyer:
+                case NPCID.SkeletronPrime:
+                    bool canDropTwins = false;
+
+                    switch (npc.type)
+                    {
+                        case NPCID.Spazmatism:
+                            canDropTwins = !NPC.AnyNPCs(NPCID.Retinazer);
+                            break;
+
+                        case NPCID.Retinazer:
+                            canDropTwins = !NPC.AnyNPCs(NPCID.Spazmatism);
+                            break;
+                    }
+
+                    if ((npc.type == NPCID.Spazmatism || npc.type == NPCID.Retinazer) && !canDropTwins)
+                        break;
+
+                    DropHelper.DropItemCondition(npc, ModContent.ItemType<MysteriousCircuitry>(), false,
+                        !CalamityGlobalNPC.DraedonMayhem, 1, 7);
+                    DropHelper.DropItemCondition(npc, ModContent.ItemType<DubiousPlating>(), false,
+                        !CalamityGlobalNPC.DraedonMayhem, 1, 7);
+                    break;
+            }
+
+            return base.PreNPCLoot(npc);
+        }
+
         public override void NPCLoot(NPC npc)
         {
             switch (npc.type)
