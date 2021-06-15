@@ -1,5 +1,11 @@
 Addon to Calamity.
 
+1.0.3.0:
+* Exposed a lot of previously private or internal fields, properties, and methods to the public (for mod devs).
+* Large code clean-ups, MonoMod unification.
+* Fixed tooltip issues.
+* Fixed null-refs causing crashes from attempting to unload the mod early.
+
 Current features:
 * General changes:
 - Cavern shrines now use gray bricks, stone, and a gold chest (as opposed to obsidian stuff).
