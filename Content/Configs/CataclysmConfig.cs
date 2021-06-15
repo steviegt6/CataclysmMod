@@ -18,7 +18,7 @@ namespace CataclysmMod.Content.Configs
         [Tooltip("Cavern Shrine now uses gray bricks and stone instead of obsidian.")]
         [ReloadRequired]
         [DefaultValue(true)]
-        public bool cavernShrineChanges;
+        public bool CavernShrineChanges;
 
         // Item Changes
         [Header("Item Changes")]
@@ -26,24 +26,24 @@ namespace CataclysmMod.Content.Configs
         [Tooltip("Removes Torrential Tear's Death mode nerf as it's absolutely pointless and just hinders vision.")]
         [ReloadRequired]
         [DefaultValue(true)]
-        public bool torrentialTearNerfRemoval;
+        public bool TorrentialTearNerfRemoval;
 
         // NPC Changes
         [Header("NPC Changes")]
         [Label("Specify Whether an NPC is Organic or Inorganic")]
         [Tooltip("Display text indicating if an NPC is organic or not under their healthbar.")]
         [DefaultValue(false)]
-        public bool displayOrganicTextNPCs;
+        public bool DisplayOrganicTextNpCs;
 
         [Label("Slime God Inflicts Slimed Instead of Distorted")]
         [DefaultValue(true)]
-        public bool slimeGodSlimedDebuff;
+        public bool SlimeGodSlimedDebuff;
 
         // Projectile Changes
         [Header("Projectile Changes")]
         [Label("Drataliornus Arrows Pass Through Blocks")]
         [Tooltip("Drataliornus Arrows can now be shot through blocks.")]
         [DefaultValue(true)]
-        public bool drataliornusArrowsThroughBlocks;
+        public bool DrataliornusArrowsThroughBlocks;
     }
 }

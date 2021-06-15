@@ -9,7 +9,7 @@ namespace CataclysmMod.Content.GlobalModifications.Projectiles
     {
         public override void PostAI(Projectile projectile)
         {
-            if (CataclysmConfig.Instance.drataliornusArrowsThroughBlocks &&
+            if (CataclysmConfig.Instance.DrataliornusArrowsThroughBlocks &&
                 projectile.type == ModContent.ProjectileType<DrataliornusFlame>())
                 projectile.tileCollide = false;
         }

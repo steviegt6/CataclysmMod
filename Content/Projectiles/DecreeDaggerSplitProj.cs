@@ -9,7 +9,7 @@ namespace CataclysmMod.Content.Projectiles
 {
     public class DecreeDaggerSplitProj : ModProjectile
     {
-        public int splitTime;
+        public int SplitTime { get; set; }
 
         public override string Texture => "CalamityMod/Items/Weapons/Rogue/CursedDagger";
 
@@ -34,7 +34,7 @@ namespace CataclysmMod.Content.Projectiles
 
         public override void AI()
         {
-            splitTime++;
+            SplitTime++;
 
             if (Main.rand.NextBool(4))
             {
@@ -63,7 +63,7 @@ namespace CataclysmMod.Content.Projectiles
             bool doSpecial = false;
 
             foreach (NPC npc in Main.npc)
-                if (npc.CanBeChasedBy(projectile) && splitTime >= 120)
+                if (npc.CanBeChasedBy(projectile) && SplitTime >= 120)
                 {
                     float offset = npc.width / 2f + npc.height / 2f;
                     bool special = projectile.Calamity().stealthStrike ||

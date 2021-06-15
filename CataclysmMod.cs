@@ -10,7 +10,9 @@ namespace CataclysmMod
 {
     public class CataclysmMod : Mod
     {
-        public static readonly Version ExpectedCalamityVersion = new Version(1, 4, 5, 7);
+        public static Version ExpectedCalamityVersion => new Version(1, 4, 5, 7);
+
+        public static CataclysmMod Instance { get; private set; }
 
         public CataclysmMod()
         {
@@ -25,13 +27,11 @@ namespace CataclysmMod
             };
         }
 
-        public static CataclysmMod Instance { get; private set; }
-
         public override void Load()
         {
-            CalamityVersionException.ThrowErrorOnIncorrectVersion(ModLoader.GetMod("CalamityMod"),
-                ExpectedCalamityVersion);
-            ILManager.Load();
+            CalamityVersionException.ThrowErrorOnIncorrectVersion(ExpectedCalamityVersion);
+
+            ApplicableManager.Load();
             SummonRotationAdjustmentsGlobalProj.Initialize();
             AbyssalMinesExplosionGlobalProj.Initialize();
             ArmorSetDatabase.Initialize();
@@ -40,7 +40,7 @@ namespace CataclysmMod
 
         public override void Unload()
         {
-            ILManager.Unload();
+            ApplicableManager.Unload();
             CataclysmConfig.Instance = null;
             Instance = null;
         }

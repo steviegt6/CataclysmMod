@@ -3,20 +3,20 @@ using Terraria.ModLoader;
 
 namespace CataclysmMod.Common.Exceptions
 {
-    internal sealed class CalamityVersionException : Exception
+    public class CalamityVersionException : Exception
     {
-        internal CalamityVersionException(Version calamityVersion, Version expectedVersion, ExceptionType outdatedType)
+        public CalamityVersionException(Version calamityVersion, Version expectedVersion, ExceptionType outdatedType)
         {
             CalamityVersion = calamityVersion;
             ExpectedVersion = expectedVersion;
             OutdatedType = outdatedType;
         }
 
-        public Version CalamityVersion { get; }
+        public virtual Version CalamityVersion { get; }
 
-        public Version ExpectedVersion { get; }
+        public virtual Version ExpectedVersion { get; }
 
-        public ExceptionType OutdatedType { get; }
+        public virtual ExceptionType OutdatedType { get; }
 
         public override string Message
         {
@@ -59,9 +59,9 @@ namespace CataclysmMod.Common.Exceptions
             }
         }
 
-        public static void ThrowErrorOnIncorrectVersion(Mod calamityMod, Version expectedVersion)
+        public static void ThrowErrorOnIncorrectVersion(Version expectedVersion)
         {
-            Version calamityVersion = calamityMod.Version;
+            Version calamityVersion = ModLoader.GetMod("CalamityMod").Version;
 
             // Throw an error if the loaded Calamity mod is outdated
             if (calamityVersion < expectedVersion)
@@ -73,7 +73,7 @@ namespace CataclysmMod.Common.Exceptions
                 throw new CalamityVersionException(calamityVersion, null, ExceptionType.OutdatedCataclysm);
         }
 
-        internal enum ExceptionType
+        public enum ExceptionType
         {
             OutdatedCalamity,
             OutdatedCataclysm

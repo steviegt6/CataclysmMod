@@ -1,4 +1,5 @@
-﻿using MonoMod.Cil;
+﻿using System;
+using System.Reflection;
 using Terraria;
 using Terraria.ModLoader;
 
@@ -26,9 +27,7 @@ namespace CataclysmMod.Common.Utilities
             return true;
         }
 
-        /// <summary>
-        ///     Creates an <see cref="ILCursor" /> with an <see cref="ILContext" />.
-        /// </summary>
-        public static void CreateCursor(this ILContext context, out ILCursor c) => c = new ILCursor(context);
+        public static MethodInfo GetMethodForced(this Type type, string method) => type.GetMethod(method,
+            BindingFlags.NonPublic | BindingFlags.Public | BindingFlags.Static | BindingFlags.Instance);
     }
 }

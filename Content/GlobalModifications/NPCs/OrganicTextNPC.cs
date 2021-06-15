@@ -18,7 +18,7 @@ namespace CataclysmMod.Content.GlobalModifications.NPCs
             else if (npc.Inorganic())
                 organicDrawText = "Inorganic";
 
-            if (string.IsNullOrEmpty(organicDrawText) || !CataclysmConfig.Instance.displayOrganicTextNPCs)
+            if (string.IsNullOrEmpty(organicDrawText) || !CataclysmConfig.Instance.DisplayOrganicTextNpCs)
                 return base.DrawHealthBar(npc, hbPosition, ref scale, ref position);
 
             Color drawColor = Lighting.GetColor((int) (npc.position.X / 16), (int) (npc.position.Y / 16));
