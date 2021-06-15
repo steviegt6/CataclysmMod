@@ -62,28 +62,28 @@ namespace CataclysmMod.Content.GlobalModifications.Items
             {
                 case ItemID.AdamantitePickaxe:
                 case ItemID.TitaniumPickaxe:
-                    tooltips.Add(new TooltipLine(mod, $"{mod.Name}:PickCryonicCharred", "Capable of mining Cryonic and Charred Ore"));
+                    TooltipUtils.AddTooltip(tooltips, new TooltipLine(mod, $"{mod.Name}:PickCryonicCharred", "Capable of mining Cryonic and Charred Ore"));
                     break;
 
                 case ItemID.PickaxeAxe:
                 case ItemID.Drax:
                 case ItemID.ChlorophytePickaxe:
-                    tooltips.Add(new TooltipLine(mod, $"{mod.Name}:PickPerennial","Capable of mining Perennial Ore"));
+                    TooltipUtils.AddTooltip(tooltips, new TooltipLine(mod, $"{mod.Name}:PickPerennial","Capable of mining Perennial Ore"));
                     break;
 
                 case ItemID.SolarFlarePickaxe:
                 case ItemID.VortexPickaxe:
                 case ItemID.NebulaPickaxe:
                 case ItemID.StardustPickaxe:
-                    tooltips.Add(new TooltipLine(mod, $"{mod.Name}:PickExodium", "Capable of mining Exodium Clusters"));
+                    TooltipUtils.AddTooltip(tooltips, new TooltipLine(mod, $"{mod.Name}:PickExodium", "Capable of mining Exodium Clusters"));
                     break;
             }
 
             if (item.type == ModContent.ItemType<RampartofDeities>() || item.type == ModContent.ItemType<DeificAmulet>())
-                tooltips.Add(new TooltipLine(mod, $"{mod.Name}:BandRegen", "Provides life regeneration"));
+                TooltipUtils.AddTooltip(tooltips, new TooltipLine(mod, $"{mod.Name}:BandRegen", "Provides life regeneration"));
 
             if (item.type == ModContent.ItemType<Sponge>() || item.type == ModContent.ItemType<TheAbsorber>())
-                tooltips.Add(new TooltipLine(mod, $"{mod.Name}:RoverDrive", "Activates a protective shield that grants 10 defense for 10 seconds" +
+                TooltipUtils.AddTooltip(tooltips, new TooltipLine(mod, $"{mod.Name}:RoverDrive", "Activates a protective shield that grants 10 defense for 10 seconds" +
                                                                             "\nThe shield then dissipates and recharges for 20 seconds before being reactivated"));
         }
     }
