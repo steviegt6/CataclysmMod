@@ -9,12 +9,16 @@ namespace CataclysmMod.Content.GlobalModifications.NPCs
     {
         public override void EditSpawnPool(IDictionary<int, float> pool, NPCSpawnInfo spawnInfo)
         {
-            foreach (int npc in pool.Keys)
-                if (npc == ModContent.NPCType<AngryDog>())
-                    pool[npc] = 0.024f; // twice the normal chance
+            ModifyIfValid(pool, ModContent.NPCType<AngryDog>(), 0.024f); // 2* normal chance
 
             if (!pool.ContainsKey(NPCID.AnomuraFungus) && spawnInfo.player.ZoneGlowshroom)
                 pool.Add(NPCID.AnomuraFungus, 0.1f);
+        }
+
+        public static void ModifyIfValid<TKey, TValue>(IDictionary<TKey, TValue> dict, TKey key, TValue value)
+        {
+            if (dict.ContainsKey(key))
+                dict[key] = value;
         }
     }
 }

@@ -1,5 +1,8 @@
 Addon to Calamity.
 
+1.0.3.2:
+* winter is coming
+
 1.0.3.1:
 * Triggers a mod browser update to hopefully fix file issues.
 
