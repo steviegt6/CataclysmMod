@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using CataclysmMod.Common.ModCompatibility;
-using CataclysmMod.Content.Items;
+using CataclysmMod.Content.Default.Items;
 using Terraria.ModLoader;
 
 namespace CataclysmMod

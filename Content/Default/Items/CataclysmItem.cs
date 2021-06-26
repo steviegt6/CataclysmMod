@@ -1,7 +1,7 @@
 ﻿using CataclysmMod.Common.ModCompatibility;
 using Terraria.ModLoader;
 
-namespace CataclysmMod.Content.Items
+namespace CataclysmMod.Content.Default.Items
 {
     public abstract class CataclysmItem : ModItem, IModDependent
     {
