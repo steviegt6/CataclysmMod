@@ -43,28 +43,31 @@ namespace CataclysmMod
 
                 foreach (ModDependencyAttribute dependency in dependencies)
                 {
-                    if (!ModLoader.Mods.Any(x => x.Name.Equals(dependency.Mod)))
+                    if (!ModLoader.Mods.Any(x => x.Name.Equals(dependency.Mod)) && !modRecord.Contains(dependency.Mod))
                     {
                         modRecord.Add(dependency.Mod);
-                        break;
                     }
+                }
 
-                    string contentName = type.Name;
-                    object content = Activator.CreateInstance(type);
+                string contentName = type.Name;
+                object content = Activator.CreateInstance(type);
 
-                    if (content is CataclysmItem cataclysmItem)
-                    {
-                        cataclysmItem.Autoload(ref contentName);
-                        
-                        if (cataclysmItem.LoadWithValidMods()) 
+                switch (content)
+                {
+                    case CataclysmItem cataclysmItem:
+                        if (cataclysmItem.Autoload(ref contentName))
+                            continue;
+
+                        if (cataclysmItem.LoadWithValidMods())
                             AddItem(contentName, cataclysmItem);
-                    }
+                        break;
                 }
             }
 
             foreach (string mod in modRecord)
             {
-                Logger.Warn($"Attempted to load content from mod: {mod}! This content was not loaded. If you want this content, enable the given mod.");
+                Logger.Warn(
+                    $"Attempted to load content from mod: {mod}! This content was not loaded. If you want this content, enable the given mod.");
             }
         }
     }

@@ -5,6 +5,9 @@ namespace CataclysmMod.Content.Items
 {
     public abstract class CataclysmItem : ModItem, IModDependent
     {
+        public override string Texture =>
+            ModContent.TextureExists(base.Texture) ? base.Texture : "ModLoader/MysteryItem";
+
         public virtual bool LoadWithValidMods() => true;
 
         public virtual bool DependsOnMod() => true;
