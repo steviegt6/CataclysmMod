@@ -37,17 +37,22 @@ namespace CataclysmMod
             foreach (Type type in Code.GetTypes().Where(x => !x.IsAbstract && x.GetConstructor(new Type[0]) != null))
             {
                 ModDependencyAttribute[] dependencies = type.GetCustomAttributes<ModDependencyAttribute>().ToArray();
+                bool missingDependency = false;
 
                 if (dependencies.Length == 0)
-                    break;
+                    continue;
 
                 foreach (ModDependencyAttribute dependency in dependencies)
                 {
                     if (!ModLoader.Mods.Any(x => x.Name.Equals(dependency.Mod)) && !modRecord.Contains(dependency.Mod))
                     {
+                        missingDependency = true;
                         modRecord.Add(dependency.Mod);
                     }
                 }
+
+                if (missingDependency)
+                    continue;
 
                 string contentName = type.Name;
                 object content = Activator.CreateInstance(type);

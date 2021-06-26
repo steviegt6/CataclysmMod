@@ -15,7 +15,7 @@ namespace CataclysmMod.Content.Items
         public sealed override bool Autoload(ref string name)
         {
             ModifyContentName(ref name);
-            return DependsOnMod();
+            return !DependsOnMod();
         }
 
         public virtual void ModifyContentName(ref string name)
