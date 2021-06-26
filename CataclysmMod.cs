@@ -39,20 +39,18 @@ namespace CataclysmMod
                 ModDependencyAttribute[] dependencies = type.GetCustomAttributes<ModDependencyAttribute>().ToArray();
                 bool missingDependency = false;
 
-                if (dependencies.Length == 0)
-                    continue;
+                if (dependencies.Length == 0) continue;
 
                 foreach (ModDependencyAttribute dependency in dependencies)
                 {
-                    if (!ModLoader.Mods.Any(x => x.Name.Equals(dependency.Mod)) && !modRecord.Contains(dependency.Mod))
-                    {
-                        missingDependency = true;
-                        modRecord.Add(dependency.Mod);
-                    }
+                    if (ModLoader.Mods.Any(x => x.Name.Equals(dependency.Mod)) ||
+                        modRecord.Contains(dependency.Mod)) continue;
+
+                    missingDependency = true;
+                    modRecord.Add(dependency.Mod);
                 }
 
-                if (missingDependency)
-                    continue;
+                if (missingDependency) continue;
 
                 string contentName = type.Name;
                 object content = Activator.CreateInstance(type);
