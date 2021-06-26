@@ -67,7 +67,7 @@ namespace CataclysmMod
             foreach (string mod in modRecord)
             {
                 Logger.Warn(
-                    $"Attempted to load content from mod: {mod}! This content was not loaded. If you want this content, enable the given mod.");
+                    $"There was content in Cataclysm that depends on: {mod}! This content was not loaded as the given mod is not enabled.");
             }
         }
     }
