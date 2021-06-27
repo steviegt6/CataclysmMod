@@ -26,7 +26,7 @@ namespace CataclysmMod.Content.Calamity.Recipes
                 .WithIngredients((ModContent.ItemType<Lumenite>(), 6), (ModContent.ItemType<RuinousSoul>(), 4),
                     (ModContent.ItemType<ExodiumClusterOre>(), 12), (ItemID.SniperScope, 1))
                 .WithTiles(TileID.LunarCraftingStation).WithResult((ModContent.ItemType<HalleysInferno>(), 1))
-                .EditRecipe(
+                .AsExactSearch().EditRecipe(
                     editor =>
                     {
                         editor.DeleteIngredient(ItemID.SniperScope);

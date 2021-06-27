@@ -24,6 +24,8 @@
     <Reference Include="System.Windows.Forms" />
   </ItemGroup>
   <ItemGroup>
+    <Folder Include="Content\Calamity\GlobalModifications\" />
+    <Folder Include="Content\Default\GlobalModifications\" />
     <Folder Include="Content\Default\Recipes\" />
   </ItemGroup>
 </Project>
