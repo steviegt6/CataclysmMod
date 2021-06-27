@@ -5,6 +5,7 @@ using System.Reflection;
 using CataclysmMod.Common.ModCompatibility;
 using CataclysmMod.Content.Default.GlobalModifications;
 using CataclysmMod.Content.Default.Items;
+using CataclysmMod.Content.Default.Projectiles;
 using CataclysmMod.Content.Default.Recipes;
 using Terraria.ModLoader;
 
@@ -104,6 +105,20 @@ namespace CataclysmMod
 
                         if (cataclysmItem.LoadWithValidMods())
                             AddItem(contentName, cataclysmItem);
+                        break;
+
+                    case CataclysmProjectile cataclysmProjectile:
+                        if (cataclysmProjectile.Autoload(ref contentName))
+                            continue;
+
+                        if (cataclysmProjectile.LoadWithValidMods())
+                            AddProjectile(contentName, cataclysmProjectile);
+                        break;
+
+                    // special logic for rogue weapons and stuff
+                    case ModItem modItem:
+                        modItem.Autoload(ref contentName); // assumes always false :)
+                        AddItem(contentName, modItem);
                         break;
 
                     case RecipeContainer recipeContainer:
