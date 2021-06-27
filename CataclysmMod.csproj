@@ -23,4 +23,7 @@
     <Reference Include="System.Net.Http" />
     <Reference Include="System.Windows.Forms" />
   </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Content\Default\Recipes\" />
+  </ItemGroup>
 </Project>

@@ -4,12 +4,20 @@ using System.Linq;
 using System.Reflection;
 using CataclysmMod.Common.ModCompatibility;
 using CataclysmMod.Content.Default.Items;
+using CataclysmMod.Content.Default.Recipes;
 using Terraria.ModLoader;
 
 namespace CataclysmMod
 {
     public class CataclysmMod : Mod
     {
+        public static Action<Mod> PreAddRecipeHooks;
+        public static Action<Mod> AddRecipeHooks;
+        public static Action<Mod> PostAddRecipeHooks;
+        public static Action<Mod> PreAddRecipeGroupHooks;
+        public static Action<Mod> AddRecipeGroupHooks;
+        public static Action<Mod> PostAddRecipeGroupHooks;
+
         public CataclysmMod()
         {
             Properties = new ModProperties
@@ -28,6 +36,20 @@ namespace CataclysmMod
             LoadModDependentContent();
 
             Logger.Debug("Loaded mod-dependent content.");
+        }
+
+        public override void AddRecipes()
+        {
+            PreAddRecipeHooks?.Invoke(this);
+            AddRecipeHooks?.Invoke(this);
+            PostAddRecipeHooks?.Invoke(this);
+        }
+
+        public override void PostAddRecipes()
+        {
+            PreAddRecipeHooks?.Invoke(this);
+            AddRecipeGroupHooks?.Invoke(this);
+            PostAddRecipeGroupHooks?.Invoke(this);
         }
 
         private void LoadModDependentContent()
@@ -63,6 +85,16 @@ namespace CataclysmMod
 
                         if (cataclysmItem.LoadWithValidMods())
                             AddItem(contentName, cataclysmItem);
+                        break;
+
+                    case RecipeContainer recipeContainer:
+                        PreAddRecipeHooks += recipeContainer.PreAddRecipes;
+                        AddRecipeHooks += recipeContainer.AddRecipes;
+                        PostAddRecipeHooks += recipeContainer.PostAddRecipes;
+
+                        PreAddRecipeGroupHooks += recipeContainer.PreAddRecipeGroups;
+                        AddRecipeGroupHooks += recipeContainer.AddRecipeGroups;
+                        PostAddRecipeGroupHooks += recipeContainer.PostAddRecipeGroups;
                         break;
                 }
             }
