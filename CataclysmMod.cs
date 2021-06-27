@@ -47,6 +47,7 @@ namespace CataclysmMod
             PreAddRecipeGroupHooks = null;
             AddRecipeGroupHooks = null;
             PostAddRecipeGroupHooks = null;
+            ModifyRecipes = null;
         }
 
         public override void AddRecipes()
@@ -81,11 +82,12 @@ namespace CataclysmMod
 
                 foreach (ModDependencyAttribute dependency in dependencies)
                 {
-                    if (ModLoader.Mods.Any(x => x.Name.Equals(dependency.Mod)) ||
-                        modRecord.Contains(dependency.Mod)) continue;
+                    if (ModLoader.Mods.Any(x => x.Name.Equals(dependency.Mod))) continue;
 
                     missingDependency = true;
-                    modRecord.Add(dependency.Mod);
+
+                    if (!modRecord.Contains(dependency.Mod)) 
+                        modRecord.Add(dependency.Mod);
                 }
 
                 if (missingDependency) continue;
