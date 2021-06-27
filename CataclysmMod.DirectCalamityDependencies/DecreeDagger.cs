@@ -7,7 +7,7 @@ using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
 
-namespace CataclysmMod.DirectCalamityDependencies
+namespace DirectCalamityDependencies
 {
     public class DecreeDagger : RogueWeapon
     {

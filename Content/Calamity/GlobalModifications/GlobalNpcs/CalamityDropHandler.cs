@@ -10,7 +10,6 @@ using CalamityMod.NPCs.SulphurousSea;
 using CataclysmMod.Common.ModCompatibility;
 using CataclysmMod.Content.Calamity.Items.Accessories;
 using CataclysmMod.Content.Default.GlobalModifications;
-using CataclysmMod.DirectCalamityDependencies;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -59,7 +58,8 @@ namespace CataclysmMod.Content.Calamity.GlobalModifications.GlobalNpcs
             switch (npc.type)
             {
                 case NPCID.Clinger:
-                    DropHelper.DropItemChance(npc, ModContent.ItemType<DecreeDagger>(),
+                    // mod.ItemType is required to remove circular dependencies
+                    DropHelper.DropItemChance(npc, mod.ItemType("DecreeDagger"),
                         Main.expertMode ? 100 : 150);
                     break;
 

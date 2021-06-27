@@ -2,14 +2,15 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
+using CataclysmMod.Common.DirectDependencies;
 using CataclysmMod.Common.ModCompatibility;
 using CataclysmMod.Content.Default.GlobalModifications;
 using CataclysmMod.Content.Default.Items;
 using CataclysmMod.Content.Default.MonoMod;
 using CataclysmMod.Content.Default.Projectiles;
 using CataclysmMod.Content.Default.Recipes;
-using CataclysmMod.DirectCalamityDependencies;
 using Terraria.ModLoader;
+using Terraria.ModLoader.Core;
 
 namespace CataclysmMod
 {
@@ -40,8 +41,9 @@ namespace CataclysmMod
 
             LoadModDependentContent();
 
-            if (ModLoader.GetMod("CalamityMod") != null)
-                LoadDirectCalamityDependencies();
+            DirectDependencyReflection.Load();
+
+            LoadDirectDependencies();
 
             Logger.Debug("Loaded mod-dependent content.");
         }
@@ -55,6 +57,8 @@ namespace CataclysmMod
             AddRecipeGroupHooks = null;
             PostAddRecipeGroupHooks = null;
             ModifyRecipes = null;
+
+            DirectDependencyReflection.Unload();
         }
 
         public override void AddRecipes()
@@ -188,9 +192,31 @@ namespace CataclysmMod
             }
         }
 
-        private void LoadDirectCalamityDependencies()
+        private void LoadDirectDependencies()
         {
-            CalamityDependencyContent.AddContent(this);
+            TmodFile tModFile = DirectDependencyReflection.Mod_File.GetValue(this) as TmodFile;
+            Dictionary<string, TmodFile.FileEntry> files = DirectDependencyReflection.TmodFile_files.GetValue(tModFile) as Dictionary<string, TmodFile.FileEntry>;
+
+            IEnumerable<KeyValuePair<string, TmodFile.FileEntry>> directDependencyNames = files.Where((s) => s.Key.StartsWith("lib/") && s.Key.Contains("CataclysmMod.Direct"));
+
+            foreach (KeyValuePair<string, TmodFile.FileEntry> kvp in directDependencyNames)
+            {
+                byte[] dllBytes = GetFileBytes(kvp.Key);
+                Assembly asm = Assembly.Load(dllBytes);
+
+                Type module = asm.GetType("ROOT.Main");
+
+                if (module != null)
+                {
+                    DirectDependency instance = Activator.CreateInstance(module) as DirectDependency;
+
+                    if (ModLoader.GetMod(instance.DependsOn) != null)
+                    {
+                        // do stuff
+                        instance.AddContent(this);
+                    }
+                }
+            }
         }
     }
 }

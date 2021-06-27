@@ -5,7 +5,7 @@ using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
 
-namespace CataclysmMod.DirectCalamityDependencies
+namespace DirectCalamityDependencies
 {
     public class DecreeDaggerSplitProj : ModProjectile
     {
@@ -36,7 +36,7 @@ namespace CataclysmMod.DirectCalamityDependencies
         {
             SplitTime++;
 
-            if (Main.rand.NextBool(4))
+            if (Terraria.Main.rand.NextBool(4))
             {
                 Vector2 spawnPos = projectile.position + projectile.velocity;
                 Vector2 spawnSpeed = new Vector2(projectile.velocity.X * 0.5f, projectile.velocity.Y * 0.5f);
@@ -45,10 +45,10 @@ namespace CataclysmMod.DirectCalamityDependencies
             }
 
             if (projectile.Calamity().stealthStrike && projectile.timeLeft % 8 == 0 &&
-                projectile.owner == Main.myPlayer)
+                projectile.owner == Terraria.Main.myPlayer)
             {
                 Vector2 velocity = new Vector2(-14f, 14f);
-                int type = Main.rand.NextBool(2)
+                int type = Terraria.Main.rand.NextBool(2)
                     ? ProjectileID.CursedFlameFriendly
                     : ProjectileID.CursedDartFlame;
 
@@ -62,7 +62,7 @@ namespace CataclysmMod.DirectCalamityDependencies
             Vector2 center = projectile.Center;
             bool doSpecial = false;
 
-            foreach (NPC npc in Main.npc)
+            foreach (NPC npc in Terraria.Main.npc)
                 if (npc.CanBeChasedBy(projectile) && SplitTime >= 120)
                 {
                     float offset = npc.width / 2f + npc.height / 2f;
@@ -105,8 +105,8 @@ namespace CataclysmMod.DirectCalamityDependencies
 
         public override bool PreDraw(SpriteBatch spriteBatch, Color lightColor)
         {
-            Texture2D projTex = Main.projectileTexture[projectile.type];
-            Vector2 drawPos = projectile.Center - Main.screenPosition;
+            Texture2D projTex = Terraria.Main.projectileTexture[projectile.type];
+            Vector2 drawPos = projectile.Center - Terraria.Main.screenPosition;
             Vector2 drawOrigin = projTex.Size() / 2f;
 
             spriteBatch.Draw(projTex, drawPos, null, projectile.GetAlpha(lightColor), projectile.rotation, drawOrigin,
