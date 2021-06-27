@@ -34,7 +34,7 @@ namespace CataclysmMod.DirectCalamityDependencies
 
         public override void AI()
         {
-            if (Terraria.Main.rand.NextBool(4))
+            if (Main.rand.NextBool(4))
             {
                 Vector2 spawnPos = projectile.position + projectile.velocity;
                 Vector2 spawnVelocity = new Vector2(projectile.velocity.X * 0.5f,
