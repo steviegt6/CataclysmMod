@@ -47,7 +47,7 @@ namespace DirectCalamityDependencies
                 projectile.owner == Terraria.Main.myPlayer)
             {
                 Vector2 velocity = new Vector2(-14f, 14f);
-                int type = Terraria.Main.rand.NextBool(2)
+                int type = Main.rand.NextBool(2)
                     ? ProjectileID.CursedFlameFriendly
                     : ProjectileID.CursedDartFlame;
 
@@ -61,7 +61,7 @@ namespace DirectCalamityDependencies
             Vector2 center = projectile.Center;
             bool doSpecial = false;
 
-            foreach (NPC npc in Terraria.Main.npc)
+            foreach (NPC npc in Main.npc)
                 if (npc.CanBeChasedBy(projectile))
                 {
                     float offset = npc.width / 2f + npc.height / 2f;
@@ -105,10 +105,10 @@ namespace DirectCalamityDependencies
 
             for (int i = 0; i < 2; i++)
             {
-                Vector2 velocity = new Vector2(Terraria.Main.rand.Next(1, 5) * (Terraria.Main.rand.NextBool()
+                Vector2 velocity = new Vector2(Main.rand.Next(1, 5) * (Main.rand.NextBool()
                         ? 1
                         : -1),
-                    Terraria.Main.rand.Next(1, 5) * (Terraria.Main.rand.NextBool()
+                    Main.rand.Next(1, 5) * (Main.rand.NextBool()
                         ? 1
                         : -1));
 
@@ -140,8 +140,8 @@ namespace DirectCalamityDependencies
 
         public override bool PreDraw(SpriteBatch spriteBatch, Color lightColor)
         {
-            Texture2D projTex = Terraria.Main.projectileTexture[projectile.type];
-            Vector2 drawPos = projectile.Center - Terraria.Main.screenPosition;
+            Texture2D projTex = Main.projectileTexture[projectile.type];
+            Vector2 drawPos = projectile.Center - Main.screenPosition;
             Vector2 drawOrigin = projTex.Size() / 2f;
 
             spriteBatch.Draw(projTex, drawPos, null, projectile.GetAlpha(lightColor), projectile.rotation, drawOrigin,
