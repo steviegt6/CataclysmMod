@@ -3,7 +3,7 @@ Current support mods: Calamity, Thorium
 
 Have any suggestions? Any bugs to report? Shoot them at me through the repository's issue tracker (https://github.com/Steviegt6/CataclysmMod/issues) or directly in my Discord server (the homepage).
 
-1.1.0.0 overhauled the mod's internal code and made many changed, allowing Cataclysm to no longer be a Calamity-only add-on.
+1.1.0.0 overhauled the mod's internal code and made many changes, allowing Cataclysm to no longer be a Calamity-only add-on.
 
 Current features (subject to change!):
  Calamity:
