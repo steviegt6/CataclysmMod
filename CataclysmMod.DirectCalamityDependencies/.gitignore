@@ -1,8 +1,6 @@
 lib/CalamityMod.XNA.dll
 lib/CalamityMod.XNA.pdb
-lib/ThoriumMod.XNA.dll
 
 .vs/*
 bin/*
 obj/*
-
