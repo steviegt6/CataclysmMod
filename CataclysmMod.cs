@@ -212,7 +212,6 @@ namespace CataclysmMod
 
                     if (ModLoader.GetMod(instance.DependsOn) != null)
                     {
-                        // do stuff
                         instance.AddContent(this);
                     }
                 }
