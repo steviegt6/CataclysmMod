@@ -5,7 +5,7 @@ using Terraria.ModLoader;
 
 namespace CataclysmMod.Content.Default.Recipes
 {
-    public abstract class RecipeContainer // : IModDependent
+    public abstract class RecipeContainer
     {
         public class RecipeSearch
         {

@@ -3,7 +3,9 @@ using CalamityMod;
 using CalamityMod.Items;
 using CalamityMod.Items.Weapons.Rogue;
 using CalamityMod.Projectiles.Rogue;
+using CataclysmMod.Common.ModCompatibility;
 using CataclysmMod.Content.Calamity.Projectiles;
+using CataclysmMod.Content.Default.Items;
 using Microsoft.Xna.Framework;
 using Terraria;
 using Terraria.ID;
@@ -11,15 +13,16 @@ using Terraria.ModLoader;
 
 namespace CataclysmMod.Content.Calamity.Items.Weapons
 {
-    public class DecreeDagger : RogueWeapon
+    [ModDependency("CalamityMod")]
+    public class DecreeDagger : CataclysmItem
     {
-        public override bool Autoload(ref string name)
+        /*public override bool Autoload(ref string name)
         {
             if (name == null) throw new ArgumentNullException(nameof(name));
 
             name = "DaggerofDecree";
             return false;
-        }
+        }*/
 
         public override string Texture => "CalamityMod/Items/Weapons/Rogue/CursedDagger";
 
@@ -32,7 +35,7 @@ namespace CataclysmMod.Content.Calamity.Items.Weapons
                                "\nand both daggers become showered in cursed fireballs");
         }
 
-        public override void SafeSetDefaults()
+        public override void SetDefaults()
         {
             item.width = 24;
             item.height = 34;

@@ -24,6 +24,8 @@
     <Reference Include="System.Windows.Forms" />
   </ItemGroup>
   <ItemGroup>
+    <Folder Include="Content\Calamity\MonoMod\" />
+    <Folder Include="Content\Default\MonoMod\" />
     <Folder Include="Content\Default\Recipes\" />
   </ItemGroup>
 </Project>

@@ -5,6 +5,7 @@ using System.Reflection;
 using CataclysmMod.Common.ModCompatibility;
 using CataclysmMod.Content.Default.GlobalModifications;
 using CataclysmMod.Content.Default.Items;
+using CataclysmMod.Content.Default.MonoMod;
 using CataclysmMod.Content.Default.Projectiles;
 using CataclysmMod.Content.Default.Recipes;
 using Terraria.ModLoader;
@@ -77,6 +78,7 @@ namespace CataclysmMod
 
             foreach (Type type in Code.GetTypes().Where(x => !x.IsAbstract && x.GetConstructor(new Type[0]) != null))
             {
+                Logger.Debug(type.Name);
                 ModDependencyAttribute[] dependencies = type.GetCustomAttributes<ModDependencyAttribute>().ToArray();
                 bool missingDependency = false;
 
@@ -163,6 +165,14 @@ namespace CataclysmMod
 
                         if (cataclysmPlayer.LoadWithValidMods())
                             AddPlayer(contentName, cataclysmPlayer);
+                        break;
+
+                    case MonoModPatcher<string> monoModPatcher:
+                        monoModPatcher.Apply();
+                        break;
+
+                    case MonoModPatcher<MethodInfo> monoModPatcher:
+                        monoModPatcher.Apply();
                         break;
                 }
             }
