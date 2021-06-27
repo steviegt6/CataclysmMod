@@ -17,6 +17,7 @@ namespace CataclysmMod
         public static Action<Mod> PreAddRecipeGroupHooks;
         public static Action<Mod> AddRecipeGroupHooks;
         public static Action<Mod> PostAddRecipeGroupHooks;
+        public static Action<Mod> ModifyRecipes;
 
         public CataclysmMod()
         {
@@ -38,6 +39,16 @@ namespace CataclysmMod
             Logger.Debug("Loaded mod-dependent content.");
         }
 
+        public override void Unload()
+        {
+            PreAddRecipeHooks = null;
+            AddRecipeHooks = null;
+            PostAddRecipeHooks = null;
+            PreAddRecipeGroupHooks = null;
+            AddRecipeGroupHooks = null;
+            PostAddRecipeGroupHooks = null;
+        }
+
         public override void AddRecipes()
         {
             PreAddRecipeHooks?.Invoke(this);
@@ -45,11 +56,16 @@ namespace CataclysmMod
             PostAddRecipeHooks?.Invoke(this);
         }
 
-        public override void PostAddRecipes()
+        public override void AddRecipeGroups()
         {
             PreAddRecipeHooks?.Invoke(this);
             AddRecipeGroupHooks?.Invoke(this);
             PostAddRecipeGroupHooks?.Invoke(this);
+        }
+
+        public override void PostAddRecipes()
+        {
+            ModifyRecipes?.Invoke(this);
         }
 
         private void LoadModDependentContent()
@@ -95,6 +111,8 @@ namespace CataclysmMod
                         PreAddRecipeGroupHooks += recipeContainer.PreAddRecipeGroups;
                         AddRecipeGroupHooks += recipeContainer.AddRecipeGroups;
                         PostAddRecipeGroupHooks += recipeContainer.PostAddRecipeGroups;
+
+                        ModifyRecipes += recipeContainer.ModifyRecipes;
                         break;
                 }
             }
