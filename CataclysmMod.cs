@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using CataclysmMod.Common.ModCompatibility;
+using CataclysmMod.Content.Default.GlobalModifications;
 using CataclysmMod.Content.Default.Items;
 using CataclysmMod.Content.Default.Recipes;
 using Terraria.ModLoader;
@@ -86,7 +87,7 @@ namespace CataclysmMod
 
                     missingDependency = true;
 
-                    if (!modRecord.Contains(dependency.Mod)) 
+                    if (!modRecord.Contains(dependency.Mod))
                         modRecord.Add(dependency.Mod);
                 }
 
@@ -115,6 +116,38 @@ namespace CataclysmMod
                         PostAddRecipeGroupHooks += recipeContainer.PostAddRecipeGroups;
 
                         ModifyRecipes += recipeContainer.ModifyRecipes;
+                        break;
+
+                    case CataclysmGlobalItem cataclysmGlobalItem:
+                        if (cataclysmGlobalItem.Autoload(ref contentName))
+                            continue;
+
+                        if (cataclysmGlobalItem.LoadWithValidMods())
+                            AddGlobalItem(contentName, cataclysmGlobalItem);
+                        break;
+
+                    case CataclysmGlobalNpc cataclysmGlobalNpc:
+                        if (cataclysmGlobalNpc.Autoload(ref contentName))
+                            continue;
+
+                        if (cataclysmGlobalNpc.LoadWithValidMods())
+                            AddGlobalNPC(contentName, cataclysmGlobalNpc);
+                        break;
+
+                    case CataclysmGlobalProjectile cataclysmGlobalProjectile:
+                        if (cataclysmGlobalProjectile.Autoload(ref contentName))
+                            continue;
+
+                        if (cataclysmGlobalProjectile.LoadWithValidMods())
+                            AddGlobalProjectile(contentName, cataclysmGlobalProjectile);
+                        break;
+
+                    case CataclysmPlayer cataclysmPlayer:
+                        if (cataclysmPlayer.Autoload(ref contentName))
+                            continue;
+
+                        if (cataclysmPlayer.LoadWithValidMods())
+                            AddPlayer(contentName, cataclysmPlayer);
                         break;
                 }
             }
