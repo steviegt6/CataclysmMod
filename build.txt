@@ -1,7 +1,8 @@
-displayName = Cataclysm (Calamity Addon)
+displayName = Cataclysm (Multi-Mod Addon)
 author = convicted tomatophile (Stevie)
-version = 1.0.3.2
+version = 1.1.0.0
 homepage = https://discord.com/invite/qrZ4Bpz
-modReferences = CalamityMod@1.4.5.7
-dllReferences = MMHOOK_CalamityMod_v1.4.5.7
+weakReferences = CalamityMod@1.4.5.7
+dllReferences = MMHOOK_CalamityMod_v1.4.5.7, CataclysmMod.DirectCalamityDependencies
 sortAfter = CalamityMod
+buildIgnore = *.csproj, *.user, obj\*, bin\*, .vs\*, CataclysmMod.DirectCalamityDependencies\*

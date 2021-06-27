@@ -11,9 +11,9 @@
     <Exec Command="&quot;$(tMLBuildServerPath)&quot; -build $(ProjectDir) -eac $(TargetPath) -define &quot;$(DefineConstants)&quot; -unsafe $(AllowUnsafeBlocks)" />
   </Target>
   <ItemGroup>
-    <Compile Remove="Content\Recipes\**" />
-    <EmbeddedResource Remove="Content\Recipes\**" />
-    <None Remove="Content\Recipes\**" />
+    <Compile Remove="CataclysmMod.DirectCalamityDependencies\**" />
+    <EmbeddedResource Remove="CataclysmMod.DirectCalamityDependencies\**" />
+    <None Remove="CataclysmMod.DirectCalamityDependencies\**" />
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="tModLoader.CodeAssist" Version="0.1.*" />
@@ -22,10 +22,17 @@
     <Reference Include="CalamityMod">
       <HintPath>lib\CalamityMod.XNA.dll</HintPath>
     </Reference>
+    <Reference Include="CataclysmMod.DirectCalamityDependencies">
+      <HintPath>lib\CataclysmMod.DirectCalamityDependencies.dll</HintPath>
+    </Reference>
     <Reference Include="MMHOOK_CalamityMod_v1.4.5.7">
       <HintPath>lib\MMHOOK_CalamityMod_v1.4.5.7.dll</HintPath>
     </Reference>
     <Reference Include="System.Net.Http" />
     <Reference Include="System.Windows.Forms" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Content\Default\MonoMod\" />
+    <Folder Include="Content\Default\Recipes\" />
   </ItemGroup>
 </Project>

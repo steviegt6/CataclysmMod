@@ -1,33 +1,15 @@
-﻿using System;
-using System.Reflection;
-using Terraria;
-using Terraria.ModLoader;
+﻿using System.Collections.Generic;
 
 namespace CataclysmMod.Common.Utilities
 {
     public static class ExtensionMethods
     {
-        /// <summary>
-        ///     Attempts to find a recipe according to the provided <see cref="RecipeFinder" />.
-        /// </summary>
-        /// <param name="finder"></param>
-        /// <param name="editor"></param>
-        /// <returns></returns>
-        public static bool TryFindExactRecipe(this RecipeFinder finder, out RecipeEditor editor)
+        public static IDictionary<TKey, TValue> ModifyIfContains<TKey, TValue>(this IDictionary<TKey, TValue> dict, TKey key, TValue value)
         {
-            Recipe foundRecipe = finder.FindExactRecipe();
+            if (dict.ContainsKey(key))
+                dict[key] = value;
 
-            if (foundRecipe == null)
-            {
-                editor = null;
-                return false;
-            }
-
-            editor = new RecipeEditor(finder.FindExactRecipe());
-            return true;
+            return dict;
         }
-
-        public static MethodInfo GetMethodForced(this Type type, string method) => type.GetMethod(method,
-            BindingFlags.NonPublic | BindingFlags.Public | BindingFlags.Static | BindingFlags.Instance);
     }
 }
