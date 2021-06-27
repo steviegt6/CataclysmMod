@@ -1,5 +1,5 @@
 ﻿using CataclysmMod.Common.DirectDependencies;
-using DirectCalamityDependencies;
+using CataclysmMod.DirectCalamityDependencies;
 using Terraria.ModLoader;
 
 // It MUST be in the namespace "ROOT"
