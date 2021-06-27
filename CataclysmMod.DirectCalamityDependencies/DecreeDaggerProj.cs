@@ -44,7 +44,7 @@ namespace CataclysmMod.DirectCalamityDependencies
             }
 
             if (projectile.Calamity().stealthStrike && projectile.timeLeft % 8 == 0 &&
-                projectile.owner == Terraria.Main.myPlayer)
+                projectile.owner == Main.myPlayer)
             {
                 Vector2 velocity = new Vector2(-14f, 14f);
                 int type = Main.rand.NextBool(2)

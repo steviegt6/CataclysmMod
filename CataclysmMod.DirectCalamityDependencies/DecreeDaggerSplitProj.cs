@@ -106,7 +106,7 @@ namespace CataclysmMod.DirectCalamityDependencies
         public override bool PreDraw(SpriteBatch spriteBatch, Color lightColor)
         {
             Texture2D projTex = Main.projectileTexture[projectile.type];
-            Vector2 drawPos = projectile.Center - Terraria.Main.screenPosition;
+            Vector2 drawPos = projectile.Center - Main.screenPosition;
             Vector2 drawOrigin = projTex.Size() / 2f;
 
             spriteBatch.Draw(projTex, drawPos, null, projectile.GetAlpha(lightColor), projectile.rotation, drawOrigin,
