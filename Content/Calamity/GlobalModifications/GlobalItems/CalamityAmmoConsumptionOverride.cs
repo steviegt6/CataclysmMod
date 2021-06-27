@@ -10,16 +10,10 @@ namespace CataclysmMod.Content.Calamity.GlobalModifications.GlobalItems
     [ModDependency("CalamityMod")]
     public class CalamityAmmoConsumptionOverride : CataclysmGlobalItem
     {
-        // Instanced field because static would cause a static constructor call regardless of loaded mods
-        public List<int> ExemptItems { get; }
-
-        public CalamityAmmoConsumptionOverride()
+        public List<int> ExemptItems => new List<int>
         {
-            ExemptItems = new List<int>
-            {
-                ModContent.ItemType<Infinity>()
-            };
-        }
+            ModContent.ItemType<Infinity>()
+        };
 
         public override bool ConsumeAmmo(Item item, Player player) =>
             !ExemptItems.Contains(item.type) && base.ConsumeAmmo(item, player);

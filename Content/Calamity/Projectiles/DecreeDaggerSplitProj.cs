@@ -43,7 +43,7 @@ namespace CataclysmMod.Content.Calamity.Projectiles
                 Vector2 spawnPos = projectile.position + projectile.velocity;
                 Vector2 spawnSpeed = new Vector2(projectile.velocity.X * 0.5f, projectile.velocity.Y * 0.5f);
 
-                Dust.NewDust(spawnPos, projectile.width, projectile.height, 75, spawnSpeed.X, spawnSpeed.Y);
+                Dust.NewDust(spawnPos, projectile.width, projectile.height, DustID.CursedTorch, spawnSpeed.X, spawnSpeed.Y);
             }
 
             if (projectile.Calamity().stealthStrike && projectile.timeLeft % 8 == 0 &&
@@ -99,7 +99,7 @@ namespace CataclysmMod.Content.Calamity.Projectiles
                 Vector2 spawnPos = projectile.position + projectile.velocity;
                 Vector2 spawnSpeed = new Vector2(projectile.oldVelocity.X * 0.5f, projectile.oldVelocity.Y * 0.5f);
 
-                Dust.NewDust(spawnPos, projectile.width, projectile.height, 75, spawnSpeed.X, spawnSpeed.Y);
+                Dust.NewDust(spawnPos, projectile.width, projectile.height, DustID.CursedTorch, spawnSpeed.X, spawnSpeed.Y);
             }
         }
 

@@ -12,7 +12,7 @@ namespace CataclysmMod.Content.Calamity.GlobalModifications.GlobalItems
     [ModDependency("CalamityMod")]
     public class CalamityArmorSetManagement : CataclysmGlobalItem
     {
-        public List<ArmorSet> ArmorSets { get; } = new List<ArmorSet>
+        public List<ArmorSet> ArmorSets => new List<ArmorSet>
         {
             new ArmorSet(ItemID.SpiderMask, ItemID.SpiderBreastplate, ItemID.SpiderGreaves, "SpiderArmor")
         };

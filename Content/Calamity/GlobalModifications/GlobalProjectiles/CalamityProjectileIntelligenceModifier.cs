@@ -15,25 +15,19 @@ namespace CataclysmMod.Content.Calamity.GlobalModifications.GlobalProjectiles
     [ModDependency("CalamityMod")]
     public class CalamityProjectileIntelligenceModifier : CataclysmGlobalProjectile
     {
-        public List<int> SlimeGodNpcs { get; }
-        public List<int> AbyssMines { get; }
-
-        public CalamityProjectileIntelligenceModifier()
+        public List<int> SlimeGodNpcs => new List<int>
         {
-            SlimeGodNpcs = new List<int>
-            {
-                ModContent.NPCType<SlimeGodCore>(),
-                ModContent.NPCType<SlimeGod>(),
-                ModContent.NPCType<SlimeGodSplit>(),
-                ModContent.NPCType<SlimeGodRun>()
-            };
+            ModContent.NPCType<SlimeGodCore>(),
+            ModContent.NPCType<SlimeGod>(),
+            ModContent.NPCType<SlimeGodSplit>(),
+            ModContent.NPCType<SlimeGodRun>()
+        };
 
-            AbyssMines = new List<int>
-            {
-                ModContent.ProjectileType<AbyssMine>(),
-                ModContent.ProjectileType<AbyssMine2>()
-            };
-        }
+        public List<int> AbyssMines => new List<int>
+        {
+            ModContent.ProjectileType<AbyssMine>(),
+            ModContent.ProjectileType<AbyssMine2>()
+        };
 
         public override bool PreAI(Projectile projectile)
         {

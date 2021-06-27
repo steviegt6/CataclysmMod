@@ -15,32 +15,27 @@ namespace CataclysmMod.Content.Calamity.GlobalModifications.GlobalItems
     [ModDependency("CalamityMod")]
     public class CalamityToolTipModifier : CataclysmGlobalItem
     {
-        public List<PickaxeToolTipReplacement> ToolTipReplacements { get; }
-
-        public CalamityToolTipModifier()
+        public List<PickaxeToolTipReplacement> ToolTipReplacements => new List<PickaxeToolTipReplacement>
         {
-            ToolTipReplacements = new List<PickaxeToolTipReplacement>
-            {
-                // Nightmare & Deathbringer
-                new PickaxeToolTipReplacement("Able to mine Hellstone", "Capable of mining Hellstone and Aerialite"),
+            // Nightmare & Deathbringer
+            new PickaxeToolTipReplacement("Able to mine Hellstone", "Capable of mining Hellstone and Aerialite"),
 
-                // Picksaw
-                new PickaxeToolTipReplacement("Capable of mining Lihzahrd Bricks",
-                    "Capable of mining Lihzahrd Bricks and Astral Ore", ItemID.Picksaw),
+            // Picksaw
+            new PickaxeToolTipReplacement("Capable of mining Lihzahrd Bricks",
+                "Capable of mining Lihzahrd Bricks and Astral Ore", ItemID.Picksaw),
 
-                // Seismic Hampick
-                new PickaxeToolTipReplacement("Capable of mining Lihzahrd Bricks",
-                    "Capable of mining Lihzahrd Bricks, Astral Ore, and Scoria",
-                    ModContent.ItemType<FlamebeakHampick>()),
+            // Seismic Hampick
+            new PickaxeToolTipReplacement("Capable of mining Lihzahrd Bricks",
+                "Capable of mining Lihzahrd Bricks, Astral Ore, and Scoria",
+                ModContent.ItemType<FlamebeakHampick>()),
 
-                // Genesis Pickaxe
-                new PickaxeToolTipReplacement("Can mine Uelibloom Ore",
-                    "Capable of mining Uelibloom Ore and Exodium Clusters"),
+            // Genesis Pickaxe
+            new PickaxeToolTipReplacement("Can mine Uelibloom Ore",
+                "Capable of mining Uelibloom Ore and Exodium Clusters"),
 
-                // Gold & Platinum
-                new PickaxeToolTipReplacement("Can mine Meteorite", "Capable of mining Meteorite and Sea Prisms")
-            };
-        }
+            // Gold & Platinum
+            new PickaxeToolTipReplacement("Can mine Meteorite", "Capable of mining Meteorite and Sea Prisms")
+        };
 
         public override void ModifyTooltips(Item item, List<TooltipLine> tooltips)
         {

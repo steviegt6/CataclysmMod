@@ -12,23 +12,18 @@ namespace CataclysmMod.Content.Calamity.GlobalModifications.GlobalProjectiles
     [ModDependency("CalamityMod")]
     public class CalamityMinionRotationHandler : CataclysmGlobalProjectile
     {
-        public Dictionary<int, RotationData> SummonRotationAdjustments;
+        public Dictionary<int, RotationData> SummonRotationAdjustments => new Dictionary<int, RotationData>
+        {
+            {ModContent.ProjectileType<IceClasperMinion>(), new RotationData(0.15f)},
+            {ModContent.ProjectileType<PowerfulRaven>(), new RotationData(0.25f, 0f)},
+            {ModContent.ProjectileType<HerringMinion>(), new RotationData(0.25f)}
+        };
 
         public float SavedRotation;
 
         public override bool InstancePerEntity => true;
 
         public override bool CloneNewInstances => true;
-
-        public CalamityMinionRotationHandler()
-        {
-            SummonRotationAdjustments = new Dictionary<int, RotationData>
-            {
-                {ModContent.ProjectileType<IceClasperMinion>(), new RotationData(0.15f)},
-                {ModContent.ProjectileType<PowerfulRaven>(), new RotationData(0.25f, 0f)},
-                {ModContent.ProjectileType<HerringMinion>(), new RotationData(0.25f)}
-            };
-        }
 
         public static void LerpToRotation(Projectile projectile, RotationData rotData)
         {
