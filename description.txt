@@ -1,1 +1,39 @@
-TBD
+Cataclysm is a Terraria mod focusing on changing different aspects of different mods.
+Current support mods: Calamity, Thorium
+
+Have any suggestions? Any bugs to report? Shoot them at me through the repository's issue tracker (https://github.com/Steviegt6/CataclysmMod/issues) or directly in my Discord server (the homepage).
+
+1.1.0.0 overhauled the mod's internal code and made many changed, allowing Cataclysm to no longer be a Calamity-only add-on.
+
+Current features (subject to change!):
+ Calamity:
+ * Obsidian Skull and its subsidaries provide heat resistance.
+ * The Sponeg and The Absorber have the effects of the Rover Drive.
+ * Infinity no longer consumes ammo, but suffers from a slightly DPS decrease as a result.
+ * Spider Armor provides more defense and lets you stick to walls.
+ * Added the Sulphurous (Sulfrous) Shell, which allows you to teleport to the Sulphurous Sea (obtained from Abyssal Crates).
+ * Clother and Guide Voodoo dolls have an increased max stack of 20.
+ * Basher is 1.2 times larger.
+ * Sulphurskin Potions sell for 2 silver.
+ * The Rampart of Deities and Deific Amulet provide the same life regeneration as the Heart Band.
+ * Some changes to Mysterious Circuitry and Dubious Plating drops.
+ * Clingers drop a new item called the Dagger of Decree, which is a new legendary rogue item.
+ * The Travelling Merchant may now drop the Pulse Bow on death.
+ * Frogfish, Catfish, Devil Fish, Fusion Feeders, and Sunskaters can drop shark fins.
+ * Angry Dogs have an increased span rate and a higher change to drop the Cryophobia.
+ * Great Sand Sharks drop a new item called the Grand Shark Repellent, which can prevent the Great Sand Shark from spawning.
+ * Enemies will specify their organic status (Organic or Inorganic) once hit.
+ * The Wizard will now sell the Guide Voodoo Doll.
+ * Numerous different minions now rotate as they move. Looks cool and gud.
+ * Dratliornus' arrows pass throw blocks.
+ * Fungal Clump now emits light.
+ * Slime God's abyss mines despawn once the Slime God has been defeated.
+ * Lore items remain activated if placed in a piggy bank (Lore items will be re-added by Cataclysm once they are removed in Calamity 1.5!).
+ * Cavern shrines are made out of stone and stone bricks instead of obsidian.
+ * Slime God inflicts slimed so you don't become unable to move up and down lmaoooo.
+ * Torrential Tear doesn't make it rain like a tsunami is above you or some crap.
+ * Throwing Bricks are crafted at a work bench instead of an anvil.
+ * Halley's Inferno is crafted with a Rifle Scope instead of Sniper Scope.
+
+ Thorium:
+ * Stained Glass sells for 5 silver like vanilla stained glass.
