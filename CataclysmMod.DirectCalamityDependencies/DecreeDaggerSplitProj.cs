@@ -1,15 +1,13 @@
 ﻿using CalamityMod;
-using CataclysmMod.Common.ModCompatibility;
-using CataclysmMod.Content.Default.Projectiles;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Terraria;
 using Terraria.ID;
+using Terraria.ModLoader;
 
-namespace CataclysmMod.Content.Calamity.Projectiles
+namespace CataclysmMod.DirectCalamityDependencies
 {
-    [ModDependency("CalamityMod")]
-    public class DecreeDaggerSplitProj : CataclysmProjectile
+    public class DecreeDaggerSplitProj : ModProjectile
     {
         public int SplitTime;
 

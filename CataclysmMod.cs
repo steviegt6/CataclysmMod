@@ -8,6 +8,7 @@ using CataclysmMod.Content.Default.Items;
 using CataclysmMod.Content.Default.MonoMod;
 using CataclysmMod.Content.Default.Projectiles;
 using CataclysmMod.Content.Default.Recipes;
+using CataclysmMod.DirectCalamityDependencies;
 using Terraria.ModLoader;
 
 namespace CataclysmMod
@@ -38,6 +39,9 @@ namespace CataclysmMod
             Logger.Debug("Loading mod-dependent content...");
 
             LoadModDependentContent();
+
+            if (ModLoader.GetMod("CalamityMod") != null)
+                LoadDirectCalamityDependencies();
 
             Logger.Debug("Loaded mod-dependent content.");
         }
@@ -182,6 +186,11 @@ namespace CataclysmMod
                 Logger.Warn(
                     $"There was content in Cataclysm that depends on: {mod}! This content was not loaded as the given mod is not enabled.");
             }
+        }
+
+        private void LoadDirectCalamityDependencies()
+        {
+            CalamityDependencyContent.AddContent(this);
         }
     }
 }
