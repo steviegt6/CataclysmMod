@@ -37,3 +37,4 @@ Current features (subject to change!):
 
  Thorium:
  * Stained Glass sells for 5 silver like vanilla stained glass.
+ * Doubled Globee spawn rate. :)
