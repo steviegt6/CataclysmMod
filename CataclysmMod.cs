@@ -9,6 +9,7 @@ using CataclysmMod.Content.Default.Items;
 using CataclysmMod.Content.Default.MonoMod;
 using CataclysmMod.Content.Default.Projectiles;
 using CataclysmMod.Content.Default.Recipes;
+using ReLogic.OS;
 using Terraria.ModLoader;
 using Terraria.ModLoader.Core;
 
@@ -23,6 +24,8 @@ namespace CataclysmMod
         public static Action<Mod> AddRecipeGroupHooks;
         public static Action<Mod> PostAddRecipeGroupHooks;
         public static Action<Mod> ModifyRecipes;
+
+        public readonly List<string> ModRecord = new List<string>();
 
         public CataclysmMod()
         {
@@ -41,7 +44,11 @@ namespace CataclysmMod
 
             LoadModDependentContent();
 
+            Logger.Debug("Preparing direct dependency content...");
+
             DirectDependencyReflection.Load();
+
+            Logger.Debug("Loading direct dependency content...");
 
             LoadDirectDependencies();
 
@@ -80,13 +87,19 @@ namespace CataclysmMod
             ModifyRecipes?.Invoke(this);
         }
 
+        public override void PostSetupContent()
+        {
+            foreach (string mod in ModRecord)
+                Logger.Warn(
+                    $"There was content in Cataclysm that depends on: {mod}! This content was not loaded as the given mod is not enabled.");
+        }
+
         private void LoadModDependentContent()
         {
-            List<string> modRecord = new List<string>();
-
             foreach (Type type in Code.GetTypes().Where(x => !x.IsAbstract && x.GetConstructor(new Type[0]) != null))
             {
-                Logger.Debug(type.Name);
+                // Logger.Debug(type.Name);
+
                 ModDependencyAttribute[] dependencies = type.GetCustomAttributes<ModDependencyAttribute>().ToArray();
                 bool missingDependency = false;
 
@@ -98,8 +111,8 @@ namespace CataclysmMod
 
                     missingDependency = true;
 
-                    if (!modRecord.Contains(dependency.Mod))
-                        modRecord.Add(dependency.Mod);
+                    if (!ModRecord.Contains(dependency.Mod))
+                        ModRecord.Add(dependency.Mod);
                 }
 
                 if (missingDependency) continue;
@@ -184,20 +197,21 @@ namespace CataclysmMod
                         break;
                 }
             }
-
-            foreach (string mod in modRecord)
-            {
-                Logger.Warn(
-                    $"There was content in Cataclysm that depends on: {mod}! This content was not loaded as the given mod is not enabled.");
-            }
         }
 
         private void LoadDirectDependencies()
         {
-            TmodFile tModFile = DirectDependencyReflection.Mod_File.GetValue(this) as TmodFile;
-            Dictionary<string, TmodFile.FileEntry> files = DirectDependencyReflection.TmodFile_files.GetValue(tModFile) as Dictionary<string, TmodFile.FileEntry>;
+            bool FnaFromPlatform(string s) => Platform.IsWindows ? !s.Contains("FNA") : s.Contains("FNA");
 
-            IEnumerable<KeyValuePair<string, TmodFile.FileEntry>> directDependencyNames = files.Where((s) => s.Key.StartsWith("lib/") && s.Key.Contains("CataclysmMod.Direct"));
+            TmodFile tModFile = DirectDependencyReflection.ModFileProperty.GetValue(this) as TmodFile;
+            Dictionary<string, TmodFile.FileEntry> files =
+                (Dictionary<string, TmodFile.FileEntry>) DirectDependencyReflection.TmodFileFilesField.GetValue(
+                    tModFile);
+
+            IEnumerable<KeyValuePair<string, TmodFile.FileEntry>> directDependencyNames =
+                files.Where(s =>
+                    s.Key.StartsWith("lib/") && s.Key.Contains("CataclysmMod.Direct") && s.Key.EndsWith(".dll") &&
+                    FnaFromPlatform(s.Key));
 
             foreach (KeyValuePair<string, TmodFile.FileEntry> kvp in directDependencyNames)
             {
@@ -206,15 +220,27 @@ namespace CataclysmMod
 
                 Type module = asm.GetType("ROOT.Main");
 
-                if (module != null)
-                {
-                    DirectDependency instance = Activator.CreateInstance(module) as DirectDependency;
+                if (module == null)
+                    continue;
 
-                    if (ModLoader.GetMod(instance.DependsOn) != null)
-                    {
-                        instance.AddContent(this);
-                    }
+                bool missingMods = false;
+
+                if (!(Activator.CreateInstance(module) is DirectDependency instance))
+                    continue;
+
+                foreach (string mod in instance.DependsOn)
+                {
+                    if (!(ModLoader.GetMod(mod) is null))
+                        continue;
+
+                    missingMods = true;
+
+                    if (!ModRecord.Contains(mod))
+                        ModRecord.Add(mod);
                 }
+
+                if (!missingMods)
+                    instance.AddContent(this);
             }
         }
     }

@@ -40,7 +40,8 @@ namespace CataclysmMod.DirectCalamityDependencies
                 Vector2 spawnVelocity = new Vector2(projectile.velocity.X * 0.5f,
                     projectile.velocity.Y * 0.5f);
 
-                Dust.NewDust(spawnPos, projectile.width, projectile.height, DustID.CursedTorch, spawnVelocity.X, spawnVelocity.Y);
+                Dust.NewDust(spawnPos, projectile.width, projectile.height, DustID.CursedTorch, spawnVelocity.X,
+                    spawnVelocity.Y);
             }
 
             if (projectile.Calamity().stealthStrike && projectile.timeLeft % 8 == 0 &&
@@ -97,7 +98,8 @@ namespace CataclysmMod.DirectCalamityDependencies
                 Vector2 spawnVelocity = new Vector2(projectile.oldVelocity.X * 0.5f,
                     projectile.oldVelocity.Y * 0.5f);
 
-                Dust.NewDust(spawnPos, projectile.width, projectile.height, DustID.CursedTorch, spawnVelocity.X, spawnVelocity.Y);
+                Dust.NewDust(spawnPos, projectile.width, projectile.height, DustID.CursedTorch, spawnVelocity.X,
+                    spawnVelocity.Y);
             }
 
             if (!projectile.Calamity().stealthStrike)

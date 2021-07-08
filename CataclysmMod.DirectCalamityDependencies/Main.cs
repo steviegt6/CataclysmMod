@@ -1,4 +1,5 @@
-﻿using CataclysmMod.Common.DirectDependencies;
+﻿using System.Collections.Generic;
+using CataclysmMod.Common.DirectDependencies;
 using CataclysmMod.DirectCalamityDependencies;
 using Terraria.ModLoader;
 
@@ -7,7 +8,10 @@ namespace ROOT
 {
     public class Main : DirectDependency
     {
-        public override string DependsOn => "CalamityMod";
+        public override IEnumerable<string> DependsOn
+        {
+            get { yield return "CalamityMod"; }
+        }
 
         public override void AddContent(Mod mod)
         {

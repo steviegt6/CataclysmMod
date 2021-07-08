@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Reflection;
+using CataclysmMod.Common.Utilities;
 using Terraria.ModLoader;
 using Terraria.ModLoader.Core;
 
@@ -8,27 +9,27 @@ namespace CataclysmMod.Common.DirectDependencies
     public static class DirectDependencyReflection
     {
         public static Type ModType;
-        public static PropertyInfo Mod_File;
+        public static PropertyInfo ModFileProperty;
 
         public static Type TmodFileType;
-        public static FieldInfo TmodFile_files;
+        public static FieldInfo TmodFileFilesField;
 
         public static void Load()
         {
             ModType = typeof(Mod);
-            Mod_File = ModType.GetProperty("File", BindingFlags.NonPublic | BindingFlags.Instance);
+            ModFileProperty = ModType.GetCachedProperty("File");
 
             TmodFileType = typeof(TmodFile);
-            TmodFile_files = TmodFileType.GetField("files", BindingFlags.NonPublic | BindingFlags.Instance);
+            TmodFileFilesField = TmodFileType.GetCachedField("files");
         }
 
         public static void Unload()
         {
             ModType = null;
-            Mod_File = null;
+            ModFileProperty = null;
 
             TmodFileType = null;
-            TmodFile_files = null;
+            TmodFileFilesField = null;
         }
     }
 }
