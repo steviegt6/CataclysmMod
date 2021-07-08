@@ -22,9 +22,6 @@
     <Reference Include="CalamityMod">
       <HintPath>lib\CalamityMod.XNA.dll</HintPath>
     </Reference>
-    <Reference Include="ClickerClass">
-      <HintPath>lib\ClickerClass.XNA.dll</HintPath>
-    </Reference>
     <Reference Include="MMHOOK_CalamityMod_v1.4.5.7">
       <HintPath>lib\MMHOOK_CalamityMod_v1.4.5.7.dll</HintPath>
     </Reference>
@@ -35,6 +32,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Folder Include="Content\ClickerClass\NewFolder\" />
     <Folder Include="Content\Default\MonoMod\" />
     <Folder Include="Content\Default\Recipes\" />
   </ItemGroup>

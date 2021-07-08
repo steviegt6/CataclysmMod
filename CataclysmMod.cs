@@ -4,6 +4,7 @@ using System.Linq;
 using System.Reflection;
 using CataclysmMod.Common.DirectDependencies;
 using CataclysmMod.Common.ModCompatibility;
+using CataclysmMod.Content.ClickerClass;
 using CataclysmMod.Content.Default.GlobalModifications;
 using CataclysmMod.Content.Default.Items;
 using CataclysmMod.Content.Default.MonoMod;
@@ -40,6 +41,8 @@ namespace CataclysmMod
 
         public override void Load()
         {
+            ClickerCompatibilityCalls.Load();
+
             Logger.Debug("Loading mod-dependent content...");
 
             LoadModDependentContent();
@@ -66,6 +69,7 @@ namespace CataclysmMod
             ModifyRecipes = null;
 
             DirectDependencyReflection.Unload();
+            ClickerCompatibilityCalls.Unload();
         }
 
         public override void AddRecipes()

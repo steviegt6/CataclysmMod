@@ -38,3 +38,9 @@ Current features (subject to change!):
  Thorium:
  * Stained Glass sells for 5 silver like vanilla stained glass.
  * Doubled Globee spawn rate. :)
+
+Clicker Class:
+ * Added several new clicker weapons, still a heavy work-in-progress.
+ * More to come, hopefully.
+
+Some of these mods are more lacking than others, but I'll get around to adding more content soon!
