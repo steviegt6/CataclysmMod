@@ -5,6 +5,7 @@ using System.Reflection;
 using CataclysmMod.Common.DirectDependencies;
 using CataclysmMod.Common.ModCompatibility;
 using CataclysmMod.Content.ClickerClass;
+using CataclysmMod.Content.Default.Configs;
 using CataclysmMod.Content.Default.GlobalModifications;
 using CataclysmMod.Content.Default.Items;
 using CataclysmMod.Content.Default.MonoMod;
@@ -41,6 +42,8 @@ namespace CataclysmMod
 
         public override void Load()
         {
+            AddConfig(nameof(CataclysmPersonalConfig), new CataclysmPersonalConfig());
+
             ClickerCompatibilityCalls.Load();
 
             Logger.Debug("Loading mod-dependent content...");

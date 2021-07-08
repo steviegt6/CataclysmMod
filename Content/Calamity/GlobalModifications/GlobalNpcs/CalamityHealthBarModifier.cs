@@ -1,5 +1,6 @@
 ﻿using CalamityMod;
 using CataclysmMod.Common.ModCompatibility;
+using CataclysmMod.Content.Default.Configs;
 using CataclysmMod.Content.Default.GlobalModifications;
 using Microsoft.Xna.Framework;
 using Terraria;
@@ -12,16 +13,18 @@ namespace CataclysmMod.Content.Calamity.GlobalModifications.GlobalNpcs
     {
         public override bool? DrawHealthBar(NPC npc, byte hbPosition, ref float scale, ref Vector2 position)
         {
+            if (!CataclysmPersonalConfig.Instance.ShowOrganicText)
+                return base.DrawHealthBar(npc, hbPosition, ref scale, ref position);
+
             string organicDrawText = "";
 
             if (npc.Organic())
                 organicDrawText = "Organic";
             else if (npc.Inorganic())
                 organicDrawText = "Inorganic";
-
-            // TODO: re-add config
-            // if (string.IsNullOrEmpty(organicDrawText) || !CataclysmConfig.Instance.DisplayOrganicTextNpCs)
-            //    return base.DrawHealthBar(npc, hbPosition, ref scale, ref position);
+            
+            if (string.IsNullOrEmpty(organicDrawText))
+                return base.DrawHealthBar(npc, hbPosition, ref scale, ref position);
 
             Color drawColor = Lighting.GetColor((int) (npc.position.X / 16), (int) (npc.position.Y / 16));
             Vector2 drawPos = position - Main.screenPosition;
