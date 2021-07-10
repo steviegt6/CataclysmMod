@@ -43,4 +43,7 @@ Clicker Class:
  * Added several new clicker weapons, still a heavy work-in-progress.
  * More to come, hopefully.
 
+Split:
+ * The Umbrella can now block Menace's icicle knife and Tetris ice block attacks.
+
 Some of these mods are more lacking than others, but I'll get around to adding more content soon!
