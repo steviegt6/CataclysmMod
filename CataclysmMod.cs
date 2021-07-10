@@ -4,6 +4,7 @@ using System.Linq;
 using System.Reflection;
 using CataclysmMod.Common.DirectDependencies;
 using CataclysmMod.Common.ModCompatibility;
+using CataclysmMod.Common.Utilities;
 using CataclysmMod.Content.ClickerClass;
 using CataclysmMod.Content.Default.Configs;
 using CataclysmMod.Content.Default.GlobalModifications;
@@ -43,7 +44,7 @@ namespace CataclysmMod
         public override void Load()
         {
             AddConfig(nameof(CataclysmPersonalConfig), new CataclysmPersonalConfig());
-
+            GlowMaskRepository.Load();
             ClickerCompatibilityCalls.Load();
 
             Logger.Debug("Loading mod-dependent content...");

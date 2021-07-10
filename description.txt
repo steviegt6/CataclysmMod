@@ -41,7 +41,6 @@ Current features (subject to change!):
 
 Clicker Class:
  * Added several new clicker weapons, still a heavy work-in-progress.
- * More to come, hopefully.
 
 Split:
  * The Umbrella can now block Menace's icicle knife and Tetris ice block attacks.
