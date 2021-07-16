@@ -231,18 +231,73 @@ namespace CataclysmMod
 
             IEnumerable<KeyValuePair<string, TmodFile.FileEntry>> directDependencyNames =
                 files.Where(s =>
-                    s.Key.StartsWith("lib/") && s.Key.Contains("CataclysmMod.Direct") && s.Key.EndsWith(".dll") &&
+                    s.Key.StartsWith("lib") && s.Key.Contains("CataclysmMod.Direct") && s.Key.EndsWith(".dll") &&
                     FnaFromPlatform(s.Key));
 
             foreach (KeyValuePair<string, TmodFile.FileEntry> kvp in directDependencyNames)
             {
+                Logger.Debug($"Loading library: {kvp.Key}");
+
                 byte[] dllBytes = GetFileBytes(kvp.Key);
-                Assembly asm = Assembly.Load(dllBytes);
+                Assembly asm = null;
+
+                try
+                {
+                    asm = Assembly.Load(dllBytes);
+                }
+                catch
+                {
+                    Logger.Warn("Failed to load assembly.");
+                }
+
+                if (asm is null)
+                {
+                    Logger.Warn("Loaded assembly was null.");
+                    continue;
+                }
+
+                Logger.Debug($"Loaded assembly name: {asm.GetName().Name}, FullName: {asm.FullName}");
 
                 Type module = asm.GetType("ROOT.Main");
 
                 if (module == null)
+                {
+                    Logger.Warn("Type ROOT.Main was null.");
+
+                    Logger.Debug("Listing all assemblies in the app domain:");
+
+                    foreach (Assembly assembly in AppDomain.CurrentDomain.GetAssemblies())
+                        Logger.Debug($"Found assembly name: {assembly.GetName().Name}, FullName: {assembly.FullName}");
+
+                    Logger.Debug("Listing all reflection-only assemblies in the app domain:");
+
+                    foreach (Assembly assembly in AppDomain.CurrentDomain.ReflectionOnlyGetAssemblies())
+                        Logger.Debug($"Found reflection-only assembly name: {assembly.GetName().Name}, FullName: {assembly.FullName}");
+
+                    /*try
+                    Logger.Debug("Listing all located assembly types:");
+
+                    {
+                        foreach (Type type in asm.GetTypes())
+                            Logger.Debug($"Found type: {type.Name}");
+
+                        if (asm.GetTypes().Length == 0)
+                            Logger.Debug("Zero types in assembly found.");
+                    }
+                    catch (ReflectionTypeLoadException e)
+                    {
+                        Logger.Error($"ReflectionTypeLoadException thrown: {e}");
+
+                        Logger.Debug("Underlying exceptions:");
+
+                        foreach (Exception exception in e.LoaderExceptions)
+                        {
+                            Logger.Debug(exception.ToString());
+                        }
+                    }*/
+
                     continue;
+                }
 
                 bool missingMods = false;
 
