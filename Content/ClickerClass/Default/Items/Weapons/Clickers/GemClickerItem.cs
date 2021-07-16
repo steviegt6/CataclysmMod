@@ -140,7 +140,7 @@ namespace CataclysmMod.Content.ClickerClass.Default.Items.Weapons.Clickers
 
         public override float RadiusIncrease => 0.45f;
 
-        public override int GemItem => ItemID.Topaz;
+        public override int GemItem => ItemID.Ruby;
 
         public override int DustType => 90;
 

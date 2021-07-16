@@ -13,6 +13,7 @@ using CataclysmMod.Content.Default.MonoMod;
 using CataclysmMod.Content.Default.Projectiles;
 using CataclysmMod.Content.Default.Recipes;
 using MonoMod.RuntimeDetour;
+using MonoMod.RuntimeDetour.HookGen;
 using ReLogic.OS;
 using Terraria.ModLoader;
 using Terraria.ModLoader.Core;
@@ -33,6 +34,8 @@ namespace CataclysmMod
 
         public static List<Hook> Hooks { get; private set; }
 
+        public static List<(MethodInfo, Delegate)> Modifiers { get; private set; }
+
         public CataclysmMod()
         {
             Properties = new ModProperties
@@ -47,6 +50,7 @@ namespace CataclysmMod
         public override void Load()
         {
             Hooks = new List<Hook>();
+            Modifiers = new List<(MethodInfo, Delegate)>();
 
             AddConfig(nameof(CataclysmPersonalConfig), new CataclysmPersonalConfig());
 
@@ -83,7 +87,11 @@ namespace CataclysmMod
             foreach (Hook hook in Hooks)
                 hook.Undo();
 
+            foreach ((MethodInfo method, Delegate @delegate) in Modifiers)
+                HookEndpointManager.Unmodify(method, @delegate);
+
             Hooks = null;
+            Modifiers = null;
 
             DirectDependencyReflection.Unload();
             ClickerCompatibilityCalls.Unload();

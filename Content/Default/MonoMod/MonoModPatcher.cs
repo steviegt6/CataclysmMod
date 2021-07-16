@@ -18,8 +18,9 @@ namespace CataclysmMod.Content.Default.MonoMod
             switch (ModderMethod)
             {
                 case string method:
-                    HookEndpointManager.Modify(Method,
-                        Delegate.CreateDelegate(typeof(ILContext.Manipulator), GetType(), method));
+                    Delegate @delegate = Delegate.CreateDelegate(typeof(ILContext.Manipulator), GetType(), method);
+                    HookEndpointManager.Modify(Method, @delegate);
+                    CataclysmMod.Modifiers.Add((Method, @delegate));
                     break;
 
                 case MethodInfo method:
@@ -29,8 +30,9 @@ namespace CataclysmMod.Content.Default.MonoMod
                     break;
 
                 default:
+                    string.Format()
                     throw new ArgumentOutOfRangeException(nameof(ModderMethod),
-                        "Unexpected generic type passed to MonoModPatcher<T>");
+                        $"Unexpected generic type passed to {nameof(MonoModPatcher<T>)}<{nameof(T)}>");
             }
         }
     }
