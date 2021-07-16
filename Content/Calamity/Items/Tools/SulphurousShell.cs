@@ -23,7 +23,7 @@ namespace CataclysmMod.Content.Calamity.Items.Tools
         public override void SetDefaults()
         {
             item.useTurn = true;
-            item.width = item.height = 20;
+            item.Size = new Vector2(24f, 38f);
             item.useStyle = ItemUseStyleID.HoldingUp;
             item.useTime = item.useAnimation = 90;
             item.UseSound = SoundID.Item6;

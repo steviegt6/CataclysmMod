@@ -44,5 +44,6 @@ Clicker Class:
 
 Split:
  * The Umbrella can now block Menace's icicle knife and Tetris ice block attacks.
+ * Added the Pharaoh's Fear, an Ankh Shield and Terror Shield upgrade.
 
 Some of these mods are more lacking than others, but I'll get around to adding more content soon!

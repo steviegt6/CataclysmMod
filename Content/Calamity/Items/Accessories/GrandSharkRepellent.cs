@@ -1,5 +1,6 @@
 ﻿using CataclysmMod.Common.ModCompatibility;
 using CataclysmMod.Content.Default.Items;
+using Microsoft.Xna.Framework;
 using Terraria;
 using Terraria.ID;
 
@@ -14,8 +15,7 @@ namespace CataclysmMod.Content.Calamity.Items.Accessories
 
         public override void SetDefaults()
         {
-            item.width = 20;
-            item.height = 26;
+            item.Size = new Vector2(20f, 30f);
             item.accessory = true;
             item.rare = ItemRarityID.Lime;
             item.value = Item.sellPrice(gold: 1, silver: 25);
