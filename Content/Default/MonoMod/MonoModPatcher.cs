@@ -30,7 +30,6 @@ namespace CataclysmMod.Content.Default.MonoMod
                     break;
 
                 default:
-                    string.Format()
                     throw new ArgumentOutOfRangeException(nameof(ModderMethod),
                         $"Unexpected generic type passed to {nameof(MonoModPatcher<T>)}<{nameof(T)}>");
             }
