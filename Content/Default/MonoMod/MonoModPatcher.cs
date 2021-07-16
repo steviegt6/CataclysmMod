@@ -9,14 +9,6 @@ namespace CataclysmMod.Content.Default.MonoMod
     public abstract class MonoModPatcher<T>
         where T : class
     {
-        protected MonoModPatcher()
-        {
-            Type type = typeof(T);
-
-            if (type != typeof(string) && type != typeof(MethodInfo))
-                throw new Exception("Invalid generic type in MonoModPatcher<T>");
-        }
-
         public abstract MethodInfo Method { get; }
 
         public abstract T ModderMethod { get; }
