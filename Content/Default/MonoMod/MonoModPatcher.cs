@@ -23,19 +23,22 @@ namespace CataclysmMod.Content.Default.MonoMod
 
         public virtual void Apply()
         {
-            if (typeof(T) == typeof(string))
+            switch (ModderMethod)
             {
-                HookEndpointManager.Modify(Method,
-                    Delegate.CreateDelegate(typeof(ILContext.Manipulator), GetType(),
-                        ModderMethod as string ??
-                        throw new InvalidOperationException("ModderMethod was not cast to String!")));
-            }
+                case string method:
+                    HookEndpointManager.Modify(Method,
+                        Delegate.CreateDelegate(typeof(ILContext.Manipulator), GetType(), method));
+                    break;
 
-            if (typeof(T) == typeof(MethodInfo))
-            {
-                new Hook(Method,
-                    ModderMethod as MethodInfo ??
-                    throw new InvalidOperationException("ModderMethod was not cast to MethodInfo!")).Apply();
+                case MethodInfo method:
+                    Hook hook = new Hook(Method, method);
+                    hook.Apply();
+                    CataclysmMod.Hooks.Add(hook);
+                    break;
+
+                default:
+                    throw new ArgumentOutOfRangeException(nameof(ModderMethod),
+                        "Unexpected generic type passed to MonoModPatcher<T>");
             }
         }
     }

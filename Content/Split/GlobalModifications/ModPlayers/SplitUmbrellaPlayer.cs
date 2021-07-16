@@ -1,6 +1,5 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
-using System.Runtime.CompilerServices;
 using CataclysmMod.Common.ModCompatibility;
 using CataclysmMod.Common.References;
 using CataclysmMod.Content.Default.GlobalModifications;

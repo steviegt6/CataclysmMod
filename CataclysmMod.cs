@@ -12,6 +12,7 @@ using CataclysmMod.Content.Default.Items;
 using CataclysmMod.Content.Default.MonoMod;
 using CataclysmMod.Content.Default.Projectiles;
 using CataclysmMod.Content.Default.Recipes;
+using MonoMod.RuntimeDetour;
 using ReLogic.OS;
 using Terraria.ModLoader;
 using Terraria.ModLoader.Core;
@@ -30,6 +31,8 @@ namespace CataclysmMod
 
         public readonly List<string> ModRecord = new List<string>();
 
+        public static List<Hook> Hooks { get; private set; }
+
         public CataclysmMod()
         {
             Properties = new ModProperties
@@ -43,7 +46,10 @@ namespace CataclysmMod
 
         public override void Load()
         {
+            Hooks = new List<Hook>();
+
             AddConfig(nameof(CataclysmPersonalConfig), new CataclysmPersonalConfig());
+
             GlowMaskRepository.Load();
             ClickerCompatibilityCalls.Load();
 
@@ -71,6 +77,13 @@ namespace CataclysmMod
             AddRecipeGroupHooks = null;
             PostAddRecipeGroupHooks = null;
             ModifyRecipes = null;
+
+            CataclysmPersonalConfig.Instance = null;
+
+            foreach (Hook hook in Hooks)
+                hook.Undo();
+
+            Hooks = null;
 
             DirectDependencyReflection.Unload();
             ClickerCompatibilityCalls.Unload();

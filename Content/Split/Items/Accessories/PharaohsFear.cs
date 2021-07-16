@@ -2,7 +2,6 @@
 using CataclysmMod.Common.Utilities;
 using CataclysmMod.Content.Default.Items;
 using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Graphics;
 using Split;
 using Split.Items.Accesories.Expert;
 using Terraria;

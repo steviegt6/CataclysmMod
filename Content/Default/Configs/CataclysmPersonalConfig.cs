@@ -5,7 +5,7 @@ namespace CataclysmMod.Content.Default.Configs
 {
     public class CataclysmPersonalConfig : ModConfig
     {
-        public static CataclysmPersonalConfig Instance { get; private set; }
+        public static CataclysmPersonalConfig Instance { get; internal set; }
 
         public override ConfigScope Mode => ConfigScope.ClientSide;
 
