@@ -6,7 +6,7 @@ using Microsoft.Xna.Framework;
 using Terraria;
 using Terraria.ID;
 
-namespace CataclysmMod.Content.ClickerClass.Items.Weapons.Clickers
+namespace CataclysmMod.Content.ClickerClass.Default.Items.Weapons.Clickers
 {
     [ModDependency("ClickerClass")]
     public class SusClicker : BaseClickerItem

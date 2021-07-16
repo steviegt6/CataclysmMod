@@ -4,7 +4,7 @@ using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
 
-namespace CataclysmMod.Content.ClickerClass.Items.Weapons.Clickers
+namespace CataclysmMod.Content.ClickerClass.Default.Items.Weapons.Clickers
 {
     [ModDependency("ClickerClass")]
     public abstract class GemClickerItem : BaseClickerItem

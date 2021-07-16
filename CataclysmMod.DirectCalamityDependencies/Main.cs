@@ -4,7 +4,7 @@ using CataclysmMod.DirectCalamityDependencies;
 using Terraria.ModLoader;
 
 // It MUST be in the namespace "ROOT"
-namespace ROOT
+namespace ROOT.DirectCalamityDependencies
 {
     public class Main : DirectDependency
     {

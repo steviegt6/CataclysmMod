@@ -2,7 +2,7 @@
 using CataclysmMod.Content.Default.Items;
 using Microsoft.Xna.Framework;
 
-namespace CataclysmMod.Content.ClickerClass.Items.Weapons.Clickers
+namespace CataclysmMod.Content.ClickerClass.Default.Items.Weapons.Clickers
 {
     [ModDependency("ClickerClass")]
     public abstract class BaseClickerItem : CataclysmItem
