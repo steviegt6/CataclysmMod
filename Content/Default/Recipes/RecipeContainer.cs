@@ -55,11 +55,18 @@ namespace CataclysmMod.Content.Default.Recipes
                 if (Result.Item1 != 0)
                     finder.SetResult(Result.Item1, Result.Item2);
 
-                if (IsExact)
-                    editAction?.Invoke(new RecipeEditor(finder.FindExactRecipe()));
-                else
-                    foreach (Recipe recipe in finder.SearchRecipes())
-                        editAction?.Invoke(new RecipeEditor(recipe));
+                try
+                {
+                    if (IsExact)
+                        editAction?.Invoke(new RecipeEditor(finder.FindExactRecipe()));
+                    else
+                        foreach (Recipe recipe in finder.SearchRecipes())
+                            editAction?.Invoke(new RecipeEditor(recipe));
+                }
+                catch (Exception e)
+                {
+                    ModContent.GetInstance<CataclysmMod>().Logger.Warn($"Exception during recipe editing thrown: {e}");
+                }
             }
         }
 
