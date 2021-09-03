@@ -439,10 +439,5 @@ namespace CataclysmMod
                 return Assembly.Load(newAssemblyStream.ToArray());
             }
         }
-
-        private static IEnumerable<IAssemblyRewriter> GetRewriters()
-        {
-            yield return new XnaToFnaRewriter();
-        }
     }
 }
