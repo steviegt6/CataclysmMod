@@ -2,16 +2,13 @@
 using CalamityMod.Items.Potions;
 using CalamityMod.Items.Weapons.Melee;
 using CalamityMod.Items.Weapons.Ranged;
-using CataclysmMod.Common.ModCompatibility;
-using CataclysmMod.Content.Default.GlobalModifications;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
 
 namespace CataclysmMod.Content.Calamity.GlobalModifications.GlobalItems
 {
-    [ModDependency("CalamityMod")]
-    public class CalamityItemDefaultsModifier : CataclysmGlobalItem
+    public class CalamityItemDefaultsModifier : CalamityGlobalItemBase
     {
         // TODO: move this to default?
         public override void SetDefaults(Item item)

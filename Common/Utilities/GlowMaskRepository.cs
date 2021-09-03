@@ -9,6 +9,8 @@ namespace CataclysmMod.Common.Utilities
 {
     public static class GlowMaskRepository
     {
+        public const string TextureSearch = "CataclysmToRemove_";
+
         public static Dictionary<string, int> GlowMasks;
 
         public static void Load()
@@ -18,10 +20,26 @@ namespace CataclysmMod.Common.Utilities
             List<Texture2D> glowMasks = Main.glowMaskTexture.ToList();
             int count = glowMasks.Count;
 
-            GlowMasks.Add(nameof(PharaohsFear), count++);
-            glowMasks.Add(ModContent.GetTexture($"CataclysmMod/Content/Split/Items/Accessories/{nameof(PharaohsFear)}_Glow"));
+            foreach ((string name, Texture2D texture) in GetGlowMasks())
+            {
+                GlowMasks.Add(name, count++);
+                texture.Name = TextureSearch + texture;
+                glowMasks.Add(texture);
+            }
 
             Main.glowMaskTexture = glowMasks.ToArray();
+        }
+
+        public static void Unload()
+        {
+            Main.glowMaskTexture = Main.glowMaskTexture.Where(x => !x.Name.StartsWith(TextureSearch)).ToArray();
+            GlowMasks.Clear();
+            GlowMasks = null;
+        }
+
+        private static IEnumerable<(string, Texture2D)> GetGlowMasks()
+        {
+            yield return (nameof(PharaohsFear), ModContent.GetTexture($"CataclysmMod/Content/Split/Items/Accessories/{nameof(PharaohsFear)}_Glow"));
         }
     }
 }

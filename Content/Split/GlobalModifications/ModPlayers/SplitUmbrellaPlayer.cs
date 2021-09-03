@@ -27,16 +27,18 @@ namespace CataclysmMod.Content.Split.GlobalModifications.ModPlayers
                 Projectile[] projectiles = Main.projectile.Where(x =>
                         x.owner.Equals(owner) && x.type.Equals(ModContent.ProjectileType<PlayerUmbrellaProjectile>()) && x.active)
                     .ToArray();
-                return EntityReference<Projectile>.FormReferenceCollection(projectiles);
+                return EntityReference<Projectile>.FromReferenceCollection(projectiles);
             }
 
             foreach (EntityReference<Projectile> projectile in GetUmbrellaProjectiles(Main.myPlayer))
                 if (GetUmbrellaProjectiles(Main.myPlayer).Count() > GetValidCount() || GetValidCount() == 0)
-                    projectile.Execute(ref Main.projectile, x => x.Kill());
+                    projectile.Execute(ref Main.projectile, Kill);
 
             if (PlayerHoldingUmbrella() && !GetUmbrellaProjectiles(Main.myPlayer).Any())
                 Projectile.NewProjectile(player.position, Vector2.Zero,
                     ModContent.ProjectileType<PlayerUmbrellaProjectile>(), 0, 0f, Main.myPlayer);
         }
+
+        private static void Kill(ref Projectile projectile) => projectile.Kill();
     }
 }

@@ -15,7 +15,7 @@ namespace CataclysmMod.Common.Utilities
             Property,
             Method,
             Constructor,
-            Type,
+            Type
         }
 
         private static Dictionary<ReflectionType, Dictionary<string, object>> ReflectionCache =>

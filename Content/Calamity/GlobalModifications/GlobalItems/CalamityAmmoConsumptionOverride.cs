@@ -1,14 +1,11 @@
 ﻿using System.Collections.Generic;
 using CalamityMod.Items.Weapons.Ranged;
-using CataclysmMod.Common.ModCompatibility;
-using CataclysmMod.Content.Default.GlobalModifications;
 using Terraria;
 using Terraria.ModLoader;
 
 namespace CataclysmMod.Content.Calamity.GlobalModifications.GlobalItems
 {
-    [ModDependency("CalamityMod")]
-    public class CalamityAmmoConsumptionOverride : CataclysmGlobalItem
+    public class CalamityAmmoConsumptionOverride : CalamityGlobalItemBase
     {
         public List<int> ExemptItems => new List<int>
         {

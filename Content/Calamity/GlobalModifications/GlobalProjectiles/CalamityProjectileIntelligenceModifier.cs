@@ -4,16 +4,13 @@ using CalamityMod.NPCs.SlimeGod;
 using CalamityMod.Projectiles.Boss;
 using CalamityMod.Projectiles.Ranged;
 using CalamityMod.Projectiles.Summon;
-using CataclysmMod.Common.ModCompatibility;
-using CataclysmMod.Content.Default.GlobalModifications;
 using Microsoft.Xna.Framework;
 using Terraria;
 using Terraria.ModLoader;
 
 namespace CataclysmMod.Content.Calamity.GlobalModifications.GlobalProjectiles
 {
-    [ModDependency("CalamityMod")]
-    public class CalamityProjectileIntelligenceModifier : CataclysmGlobalProjectile
+    public class CalamityProjectileIntelligenceModifier : CalamityGlobalProjectileBase
     {
         public List<int> SlimeGodNpcs => new List<int>
         {

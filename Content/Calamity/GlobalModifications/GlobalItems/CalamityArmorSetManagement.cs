@@ -1,16 +1,13 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using CataclysmMod.Common.ArmorSets;
-using CataclysmMod.Common.ModCompatibility;
-using CataclysmMod.Content.Default.GlobalModifications;
 using Terraria;
 using Terraria.ID;
 
 // TODO: move to default namespace and make it no longer associated with calamity?
 namespace CataclysmMod.Content.Calamity.GlobalModifications.GlobalItems
 {
-    [ModDependency("CalamityMod")]
-    public class CalamityArmorSetManagement : CataclysmGlobalItem
+    public class CalamityArmorSetManagement : CalamityGlobalItemBase
     {
         public List<ArmorSet> ArmorSets => new List<ArmorSet>
         {

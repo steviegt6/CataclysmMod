@@ -1,12 +1,10 @@
-﻿using CataclysmMod.Common.ModCompatibility;
-using Microsoft.Xna.Framework;
+﻿using Microsoft.Xna.Framework;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
 
 namespace CataclysmMod.Content.ClickerClass.Default.Items.Weapons.Clickers
 {
-    [ModDependency("ClickerClass")]
     public abstract class GemClickerItem : BaseClickerItem
     {
         public abstract int DamageIncrease { get; }
@@ -48,8 +46,7 @@ namespace CataclysmMod.Content.ClickerClass.Default.Items.Weapons.Clickers
             recipe.AddRecipe();
         }
     }
-
-    [ModDependency("ClickerClass")]
+    
     public class AmethystGemClicker : GemClickerItem
     {
         public override int DamageIncrease => 0;
@@ -69,8 +66,7 @@ namespace CataclysmMod.Content.ClickerClass.Default.Items.Weapons.Clickers
             DisplayName.SetDefault("Amethyst Clicker");
         }
     }
-
-    [ModDependency("ClickerClass")]
+    
     public class TopazGemClicker : GemClickerItem
     {
         public override int DamageIncrease => 0;
@@ -90,8 +86,7 @@ namespace CataclysmMod.Content.ClickerClass.Default.Items.Weapons.Clickers
             DisplayName.SetDefault("Topaz Clicker");
         }
     }
-
-    [ModDependency("ClickerClass")]
+    
     public class SapphireGemClicker : GemClickerItem
     {
         public override int DamageIncrease => 1;
@@ -111,8 +106,7 @@ namespace CataclysmMod.Content.ClickerClass.Default.Items.Weapons.Clickers
             DisplayName.SetDefault("Sapphire Clicker");
         }
     }
-
-    [ModDependency("ClickerClass")]
+    
     public class EmeraldGemClicker : GemClickerItem
     {
         public override int DamageIncrease => 1;
@@ -133,7 +127,6 @@ namespace CataclysmMod.Content.ClickerClass.Default.Items.Weapons.Clickers
         }
     }
 
-    [ModDependency("ClickerClass")]
     public class RubyGemClicker : GemClickerItem
     {
         public override int DamageIncrease => 2;
@@ -153,8 +146,7 @@ namespace CataclysmMod.Content.ClickerClass.Default.Items.Weapons.Clickers
             DisplayName.SetDefault("Ruby Clicker");
         }
     }
-
-    [ModDependency("ClickerClass")]
+    
     public class DiamondGemClicker : GemClickerItem
     {
         public override int DamageIncrease => 2;
@@ -174,8 +166,7 @@ namespace CataclysmMod.Content.ClickerClass.Default.Items.Weapons.Clickers
             DisplayName.SetDefault("Diamond Clicker");
         }
     }
-
-    [ModDependency("ClickerClass")]
+    
     public class AmberGemClicker : GemClickerItem
     {
         public override int DamageIncrease => 3;

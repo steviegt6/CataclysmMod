@@ -282,28 +282,6 @@ namespace CataclysmMod
                     foreach (Assembly assembly in AppDomain.CurrentDomain.ReflectionOnlyGetAssemblies())
                         Logger.Debug($"Found reflection-only assembly name: {assembly.GetName().Name}, FullName: {assembly.FullName}");
 
-                    /*try
-                    Logger.Debug("Listing all located assembly types:");
-
-                    {
-                        foreach (Type type in asm.GetTypes())
-                            Logger.Debug($"Found type: {type.Name}");
-
-                        if (asm.GetTypes().Length == 0)
-                            Logger.Debug("Zero types in assembly found.");
-                    }
-                    catch (ReflectionTypeLoadException e)
-                    {
-                        Logger.Error($"ReflectionTypeLoadException thrown: {e}");
-
-                        Logger.Debug("Underlying exceptions:");
-
-                        foreach (Exception exception in e.LoaderExceptions)
-                        {
-                            Logger.Debug(exception.ToString());
-                        }
-                    }*/
-
                     continue;
                 }
 

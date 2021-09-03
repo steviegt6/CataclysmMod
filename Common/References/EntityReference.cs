@@ -1,12 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using Terraria;
 
 namespace CataclysmMod.Common.References
 {
-    public readonly struct EntityReference<TEntity> : IEntityReference<TEntity> where TEntity : Entity
+    public readonly struct EntityReference<TEntity> where TEntity : Entity
     {
+        public delegate void EntityAction(ref TEntity entity);
+
         public int Id { get; }
 
         public EntityReference(int id)
@@ -18,9 +19,9 @@ namespace CataclysmMod.Common.References
         {
         }
 
-        public void Execute(ref TEntity[] array, Action<TEntity> action) => action?.Invoke(array[Id]);
+        public void Execute(ref TEntity[] array, EntityAction action) => action?.Invoke(ref array[Id]);
 
-        public static IEnumerable<EntityReference<TCollectionEntity>> FormReferenceCollection<TCollectionEntity>(
+        public static IEnumerable<EntityReference<TCollectionEntity>> FromReferenceCollection<TCollectionEntity>(
             params TCollectionEntity[] entities) where TCollectionEntity : Entity =>
             entities.Select(projectile => new EntityReference<TCollectionEntity>(projectile));
 

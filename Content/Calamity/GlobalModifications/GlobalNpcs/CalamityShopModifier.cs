@@ -1,13 +1,10 @@
 ﻿using CalamityMod.NPCs;
-using CataclysmMod.Common.ModCompatibility;
-using CataclysmMod.Content.Default.GlobalModifications;
 using Terraria;
 using Terraria.ID;
 
 namespace CataclysmMod.Content.Calamity.GlobalModifications.GlobalNpcs
 {
-    [ModDependency("CalamityMod")]
-    public class CalamityShopModifier : CataclysmGlobalNpc
+    public class CalamityShopModifier : CalamityGlobalNpcBase
     {
         public override void SetupShop(int type, Chest shop, ref int nextSlot)
         {

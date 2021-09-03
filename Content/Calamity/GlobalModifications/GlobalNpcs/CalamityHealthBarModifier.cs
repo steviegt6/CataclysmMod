@@ -1,15 +1,12 @@
 ﻿using CalamityMod;
-using CataclysmMod.Common.ModCompatibility;
 using CataclysmMod.Content.Default.Configs;
-using CataclysmMod.Content.Default.GlobalModifications;
 using Microsoft.Xna.Framework;
 using Terraria;
 using Terraria.UI.Chat;
 
 namespace CataclysmMod.Content.Calamity.GlobalModifications.GlobalNpcs
 {
-    [ModDependency("CalamityMod")]
-    public class CalamityHealthBarModifier : CataclysmGlobalNpc
+    public class CalamityHealthBarModifier : CalamityGlobalNpcBase
     {
         public override bool? DrawHealthBar(NPC npc, byte hbPosition, ref float scale, ref Vector2 position)
         {

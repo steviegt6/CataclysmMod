@@ -1,16 +1,13 @@
 ﻿using CalamityMod;
 using CalamityMod.Items.Accessories;
-using CataclysmMod.Common.ModCompatibility;
 using CataclysmMod.Content.Calamity.GlobalModifications.ModPlayers;
-using CataclysmMod.Content.Default.GlobalModifications;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
 
 namespace CataclysmMod.Content.Calamity.GlobalModifications.GlobalItems
 {
-    [ModDependency("CalamityMod")]
-    public class CalamityAccessoryUpdater : CataclysmGlobalItem
+    public class CalamityAccessoryUpdater : CalamityGlobalItemBase
     {
         public override void UpdateAccessory(Item item, Player player, bool hideVisual)
         {

@@ -1,6 +1,5 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
-using CataclysmMod.Common.ModCompatibility;
 using ClickerClass;
 using Microsoft.Xna.Framework;
 using Terraria;
@@ -8,7 +7,6 @@ using Terraria.ID;
 
 namespace CataclysmMod.Content.ClickerClass.Default.Items.Weapons.Clickers
 {
-    [ModDependency("ClickerClass")]
     public class SusClicker : BaseClickerItem
     {
         public static List<string> AvailableEffects = new List<string>();

@@ -7,17 +7,14 @@ using CalamityMod.NPCs.Astral;
 using CalamityMod.NPCs.GreatSandShark;
 using CalamityMod.NPCs.NormalNPCs;
 using CalamityMod.NPCs.SulphurousSea;
-using CataclysmMod.Common.ModCompatibility;
 using CataclysmMod.Content.Calamity.Items.Accessories;
-using CataclysmMod.Content.Default.GlobalModifications;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
 
 namespace CataclysmMod.Content.Calamity.GlobalModifications.GlobalNpcs
 {
-    [ModDependency("CalamityMod")]
-    public class CalamityDropHandler : CataclysmGlobalNpc
+    public class CalamityDropHandler : CalamityGlobalNpcBase
     {
         public override bool PreNPCLoot(NPC npc)
         {

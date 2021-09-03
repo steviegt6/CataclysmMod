@@ -1,16 +1,13 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using CalamityMod.Projectiles.Summon;
-using CataclysmMod.Common.ModCompatibility;
-using CataclysmMod.Content.Default.GlobalModifications;
 using Microsoft.Xna.Framework;
 using Terraria;
 using Terraria.ModLoader;
 
 namespace CataclysmMod.Content.Calamity.GlobalModifications.GlobalProjectiles
 {
-    [ModDependency("CalamityMod")]
-    public class CalamityMinionRotationHandler : CataclysmGlobalProjectile
+    public class CalamityMinionRotationHandler : CalamityGlobalProjectileBase
     {
         public Dictionary<int, RotationData> SummonRotationAdjustments => new Dictionary<int, RotationData>
         {

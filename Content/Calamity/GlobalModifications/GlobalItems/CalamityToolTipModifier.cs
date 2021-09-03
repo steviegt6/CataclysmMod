@@ -2,44 +2,41 @@
 using System.Linq;
 using CalamityMod.Items.Accessories;
 using CalamityMod.Items.Tools;
-using CataclysmMod.Common.ModCompatibility;
 using CataclysmMod.Common.ToolTips;
 using CataclysmMod.Common.Utilities;
-using CataclysmMod.Content.Default.GlobalModifications;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
 
 namespace CataclysmMod.Content.Calamity.GlobalModifications.GlobalItems
 {
-    [ModDependency("CalamityMod")]
-    public class CalamityToolTipModifier : CataclysmGlobalItem
+    public class CalamityToolTipModifier : CalamityGlobalItemBase
     {
-        public List<PickaxeToolTipReplacement> ToolTipReplacements => new List<PickaxeToolTipReplacement>
+        public List<ToolTipReplacementStructure> ToolTipReplacements => new List<ToolTipReplacementStructure>
         {
             // Nightmare & Deathbringer
-            new PickaxeToolTipReplacement("Able to mine Hellstone", "Capable of mining Hellstone and Aerialite"),
+            new ToolTipReplacementStructure("Able to mine Hellstone", "Capable of mining Hellstone and Aerialite"),
 
             // Picksaw
-            new PickaxeToolTipReplacement("Capable of mining Lihzahrd Bricks",
+            new ToolTipReplacementStructure("Capable of mining Lihzahrd Bricks",
                 "Capable of mining Lihzahrd Bricks and Astral Ore", ItemID.Picksaw),
 
             // Seismic Hampick
-            new PickaxeToolTipReplacement("Capable of mining Lihzahrd Bricks",
+            new ToolTipReplacementStructure("Capable of mining Lihzahrd Bricks",
                 "Capable of mining Lihzahrd Bricks, Astral Ore, and Scoria",
                 ModContent.ItemType<FlamebeakHampick>()),
 
             // Genesis Pickaxe
-            new PickaxeToolTipReplacement("Can mine Uelibloom Ore",
+            new ToolTipReplacementStructure("Can mine Uelibloom Ore",
                 "Capable of mining Uelibloom Ore and Exodium Clusters"),
 
             // Gold & Platinum
-            new PickaxeToolTipReplacement("Can mine Meteorite", "Capable of mining Meteorite and Sea Prisms")
+            new ToolTipReplacementStructure("Can mine Meteorite", "Capable of mining Meteorite and Sea Prisms")
         };
 
         public override void ModifyTooltips(Item item, List<TooltipLine> tooltips)
         {
-            foreach (PickaxeToolTipReplacement tooltipData in ToolTipReplacements)
+            foreach (ToolTipReplacementStructure tooltipData in ToolTipReplacements)
             {
                 TooltipLine tooltip = tooltips.FirstOrDefault(l => l.text == tooltipData.ToolTipToMatch);
 

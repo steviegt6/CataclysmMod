@@ -1,15 +1,12 @@
 ﻿using System.Collections.Generic;
 using CalamityMod.NPCs.NormalNPCs;
-using CataclysmMod.Common.ModCompatibility;
 using CataclysmMod.Common.Utilities;
-using CataclysmMod.Content.Default.GlobalModifications;
 using Terraria.ID;
 using Terraria.ModLoader;
 
 namespace CataclysmMod.Content.Calamity.GlobalModifications.GlobalNpcs
 {
-    [ModDependency("CalamityMod")]
-    public class CalamitySpawnPoolModifier : CataclysmGlobalNpc
+    public class CalamitySpawnPoolModifier : CalamityGlobalNpcBase
     {
         public override void EditSpawnPool(IDictionary<int, float> pool, NPCSpawnInfo spawnInfo)
         {
