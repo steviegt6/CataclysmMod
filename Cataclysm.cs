@@ -22,6 +22,7 @@ using Mono.Cecil.Cil;
 using MonoMod.RuntimeDetour;
 using MonoMod.RuntimeDetour.HookGen;
 using ReLogic.OS;
+using Terraria;
 using Terraria.ModLoader;
 using Terraria.ModLoader.Core;
 using MemoryStream = System.IO.MemoryStream;
@@ -385,6 +386,56 @@ namespace CataclysmMod
                         "Microsoft.Xna.Framework.Graphics",
                     };
 
+                    List<(ModuleDefinition, Assembly)> replacementScopes = new List<(ModuleDefinition, Assembly)>
+                    {
+                        (ModuleDefinition.ReadModule(Path.Combine(AppDomain.CurrentDomain.BaseDirectory,
+                            "ModCompile", "FNA.dll")), typeof(Vector2).Assembly),
+                        (ModuleDefinition.ReadModule(typeof(Main).Assembly.Location), typeof(Main).Assembly )
+                    };
+
+                    void RemoveModReference(string modName)
+                    {
+                        if (ModLoader.GetMod(modName) is null)
+                            return;
+
+                        Logger.Debug($"Registering assembly to remove: {modName}");
+                        removedReferences.Add(modName);
+                        Logger.Debug($"Registered assembly to remove: {modName}");
+                    }
+
+                    void AddModModule(string modName)
+                    {
+                        if (ModLoader.GetMod(modName) is null)
+                            return;
+
+                        Logger.Debug($"Registering module to add: {modName}");
+
+                        using (Stream stream = ModLoader.GetMod(modName).GetFileStream($"{modName}.FNA.dll"))
+                        using (MemoryStream memCopy = new MemoryStream())
+                        {
+                            stream.CopyTo(memCopy);
+                            memCopy.Position = 0;
+
+                            replacementScopes.Add((
+                                ModuleDefinition.ReadModule(memCopy, new ReaderParameters(ReadingMode.Deferred)),
+                                ModLoader.GetMod(modName).Code));
+                        }
+
+                        Logger.Debug($"Registered module to add: {modName}");
+                    }
+
+                    List<string> mods = new List<string>
+                    {
+                        "CataclysmMod",
+                        "CalamityMod"
+                    };
+
+                    foreach (string mod in mods)
+                    {
+                        RemoveModReference(mod);
+                        AddModModule(mod);
+                    }
+
                     Dictionary<string, Assembly> typeAssemblies = new Dictionary<string, Assembly>();
 
                     for (int i = 0; i < module.AssemblyReferences.Count; i++)
@@ -396,16 +447,15 @@ namespace CataclysmMod
 
                     Logger.Debug("Removed bad assembly references.");
 
-                    ModuleDefinition scopeModule =
-                        ModuleDefinition.ReadModule(Path.Combine(AppDomain.CurrentDomain.BaseDirectory,
-                            "ModCompile", "FNA.dll"));
-
-                    foreach (TypeDefinition type in scopeModule.GetTypes())
+                    foreach ((ModuleDefinition scopeModule, Assembly scopeAssembly) in replacementScopes)
                     {
-                        if (!type.IsPublic || type.Namespace.Contains('<'))
-                            continue;
+                        foreach (TypeDefinition type in scopeModule.GetTypes())
+                        {
+                            if (!type.IsPublic || type.Namespace.Contains('<'))
+                                continue;
 
-                        typeAssemblies[type.FullName] = typeof(Vector2).Assembly;
+                            typeAssemblies[type.FullName] = scopeAssembly;
+                        }
                     }
 
                     void ChangeTypeScope(TypeReference typeReference)
@@ -419,7 +469,8 @@ namespace CataclysmMod
                         typeReference.Scope = AssemblyNameReference.Parse(typeAssembly.FullName);
                     }
 
-                    module.AssemblyReferences.Add(AssemblyNameReference.Parse(typeof(Vector2).FullName));
+                    foreach ((ModuleDefinition _, Assembly assembly) in replacementScopes)
+                        module.AssemblyReferences.Add(AssemblyNameReference.Parse(assembly.FullName));
 
                     foreach (TypeReference type in module.GetTypeReferences().OrderBy(x => x.FullName))
                         ChangeTypeScope(type);
