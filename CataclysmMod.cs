@@ -240,21 +240,17 @@ namespace CataclysmMod
 
         private void LoadDirectDependencies()
         {
-            bool FnaFromPlatform(string s) => Platform.IsWindows ? !s.Contains("FNA") : s.Contains("FNA");
-
             TmodFile tModFile = DirectDependencyReflection.ModFileProperty.GetValue(this) as TmodFile;
             Dictionary<string, TmodFile.FileEntry> files =
                 (Dictionary<string, TmodFile.FileEntry>) DirectDependencyReflection.TmodFileFilesField.GetValue(
                     tModFile);
 
-            IEnumerable<KeyValuePair<string, TmodFile.FileEntry>> directDependencyNames =
-                files.Where(s =>
-                    s.Key.StartsWith("lib") && s.Key.Contains("CataclysmMod.Direct") && s.Key.EndsWith(".dll") &&
-                    FnaFromPlatform(s.Key));
+            IEnumerable<KeyValuePair<string, TmodFile.FileEntry>> directDependencyNames = files.Where(s =>
+                s.Key.StartsWith("lib") && s.Key.Contains("CataclysmMod.Direct") && s.Key.EndsWith(".dll"));
 
             foreach (KeyValuePair<string, TmodFile.FileEntry> kvp in directDependencyNames)
             {
-                Logger.Debug($"Loading library: {kvp.Key}");
+                Logger.Debug($"Loading direct dependency: {kvp.Key}");
 
                 byte[] dllBytes = GetFileBytes(kvp.Key);
                 Assembly asm = null;
@@ -280,7 +276,7 @@ namespace CataclysmMod
 
                 if (module == null)
                 {
-                    Logger.Warn("Type ROOT.Main was null.");
+                    Logger.Warn("Type ROOT.Main was null, proceeding to panic-log:");
 
                     Logger.Debug("Listing all assemblies in the app domain:");
 
@@ -292,6 +288,8 @@ namespace CataclysmMod
                     foreach (Assembly assembly in AppDomain.CurrentDomain.ReflectionOnlyGetAssemblies())
                         Logger.Debug(
                             $"Found reflection-only assembly name: {assembly.GetName().Name}, FullName: {assembly.FullName}");
+
+                    Logger.Debug("Panic-logging complete, attempting to move forward...");
 
                     continue;
                 }
@@ -336,17 +334,16 @@ namespace CataclysmMod
 
             try
             {
-                if (mod.GetFieldValue<Mod, TmodFile>("file").HasFile(libPath))
+                if (!mod.GetPropertyValue<Mod, TmodFile>("File").HasFile(libPath))
+                    throw new Exception($"No direct dependency file found: {name.Name}.dll");
+
+                using (Stream assembly = mod.GetFileStream(libPath))
+                using (MemoryStream memoryStream = new MemoryStream())
                 {
-                    using (Stream assembly = mod.GetFileStream(libPath))
-                    using (MemoryStream memoryStream = new MemoryStream())
-                    {
-                        assembly.CopyTo(memoryStream);
-                        return RewriteAssembly(memoryStream);
-                    }
+                    assembly.CopyTo(memoryStream);
+                    return RewriteAssembly(memoryStream);
                 }
 
-                throw new Exception($"No direct dependency file found: {name.Name}.dll");
             }
             catch (Exception e)
             {
