@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Reflection;
 using CataclysmMod.Common.DirectDependencies;
@@ -12,6 +13,11 @@ using CataclysmMod.Content.Default.Items;
 using CataclysmMod.Content.Default.MonoMod;
 using CataclysmMod.Content.Default.Projectiles;
 using CataclysmMod.Content.Default.Recipes;
+using CataclysmMod.Core.AssemblyRewriting;
+using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
+using Mono.Cecil;
+using Mono.Cecil.Cil;
 using MonoMod.RuntimeDetour;
 using MonoMod.RuntimeDetour.HookGen;
 using ReLogic.OS;
@@ -49,6 +55,8 @@ namespace CataclysmMod
 
         public override void Load()
         {
+            AppDomain.CurrentDomain.AssemblyResolve += DirectDependencyFallback;
+
             Hooks = new List<Hook>();
             Modifiers = new List<(MethodInfo, Delegate)>();
 
@@ -74,6 +82,8 @@ namespace CataclysmMod
 
         public override void Unload()
         {
+            AppDomain.CurrentDomain.AssemblyResolve -= DirectDependencyFallback;
+
             PreAddRecipeHooks = null;
             AddRecipeHooks = null;
             PostAddRecipeHooks = null;
@@ -119,8 +129,8 @@ namespace CataclysmMod
         public override void PostSetupContent()
         {
             foreach (string mod in ModRecord)
-                Logger.Warn(
-                    $"There was content in Cataclysm that depends on: {mod}! This content was not loaded as the given mod is not enabled.");
+                Logger.Warn($"There was content in Cataclysm that depends on: {mod}!" +
+                            $"\nThis content was not loaded as the given mod is not enabled.");
         }
 
         private void LoadModDependentContent()
@@ -280,7 +290,8 @@ namespace CataclysmMod
                     Logger.Debug("Listing all reflection-only assemblies in the app domain:");
 
                     foreach (Assembly assembly in AppDomain.CurrentDomain.ReflectionOnlyGetAssemblies())
-                        Logger.Debug($"Found reflection-only assembly name: {assembly.GetName().Name}, FullName: {assembly.FullName}");
+                        Logger.Debug(
+                            $"Found reflection-only assembly name: {assembly.GetName().Name}, FullName: {assembly.FullName}");
 
                     continue;
                 }
@@ -304,6 +315,137 @@ namespace CataclysmMod
                 if (!missingMods)
                     instance.AddContent(this);
             }
+        }
+
+        // We hook into AppDomain.CurrentDomain.AssemblyResolve to use this.
+        // *Nix & 64bit will fail to resolve our DirectXDependency assemblies.
+        // Here, we can load them manually and perform rewrites for compatibility.
+        private static Assembly DirectDependencyFallback(object sender, ResolveEventArgs args)
+        {
+            AssemblyName name = new AssemblyName(args.Name);
+
+            if (!name.Name.Contains("CataclysmMod.Direct"))
+                return null;
+
+            CataclysmMod mod = ModContent.GetInstance<CataclysmMod>();
+
+            if (mod is null)
+                throw new Exception("Cataclysm not yet loaded.");
+
+            string libPath = $"lib/{name.Name}.dll";
+
+            try
+            {
+                if (mod.GetFieldValue<Mod, TmodFile>("file").HasFile(libPath))
+                {
+                    using (Stream assembly = mod.GetFileStream(libPath))
+                    using (MemoryStream memoryStream = new MemoryStream())
+                    {
+                        assembly.CopyTo(memoryStream);
+                        return RewriteAssembly(memoryStream);
+                    }
+                }
+
+                throw new Exception($"No direct dependency file found: {name.Name}.dll");
+            }
+            catch (Exception e)
+            {
+                throw new Exception("Could not manually resolve assembly: " + args.Name, e);
+            }
+        }
+
+        // Rewrites assemblies.
+        // Map XNA namespace references to FNA.
+        private static Assembly RewriteAssembly(Stream assemblyStream)
+        {
+            AssemblyDefinition definition = AssemblyDefinition.ReadAssembly(assemblyStream);
+            ModuleDefinition module = definition.MainModule;
+
+            if (!Platform.IsWindows)
+            {
+                List<Assembly> addedReferences = new List<Assembly>
+                {
+                    typeof(Vector2).Assembly,
+                    typeof(SpriteBatch).Assembly
+                };
+
+                List<string> removedReferences = new List<string>
+                {
+                    "Microsoft.Xna.Framework",
+                    "Microsoft.Xna.Framework.Graphics",
+                };
+
+                Dictionary<Assembly, AssemblyNameReference> targetReferences = addedReferences.ToDictionary(x => x,
+                    x => AssemblyNameReference.Parse(x.FullName));
+
+                Dictionary<Assembly, ModuleDefinition> targetModules = addedReferences.ToDictionary(x => x,
+                    x => ModuleDefinition.ReadModule(x.Modules.Single().FullyQualifiedName,
+                        new ReaderParameters {InMemory = true}));
+
+
+                Dictionary<string, Assembly> typeAssemblies = new Dictionary<string, Assembly>();
+
+                for (int i = 0; i < module.AssemblyReferences.Count; i++)
+                    if (removedReferences.Any(x => module.AssemblyReferences[i].Name == x))
+                    {
+                        module.AssemblyReferences.RemoveAt(i);
+                        i--;
+                    }
+
+                foreach (Assembly assembly in addedReferences)
+                {
+                    ModuleDefinition scopeModule = targetModules[assembly];
+
+                    foreach (TypeDefinition type in scopeModule.GetTypes())
+                    {
+                        if (!type.IsPublic || type.Namespace.Contains('<'))
+                            continue;
+
+                        typeAssemblies[type.FullName] = assembly;
+                    }
+                }
+
+                void ChangeTypeScope(TypeReference typeReference)
+                {
+                    if (typeReference is null || typeReference.FullName.StartsWith("System."))
+                        return;
+
+                    if (!typeAssemblies.TryGetValue(typeReference.FullName, out Assembly typeAssembly))
+                        return;
+
+                    typeReference.Scope = targetReferences[typeAssembly];
+                }
+
+                foreach (AssemblyNameReference target in targetReferences.Values)
+                    module.AssemblyReferences.Add(target);
+
+                foreach (TypeReference type in module.GetTypeReferences().OrderBy(x => x.FullName))
+                    ChangeTypeScope(type);
+
+                foreach (TypeDefinition type in module.GetTypes())
+                foreach (CustomAttributeArgument constructorArg in type.CustomAttributes.SelectMany(attribute =>
+                    attribute.ConstructorArguments))
+                    if (constructorArg.Value is TypeReference typeReference)
+                        ChangeTypeScope(typeReference);
+            }
+
+            using (MemoryStream newAssemblyStream = new MemoryStream())
+            using (MemoryStream symbolStream = new MemoryStream())
+            {
+                definition.Write(newAssemblyStream, new WriterParameters
+                {
+                    WriteSymbols = true,
+                    SymbolStream = symbolStream,
+                    SymbolWriterProvider = new DefaultSymbolWriterProvider()
+                });
+
+                return Assembly.Load(newAssemblyStream.ToArray());
+            }
+        }
+
+        private static IEnumerable<IAssemblyRewriter> GetRewriters()
+        {
+            yield return new XnaToFnaRewriter();
         }
     }
 }
