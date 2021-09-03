@@ -254,18 +254,18 @@ namespace CataclysmMod
                 (Dictionary<string, TmodFile.FileEntry>) DirectDependencyReflection.TmodFileFilesField.GetValue(
                     tModFile);
 
-            IEnumerable<KeyValuePair<string, TmodFile.FileEntry>> directDependencyNames = files.Where(s =>
-                s.Key.StartsWith("lib") && s.Key.Contains("CataclysmMod.Direct") && s.Key.EndsWith(".dll"));
+            IEnumerable<KeyValuePair<string, TmodFile.FileEntry>> directDependencyNames =
+                files.Where(s => s.Key.StartsWith("lib") && s.Key.Contains("Direct") && s.Key.EndsWith(".dll"));
 
             foreach (KeyValuePair<string, TmodFile.FileEntry> kvp in directDependencyNames)
             {
                 Logger.Debug($"Loading direct dependency: {kvp.Key}");
-                
+
                 Assembly asm = null;
 
                 try
                 {
-                    if (Platform.IsWindows)
+                    if (Platform.IsWindows && !Environment.Is64BitProcess)
                     {
                         using (Stream stream = GetFileStream(kvp.Key))
                         using (MemoryStream mem = new MemoryStream())
@@ -276,7 +276,7 @@ namespace CataclysmMod
                     }
                     else
                         asm = DirectDependencyFallback(null,
-                            new ResolveEventArgs(kvp.Key.Replace("CataclysmMod.", "").Replace(".dll", "")));
+                            new ResolveEventArgs(kvp.Key.Replace(".dll", "")));
                 }
                 catch
                 {
@@ -339,27 +339,20 @@ namespace CataclysmMod
         // Here, we can load them manually and perform rewrites for compatibility.
         private Assembly DirectDependencyFallback(object sender, ResolveEventArgs args)
         {
-            if (!args.Name.Contains("CataclysmMod.Direct"))
+            if (!args.Name.Contains("Direct"))
                 return null;
 
-            Cataclysm mod = ModContent.GetInstance<Cataclysm>();
-
-            if (mod is null)
-                throw new Exception("Cataclysm not yet loaded.");
-
-            string libPath = $"lib/{args.Name}.dll";
+            string libPath = $"{args.Name}.dll";
 
             try
             {
-                if (!mod.GetPropertyValue<Mod, TmodFile>("File").HasFile(libPath))
-                    throw new Exception($"No direct dependency file found: {args.Name}.dll");
+                Logger.Debug($"Attempting to load and rewrite assembly: {args.Name}.");
 
-                using (Stream assembly = mod.GetFileStream(libPath))
-                using (MemoryStream memoryStream = new MemoryStream())
-                {
-                    assembly.CopyTo(memoryStream);
-                    return RewriteAssembly(memoryStream);
-                }
+                //if (!this.GetPropertyValue<Mod, TmodFile>("File").HasFile(libPath))
+                //    throw new Exception($"No direct dependency file found: {args.Name}.dll");
+
+                using (Stream assembly = GetFileStream(libPath))
+                    return RewriteAssembly(assembly);
 
             }
             catch (Exception e)
@@ -372,98 +365,88 @@ namespace CataclysmMod
         // Map XNA namespace references to FNA.
         private Assembly RewriteAssembly(Stream assemblyStream)
         {
-            Logger.Debug($"Rewriting an assembly...");
+            Logger.Debug("Rewriting an assembly...");
 
-            AssemblyDefinition definition = AssemblyDefinition.ReadAssembly(assemblyStream);
-            ModuleDefinition module = definition.MainModule;
-
-            Logger.Debug($"Rewriting with assembly definition: {definition.FullName}");
-
-            if (!Platform.IsWindows)
+            using (MemoryStream memStream = new MemoryStream())
             {
-                List<Assembly> addedReferences = new List<Assembly>
+                assemblyStream.CopyTo(memStream);
+                memStream.Position = 0;
+
+                AssemblyDefinition definition = AssemblyDefinition.ReadAssembly(memStream);
+                ModuleDefinition module = definition.MainModule;
+
+                Logger.Debug($"Rewriting with assembly definition: {definition.FullName}");
+
+                if (!Platform.IsWindows || Environment.Is64BitProcess)
                 {
-                    typeof(Vector2).Assembly,
-                    typeof(SpriteBatch).Assembly
-                };
-
-                List<string> removedReferences = new List<string>
-                {
-                    "Microsoft.Xna.Framework",
-                    "Microsoft.Xna.Framework.Graphics",
-                };
-
-                Dictionary<Assembly, AssemblyNameReference> targetReferences = addedReferences.ToDictionary(x => x,
-                    x => AssemblyNameReference.Parse(x.FullName));
-
-                Dictionary<Assembly, ModuleDefinition> targetModules = addedReferences.ToDictionary(x => x,
-                    x => ModuleDefinition.ReadModule(x.Modules.Single().FullyQualifiedName,
-                        new ReaderParameters {InMemory = true}));
-
-
-                Dictionary<string, Assembly> typeAssemblies = new Dictionary<string, Assembly>();
-
-                for (int i = 0; i < module.AssemblyReferences.Count; i++)
-                    if (removedReferences.Any(x => module.AssemblyReferences[i].Name == x))
+                    List<string> removedReferences = new List<string>
                     {
-                        module.AssemblyReferences.RemoveAt(i);
-                        i--;
-                    }
+                        "Microsoft.Xna.Framework",
+                        "Microsoft.Xna.Framework.Graphics",
+                    };
 
-                Logger.Debug("Removed bad assembly references.");
+                    Dictionary<string, Assembly> typeAssemblies = new Dictionary<string, Assembly>();
 
-                foreach (Assembly assembly in addedReferences)
-                {
-                    ModuleDefinition scopeModule = targetModules[assembly];
+                    for (int i = 0; i < module.AssemblyReferences.Count; i++)
+                        if (removedReferences.Any(x => module.AssemblyReferences[i].Name == x))
+                        {
+                            module.AssemblyReferences.RemoveAt(i);
+                            i--;
+                        }
+
+                    Logger.Debug("Removed bad assembly references.");
+
+                    ModuleDefinition scopeModule =
+                        ModuleDefinition.ReadModule(Path.Combine(AppDomain.CurrentDomain.BaseDirectory,
+                            "ModCompile", "FNA.dll"));
 
                     foreach (TypeDefinition type in scopeModule.GetTypes())
                     {
                         if (!type.IsPublic || type.Namespace.Contains('<'))
                             continue;
 
-                        typeAssemblies[type.FullName] = assembly;
+                        typeAssemblies[type.FullName] = typeof(Vector2).Assembly;
                     }
+
+                    void ChangeTypeScope(TypeReference typeReference)
+                    {
+                        if (typeReference is null || typeReference.FullName.StartsWith("System."))
+                            return;
+
+                        if (!typeAssemblies.TryGetValue(typeReference.FullName, out Assembly typeAssembly))
+                            return;
+
+                        typeReference.Scope = AssemblyNameReference.Parse(typeAssembly.FullName);
+                    }
+
+                    module.AssemblyReferences.Add(AssemblyNameReference.Parse(typeof(Vector2).FullName));
+
+                    foreach (TypeReference type in module.GetTypeReferences().OrderBy(x => x.FullName))
+                        ChangeTypeScope(type);
+
+                    foreach (TypeDefinition type in module.GetTypes())
+                    foreach (CustomAttributeArgument constructorArg in type.CustomAttributes.SelectMany(attribute =>
+                        attribute.ConstructorArguments))
+                        if (constructorArg.Value is TypeReference typeReference)
+                            ChangeTypeScope(typeReference);
+
+                    Logger.Debug("Changed type scopes.");
                 }
 
-                void ChangeTypeScope(TypeReference typeReference)
+                using (MemoryStream newAssemblyStream = new MemoryStream())
+                using (MemoryStream symbolStream = new MemoryStream())
                 {
-                    if (typeReference is null || typeReference.FullName.StartsWith("System."))
-                        return;
+                    definition.Write(newAssemblyStream, new WriterParameters
+                    {
+                        WriteSymbols = true,
+                        SymbolStream = symbolStream,
+                        SymbolWriterProvider = new PortablePdbWriterProvider()
+                    });
 
-                    if (!typeAssemblies.TryGetValue(typeReference.FullName, out Assembly typeAssembly))
-                        return;
+                    Logger.Debug("Wrote rewritten assembly to stream.");
 
-                    typeReference.Scope = targetReferences[typeAssembly];
+                    return Assembly.Load(newAssemblyStream.ToArray(), symbolStream.ToArray());
                 }
-
-                foreach (AssemblyNameReference target in targetReferences.Values)
-                    module.AssemblyReferences.Add(target);
-
-                foreach (TypeReference type in module.GetTypeReferences().OrderBy(x => x.FullName))
-                    ChangeTypeScope(type);
-
-                foreach (TypeDefinition type in module.GetTypes())
-                foreach (CustomAttributeArgument constructorArg in type.CustomAttributes.SelectMany(attribute =>
-                    attribute.ConstructorArguments))
-                    if (constructorArg.Value is TypeReference typeReference)
-                        ChangeTypeScope(typeReference);
-
-                Logger.Debug("Changed type scopes.");
-            }
-
-            using (MemoryStream newAssemblyStream = new MemoryStream())
-            using (MemoryStream symbolStream = new MemoryStream())
-            {
-                definition.Write(newAssemblyStream, new WriterParameters
-                {
-                    WriteSymbols = true,
-                    SymbolStream = symbolStream,
-                    SymbolWriterProvider = new DefaultSymbolWriterProvider()
-                });
-
-                Logger.Debug("Wrote rewritten assembly to stream.");
-
-                return Assembly.Load(newAssemblyStream.ToArray(), symbolStream.ToArray());
             }
         }
     }
