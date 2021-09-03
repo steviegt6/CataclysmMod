@@ -12,9 +12,6 @@
     <OutputPath></OutputPath>
   </PropertyGroup>
   <ItemGroup>
-    <ProjectReference Include="..\CataclysmMod.csproj" />
-  </ItemGroup>
-  <ItemGroup>
     <Reference Include="CalamityMod">
       <HintPath>..\lib\CalamityMod.XNA.dll</HintPath>
     </Reference>

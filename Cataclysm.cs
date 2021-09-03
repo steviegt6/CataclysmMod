@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Reflection;
+using System.Runtime.CompilerServices;
 using CataclysmMod.Common.DirectDependencies;
 using CataclysmMod.Common.ModCompatibility;
 using CataclysmMod.Common.Utilities;
@@ -13,7 +14,6 @@ using CataclysmMod.Content.Default.Items;
 using CataclysmMod.Content.Default.MonoMod;
 using CataclysmMod.Content.Default.Projectiles;
 using CataclysmMod.Content.Default.Recipes;
-using CataclysmMod.Core.AssemblyRewriting;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Mono.Cecil;
@@ -26,7 +26,7 @@ using Terraria.ModLoader.Core;
 
 namespace CataclysmMod
 {
-    public class CataclysmMod : Mod
+    public class Cataclysm : Mod
     {
         public static Action<Mod> PreAddRecipeHooks;
         public static Action<Mod> AddRecipeHooks;
@@ -42,7 +42,7 @@ namespace CataclysmMod
 
         public static List<(MethodInfo, Delegate)> Modifiers { get; private set; }
 
-        public CataclysmMod()
+        public Cataclysm()
         {
             Properties = new ModProperties
             {
@@ -251,13 +251,12 @@ namespace CataclysmMod
             foreach (KeyValuePair<string, TmodFile.FileEntry> kvp in directDependencyNames)
             {
                 Logger.Debug($"Loading direct dependency: {kvp.Key}");
-
-                byte[] dllBytes = GetFileBytes(kvp.Key);
+                
                 Assembly asm = null;
 
                 try
                 {
-                    asm = Assembly.Load(dllBytes);
+                    asm = ReferenceDirectDependency(kvp.Key);
                 }
                 catch
                 {
@@ -272,7 +271,7 @@ namespace CataclysmMod
 
                 Logger.Debug($"Loaded direct dependency assembly: {asm.GetName().Name}, FullName: {asm.FullName}");
 
-                Type module = asm.GetType("ROOT.Main");
+                Type module = asm.GetTypes().FirstOrDefault(x => x.FullName?.EndsWith("Main") ?? false);
 
                 if (module == null)
                 {
@@ -325,7 +324,7 @@ namespace CataclysmMod
             if (!name.Name.Contains("CataclysmMod.Direct"))
                 return null;
 
-            CataclysmMod mod = ModContent.GetInstance<CataclysmMod>();
+            Cataclysm mod = ModContent.GetInstance<Cataclysm>();
 
             if (mod is null)
                 throw new Exception("Cataclysm not yet loaded.");
@@ -439,5 +438,19 @@ namespace CataclysmMod
                 return Assembly.Load(newAssemblyStream.ToArray());
             }
         }
+
+        private static Assembly ReferenceDirectDependency(string dependency)
+        {
+            switch (dependency)
+            {
+                case "lib/CataclysmMod.DirectCalamityDependencies.dll":
+                    return Calamity();
+            }
+
+            return null;
+        }
+
+        [MethodImpl(MethodImplOptions.NoInlining)]
+        private static Assembly Calamity() => typeof(CataclysmMod.DirectCalamityDependencies.Main).Assembly;
     }
 }
