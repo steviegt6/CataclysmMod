@@ -5,7 +5,7 @@ VisualStudioVersion = 16.0.30204.135
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CataclysmMod", "CataclysmMod.csproj", "{E34488D0-6522-4986-980F-EF77D87D8EBE}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CataclysmMod.DirectCalamityDependencies", "CataclysmMod.DirectCalamityDependencies\CataclysmMod.DirectCalamityDependencies.csproj", "{A63DBBE5-2975-4C85-95AB-565B5E210E1B}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DirectCalamityDependencies", "CataclysmMod.DirectCalamityDependencies\DirectCalamityDependencies.csproj", "{A63DBBE5-2975-4C85-95AB-565B5E210E1B}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

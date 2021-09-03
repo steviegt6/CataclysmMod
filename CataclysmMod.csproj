@@ -38,7 +38,4 @@
     <Folder Include="Content\Default\MonoMod\" />
     <Folder Include="Content\Default\Recipes\" />
   </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="CataclysmMod.DirectCalamityDependencies\CataclysmMod.DirectCalamityDependencies.csproj" />
-  </ItemGroup>
 </Project>

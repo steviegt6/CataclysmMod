@@ -23,6 +23,7 @@ using MonoMod.RuntimeDetour.HookGen;
 using ReLogic.OS;
 using Terraria.ModLoader;
 using Terraria.ModLoader.Core;
+using MemoryStream = System.IO.MemoryStream;
 
 namespace CataclysmMod
 {
@@ -41,6 +42,8 @@ namespace CataclysmMod
         public static List<Hook> Hooks { get; private set; }
 
         public static List<(MethodInfo, Delegate)> Modifiers { get; private set; }
+
+        public bool DepsLoaded;
 
         public Cataclysm()
         {
@@ -240,6 +243,11 @@ namespace CataclysmMod
 
         private void LoadDirectDependencies()
         {
+            if (DepsLoaded)
+                return;
+
+            DepsLoaded = true;
+
             TmodFile tModFile = DirectDependencyReflection.ModFileProperty.GetValue(this) as TmodFile;
             Dictionary<string, TmodFile.FileEntry> files =
                 (Dictionary<string, TmodFile.FileEntry>) DirectDependencyReflection.TmodFileFilesField.GetValue(
@@ -256,7 +264,17 @@ namespace CataclysmMod
 
                 try
                 {
-                    asm = ReferenceDirectDependency(kvp.Key);
+                    if (Platform.IsWindows)
+                    {
+                        using (Stream stream = GetFileStream(kvp.Key))
+                        using (MemoryStream mem = new MemoryStream())
+                        {
+                            stream.CopyTo(mem);
+                            asm = Assembly.Load(mem.ToArray());
+                        }
+                    }
+                    else
+                        asm = DirectDependencyFallback(null, new ResolveEventArgs(kvp.Key.Remove(0, 17).Remove(kvp.Key.Length, -4)));
                 }
                 catch
                 {
@@ -271,11 +289,11 @@ namespace CataclysmMod
 
                 Logger.Debug($"Loaded direct dependency assembly: {asm.GetName().Name}, FullName: {asm.FullName}");
 
-                Type module = asm.GetTypes().FirstOrDefault(x => x.FullName?.EndsWith("Main") ?? false);
+                Type module = asm.GetTypes().FirstOrDefault(x => x.IsSubclassOf(typeof(DirectDependency)));
 
                 if (module == null)
                 {
-                    Logger.Warn("Type ROOT.Main was null, proceeding to panic-log:");
+                    Logger.Warn("No types extending DirectDependency found, proceeding to panic-log:");
 
                     Logger.Debug("Listing all assemblies in the app domain:");
 
@@ -438,19 +456,5 @@ namespace CataclysmMod
                 return Assembly.Load(newAssemblyStream.ToArray());
             }
         }
-
-        private static Assembly ReferenceDirectDependency(string dependency)
-        {
-            switch (dependency)
-            {
-                case "lib/CataclysmMod.DirectCalamityDependencies.dll":
-                    return Calamity();
-            }
-
-            return null;
-        }
-
-        [MethodImpl(MethodImplOptions.NoInlining)]
-        private static Assembly Calamity() => typeof(CataclysmMod.DirectCalamityDependencies.Main).Assembly;
     }
 }

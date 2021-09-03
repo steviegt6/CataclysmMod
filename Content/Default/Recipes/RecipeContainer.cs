@@ -65,7 +65,7 @@ namespace CataclysmMod.Content.Default.Recipes
                 }
                 catch (Exception e)
                 {
-                    ModContent.GetInstance<CataclysmMod>().Logger.Warn($"Exception during recipe editing thrown: {e}");
+                    ModContent.GetInstance<Cataclysm>().Logger.Warn($"Exception during recipe editing thrown: {e}");
                 }
             }
         }

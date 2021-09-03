@@ -20,13 +20,13 @@ namespace CataclysmMod.Content.Default.MonoMod
                 case string method:
                     Delegate @delegate = Delegate.CreateDelegate(typeof(ILContext.Manipulator), GetType(), method);
                     HookEndpointManager.Modify(Method, @delegate);
-                    CataclysmMod.Modifiers.Add((Method, @delegate));
+                    Cataclysm.Modifiers.Add((Method, @delegate));
                     break;
 
                 case MethodInfo method:
                     Hook hook = new Hook(Method, method);
                     hook.Apply();
-                    CataclysmMod.Hooks.Add(hook);
+                    Cataclysm.Hooks.Add(hook);
                     break;
 
                 default:
