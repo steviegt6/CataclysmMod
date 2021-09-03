@@ -4,6 +4,7 @@ using System.IO;
 using System.Linq;
 using System.Reflection;
 using System.Runtime.CompilerServices;
+using System.Text;
 using CataclysmMod.Common.DirectDependencies;
 using CataclysmMod.Common.ModCompatibility;
 using CataclysmMod.Common.Utilities;
@@ -274,7 +275,8 @@ namespace CataclysmMod
                         }
                     }
                     else
-                        asm = DirectDependencyFallback(null, new ResolveEventArgs(kvp.Key.Remove(0, 17).Remove(kvp.Key.Length, -4)));
+                        asm = DirectDependencyFallback(null,
+                            new ResolveEventArgs(kvp.Key.Replace("CataclysmMod.", "").Replace(".dll", "")));
                 }
                 catch
                 {
@@ -335,11 +337,9 @@ namespace CataclysmMod
         // We hook into AppDomain.CurrentDomain.AssemblyResolve to use this.
         // *Nix & 64bit will fail to resolve our DirectXDependency assemblies.
         // Here, we can load them manually and perform rewrites for compatibility.
-        private static Assembly DirectDependencyFallback(object sender, ResolveEventArgs args)
+        private Assembly DirectDependencyFallback(object sender, ResolveEventArgs args)
         {
-            AssemblyName name = new AssemblyName(args.Name);
-
-            if (!name.Name.Contains("CataclysmMod.Direct"))
+            if (!args.Name.Contains("CataclysmMod.Direct"))
                 return null;
 
             Cataclysm mod = ModContent.GetInstance<Cataclysm>();
@@ -347,12 +347,12 @@ namespace CataclysmMod
             if (mod is null)
                 throw new Exception("Cataclysm not yet loaded.");
 
-            string libPath = $"lib/{name.Name}.dll";
+            string libPath = $"lib/{args.Name}.dll";
 
             try
             {
                 if (!mod.GetPropertyValue<Mod, TmodFile>("File").HasFile(libPath))
-                    throw new Exception($"No direct dependency file found: {name.Name}.dll");
+                    throw new Exception($"No direct dependency file found: {args.Name}.dll");
 
                 using (Stream assembly = mod.GetFileStream(libPath))
                 using (MemoryStream memoryStream = new MemoryStream())
@@ -370,10 +370,14 @@ namespace CataclysmMod
 
         // Rewrites assemblies.
         // Map XNA namespace references to FNA.
-        private static Assembly RewriteAssembly(Stream assemblyStream)
+        private Assembly RewriteAssembly(Stream assemblyStream)
         {
+            Logger.Debug($"Rewriting an assembly...");
+
             AssemblyDefinition definition = AssemblyDefinition.ReadAssembly(assemblyStream);
             ModuleDefinition module = definition.MainModule;
+
+            Logger.Debug($"Rewriting with assembly definition: {definition.FullName}");
 
             if (!Platform.IsWindows)
             {
@@ -405,6 +409,8 @@ namespace CataclysmMod
                         module.AssemblyReferences.RemoveAt(i);
                         i--;
                     }
+
+                Logger.Debug("Removed bad assembly references.");
 
                 foreach (Assembly assembly in addedReferences)
                 {
@@ -441,6 +447,8 @@ namespace CataclysmMod
                     attribute.ConstructorArguments))
                     if (constructorArg.Value is TypeReference typeReference)
                         ChangeTypeScope(typeReference);
+
+                Logger.Debug("Changed type scopes.");
             }
 
             using (MemoryStream newAssemblyStream = new MemoryStream())
@@ -453,7 +461,9 @@ namespace CataclysmMod
                     SymbolWriterProvider = new DefaultSymbolWriterProvider()
                 });
 
-                return Assembly.Load(newAssemblyStream.ToArray());
+                Logger.Debug("Wrote rewritten assembly to stream.");
+
+                return Assembly.Load(newAssemblyStream.ToArray(), symbolStream.ToArray());
             }
         }
     }
