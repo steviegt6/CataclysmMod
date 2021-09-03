@@ -335,8 +335,9 @@ namespace CataclysmMod
             }
         }
 
-        // We hook into AppDomain.CurrentDomain.AssemblyResolve to use this.
-        // *Nix & 64bit will fail to resolve our DirectXDependency assemblies.
+        // We hook into AppDomain.CurrentDomain.AssemblyResolve to use this. We also call it manually when expected.
+        // *Nix & 64bit will fail to resolve our DirectXDependency assemblies. We normally try to skip loading
+        // these automatically, and instead opt for a manual load process that also calls this method.
         // Here, we can load them manually and perform rewrites for compatibility.
         private Assembly DirectDependencyFallback(object sender, ResolveEventArgs args)
         {
@@ -380,82 +381,58 @@ namespace CataclysmMod
 
                 if (!Platform.IsWindows || Environment.Is64BitProcess)
                 {
-                    List<string> removedReferences = new List<string>
+                    ModuleDefinition ResolveFnaModule()
+                    {
+                        const string moduleNameDll = "FNA.dll";
+                        string resourceName = Array.Find(typeof(Program).Assembly.GetManifestResourceNames(),
+                            x => x.EndsWith(moduleNameDll));
+
+                        using (Stream fileStream = typeof(Program).Assembly.GetManifestResourceStream(resourceName))
+                        {
+                            using (MemoryStream mem = new MemoryStream())
+                            {
+                                fileStream?.CopyTo(mem);
+                                mem.Position = 0;
+
+                                return AssemblyDefinition.ReadAssembly(mem, new ReaderParameters(ReadingMode.Immediate))
+                                    .MainModule;
+                            }
+                        }
+                    }
+
+                    List<string> xnaLeftovers = new List<string>
                     {
                         "Microsoft.Xna.Framework",
                         "Microsoft.Xna.Framework.Graphics",
+                        "Microsoft.Xna.Framework.Xact",
+                        "Microsoft.Xna.Framework.Game"
                     };
 
-                    List<(ModuleDefinition, Assembly)> replacementScopes = new List<(ModuleDefinition, Assembly)>
+                    List<ModuleDefinition> addedModules = new List<ModuleDefinition>
                     {
-                        (ModuleDefinition.ReadModule(Path.Combine(AppDomain.CurrentDomain.BaseDirectory,
-                            "ModCompile", "FNA.dll")), typeof(Vector2).Assembly),
-                        (ModuleDefinition.ReadModule(typeof(Main).Assembly.Location), typeof(Main).Assembly )
+                        ResolveFnaModule()
                     };
 
-                    void RemoveModReference(string modName)
-                    {
-                        if (ModLoader.GetMod(modName) is null)
-                            return;
-
-                        Logger.Debug($"Registering assembly to remove: {modName}");
-                        removedReferences.Add(modName);
-                        Logger.Debug($"Registered assembly to remove: {modName}");
-                    }
-
-                    void AddModModule(string modName)
-                    {
-                        if (ModLoader.GetMod(modName) is null)
-                            return;
-
-                        Logger.Debug($"Registering module to add: {modName}");
-
-                        using (Stream stream = ModLoader.GetMod(modName).GetFileStream($"{modName}.FNA.dll"))
-                        using (MemoryStream memCopy = new MemoryStream())
-                        {
-                            stream.CopyTo(memCopy);
-                            memCopy.Position = 0;
-
-                            replacementScopes.Add((
-                                ModuleDefinition.ReadModule(memCopy, new ReaderParameters(ReadingMode.Deferred)),
-                                ModLoader.GetMod(modName).Code));
-                        }
-
-                        Logger.Debug($"Registered module to add: {modName}");
-                    }
-
-                    List<string> mods = new List<string>
-                    {
-                        "CataclysmMod",
-                        "CalamityMod"
-                    };
-
-                    foreach (string mod in mods)
-                    {
-                        RemoveModReference(mod);
-                        AddModModule(mod);
-                    }
-
-                    Dictionary<string, Assembly> typeAssemblies = new Dictionary<string, Assembly>();
+                    Dictionary<string, ModuleDefinition>
+                        remappedAssemblies = new Dictionary<string, ModuleDefinition>();
 
                     for (int i = 0; i < module.AssemblyReferences.Count; i++)
-                        if (removedReferences.Any(x => module.AssemblyReferences[i].Name == x))
+                        if (xnaLeftovers.Any(x => module.AssemblyReferences[i].Name == x))
                         {
                             module.AssemblyReferences.RemoveAt(i);
                             i--;
                         }
 
                     Logger.Debug("Removed bad assembly references.");
+                    Logger.Debug("Proceeding to remap...");
 
-                    foreach ((ModuleDefinition scopeModule, Assembly scopeAssembly) in replacementScopes)
+                    foreach (ModuleDefinition scopeModule in addedModules)
+                    foreach (TypeDefinition type in scopeModule.GetTypes())
                     {
-                        foreach (TypeDefinition type in scopeModule.GetTypes())
-                        {
-                            if (!type.IsPublic || type.Namespace.Contains('<'))
-                                continue;
+                        if (!type.IsPublic || type.Namespace.Contains('<'))
+                            continue;
 
-                            typeAssemblies[type.FullName] = scopeAssembly;
-                        }
+                        remappedAssemblies[type.FullName] = scopeModule;
                     }
 
                     void ChangeTypeScope(TypeReference typeReference)
@@ -463,14 +440,14 @@ namespace CataclysmMod
                         if (typeReference is null || typeReference.FullName.StartsWith("System."))
                             return;
 
-                        if (!typeAssemblies.TryGetValue(typeReference.FullName, out Assembly typeAssembly))
+                        if (!remappedAssemblies.TryGetValue(typeReference.FullName, out ModuleDefinition typeModule))
                             return;
 
-                        typeReference.Scope = AssemblyNameReference.Parse(typeAssembly.FullName);
+                        typeReference.Scope = typeModule;
                     }
 
-                    foreach ((ModuleDefinition _, Assembly assembly) in replacementScopes)
-                        module.AssemblyReferences.Add(AssemblyNameReference.Parse(assembly.FullName));
+                    foreach (ModuleDefinition scopeModule in addedModules)
+                        module.AssemblyReferences.Add(AssemblyNameReference.Parse(scopeModule.Name));
 
                     foreach (TypeReference type in module.GetTypeReferences().OrderBy(x => x.FullName))
                         ChangeTypeScope(type);
