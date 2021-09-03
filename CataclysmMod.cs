@@ -261,7 +261,7 @@ namespace CataclysmMod
                 }
                 catch
                 {
-                    Logger.Warn("Failed to load assembly.");
+                    Logger.Warn("Failed to load direct dependency's assembly.");
                 }
 
                 if (asm is null)
@@ -270,7 +270,7 @@ namespace CataclysmMod
                     continue;
                 }
 
-                Logger.Debug($"Loaded assembly name: {asm.GetName().Name}, FullName: {asm.FullName}");
+                Logger.Debug($"Loaded direct dependency assembly: {asm.GetName().Name}, FullName: {asm.FullName}");
 
                 Type module = asm.GetType("ROOT.Main");
 
