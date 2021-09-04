@@ -413,6 +413,36 @@ namespace CataclysmMod
                         ResolveFnaModule()
                     };
 
+                    void ResolveModdedModule(string modName)
+                    {
+                        Mod mod = ModLoader.GetMod(modName);
+
+                        Logger.Debug($"Attempting to parse module: {modName}");
+
+                        if (mod is null)
+                        {
+                            Logger.Debug($"Could not parse module: {modName}");
+                            return;
+                        }
+
+                        using (Stream fileStream = mod.GetFileStream($"{modName}.FNA.dll"))
+                        {
+                            using (MemoryStream mem = new MemoryStream())
+                            {
+                                fileStream?.CopyTo(mem);
+                                mem.Position = 0;
+
+                                addedModules.Add(AssemblyDefinition
+                                    .ReadAssembly(mem, new ReaderParameters(ReadingMode.Immediate)).MainModule);
+                            }
+                        }
+
+                        Logger.Debug($"Parsed module: {modName}");
+                    }
+
+                    ResolveModdedModule("CataclysmMod");
+                    ResolveModdedModule("CalamityMod");
+
                     Dictionary<string, ModuleDefinition>
                         remappedAssemblies = new Dictionary<string, ModuleDefinition>();
 
