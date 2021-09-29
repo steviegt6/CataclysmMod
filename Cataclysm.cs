@@ -3,8 +3,6 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Reflection;
-using System.Runtime.CompilerServices;
-using System.Text;
 using CataclysmMod.Common.DirectDependencies;
 using CataclysmMod.Common.ModCompatibility;
 using CataclysmMod.Common.Utilities;
@@ -15,17 +13,16 @@ using CataclysmMod.Content.Default.Items;
 using CataclysmMod.Content.Default.MonoMod;
 using CataclysmMod.Content.Default.Projectiles;
 using CataclysmMod.Content.Default.Recipes;
+using CataclysmMod.Core.Cecil;
 using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Graphics;
 using Mono.Cecil;
 using Mono.Cecil.Cil;
 using MonoMod.RuntimeDetour;
 using MonoMod.RuntimeDetour.HookGen;
-using ReLogic.OS;
-using Terraria;
+using MonoMod.Utils;
 using Terraria.ModLoader;
 using Terraria.ModLoader.Core;
-using MemoryStream = System.IO.MemoryStream;
+using Platform = ReLogic.OS.Platform;
 
 namespace CataclysmMod
 {
@@ -60,7 +57,9 @@ namespace CataclysmMod
 
         public override void Load()
         {
-            AppDomain.CurrentDomain.AssemblyResolve += DirectDependencyFallback;
+            // AppDomain.CurrentDomain.AssemblyResolve += DirectDependencyFallback;
+            AppDomain.CurrentDomain.AssemblyResolve += RemapModsAndFna;
+            AppDomain.CurrentDomain.TypeResolve += RemapTypesToFna;
 
             Hooks = new List<Hook>();
             Modifiers = new List<(MethodInfo, Delegate)>();
@@ -87,7 +86,9 @@ namespace CataclysmMod
 
         public override void Unload()
         {
-            AppDomain.CurrentDomain.AssemblyResolve -= DirectDependencyFallback;
+            // AppDomain.CurrentDomain.AssemblyResolve -= DirectDependencyFallback;
+            AppDomain.CurrentDomain.AssemblyResolve -= RemapModsAndFna;
+            AppDomain.CurrentDomain.TypeResolve -= RemapTypesToFna;
 
             PreAddRecipeHooks = null;
             AddRecipeHooks = null;
@@ -135,12 +136,12 @@ namespace CataclysmMod
         {
             foreach (string mod in ModRecord)
                 Logger.Warn($"There was content in Cataclysm that depends on: {mod}!" +
-                            $"\nThis content was not loaded as the given mod is not enabled.");
+                            "\nThis content was not loaded as the given mod is not enabled.");
         }
 
         private void LoadModDependentContent()
         {
-            foreach (Type type in Code.GetTypes().Where(x => !x.IsAbstract && x.GetConstructor(new Type[0]) != null))
+            foreach (Type type in Code.GetTypes().Where(x => !x.IsAbstract && x.GetConstructor(Type.EmptyTypes) != null))
             {
                 // Logger.Debug(type.Name);
 
@@ -151,7 +152,8 @@ namespace CataclysmMod
 
                 foreach (ModDependencyAttribute dependency in dependencies)
                 {
-                    if (ModLoader.Mods.Any(x => x.Name.Equals(dependency.Mod))) continue;
+                    if (ModLoader.Mods.Any(x => x.Name.Equals(dependency.Mod)))
+                        continue;
 
                     missingDependency = true;
 
@@ -266,18 +268,22 @@ namespace CataclysmMod
 
                 try
                 {
-                    if (Platform.IsWindows && !Environment.Is64BitProcess)
-                    {
+                    //if (Platform.IsWindows && !Environment.Is64BitProcess)
+                    //{
                         using (Stream stream = GetFileStream(kvp.Key))
                         using (MemoryStream mem = new MemoryStream())
                         {
                             stream.CopyTo(mem);
+                            mem.Position = 0;
+
+                            RuntimeRewriteAssembly(mem);
+
                             asm = Assembly.Load(mem.ToArray());
                         }
-                    }
-                    else
-                        asm = DirectDependencyFallback(null,
-                            new ResolveEventArgs(kvp.Key.Replace(".dll", "")));
+                    //}
+                    //else
+                    //    asm = DirectDependencyFallback(null,
+                    //        new ResolveEventArgs(kvp.Key.Replace(".dll", "")));
                 }
                 catch
                 {
@@ -335,7 +341,28 @@ namespace CataclysmMod
             }
         }
 
-        // We hook into AppDomain.CurrentDomain.AssemblyResolve to use this. We also call it manually when expected.
+        private static Assembly RemapTypesToFna(object sender, ResolveEventArgs args) =>
+            args.Name.Contains("Microsoft.Xna") ? typeof(Vector2).Assembly : null;
+
+        private static Assembly RemapModsAndFna(object sender, ResolveEventArgs args) =>
+            args.Name.StartsWith("Microsoft.Xna")
+                ? typeof(Vector2).Assembly
+                : ModLoader.GetMod(args.Name.Split(',')[0]).Code;
+
+        private void RuntimeRewriteAssembly(Stream memoryStream)
+        {
+            if (Platform.IsWindows)
+            {
+                Logger.Debug("User is using XNA, aborting rewrite...");
+                return;
+            }
+
+            FnaRemapper.RemapAssembly(memoryStream);
+
+            Logger.Debug("Rewrote assembly definition!");
+        }
+
+        /*// We hook into AppDomain.CurrentDomain.AssemblyResolve to use this. We also call it manually when expected.
         // *Nix & 64bit will fail to resolve our DirectXDependency assemblies. We normally try to skip loading
         // these automatically, and instead opt for a manual load process that also calls this method.
         // Here, we can load them manually and perform rewrites for compatibility.
@@ -506,6 +533,6 @@ namespace CataclysmMod
                     return Assembly.Load(newAssemblyStream.ToArray(), symbolStream.ToArray());
                 }
             }
-        }
+        }*/
     }
 }
