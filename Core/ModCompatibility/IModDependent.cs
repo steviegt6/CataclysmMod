@@ -1,4 +1,4 @@
-﻿namespace CataclysmMod.Common.ModCompatibility
+﻿namespace CataclysmMod.Core.ModCompatibility
 {
     public interface IModDependent
     {

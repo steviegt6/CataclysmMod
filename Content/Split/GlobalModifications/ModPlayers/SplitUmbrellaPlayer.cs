@@ -1,9 +1,9 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
-using CataclysmMod.Common.ModCompatibility;
 using CataclysmMod.Common.References;
 using CataclysmMod.Content.Default.GlobalModifications;
 using CataclysmMod.Content.Split.Projectiles;
+using CataclysmMod.Core.ModCompatibility;
 using Microsoft.Xna.Framework;
 using Terraria;
 using Terraria.ID;

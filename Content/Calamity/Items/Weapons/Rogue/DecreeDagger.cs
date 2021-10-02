@@ -2,12 +2,13 @@
 using CalamityMod.Items;
 using CalamityMod.Items.Weapons.Rogue;
 using CalamityMod.Projectiles.Rogue;
+using CataclysmMod.Content.Calamity.Projectiles;
 using Microsoft.Xna.Framework;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
 
-namespace DirectCalamityDependencies
+namespace CataclysmMod.Content.Calamity.Items.Weapons.Rogue
 {
     public class DecreeDagger : RogueWeapon
     {

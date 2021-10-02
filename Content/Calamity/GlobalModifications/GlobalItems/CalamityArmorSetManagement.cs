@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
-using CataclysmMod.Common.ArmorSets;
+using CataclysmMod.Common.DataStructures;
 using Terraria;
 using Terraria.ID;
 
@@ -9,14 +9,14 @@ namespace CataclysmMod.Content.Calamity.GlobalModifications.GlobalItems
 {
     public class CalamityArmorSetManagement : CalamityGlobalItemBase
     {
-        public List<ArmorSet> ArmorSets => new List<ArmorSet>
+        public List<ArmorSetData> ArmorSets => new List<ArmorSetData>
         {
-            new ArmorSet(ItemID.SpiderMask, ItemID.SpiderBreastplate, ItemID.SpiderGreaves, "SpiderArmor")
+            new ArmorSetData(ItemID.SpiderMask, ItemID.SpiderBreastplate, ItemID.SpiderGreaves, "SpiderArmor")
         };
 
         public override string IsArmorSet(Item head, Item body, Item legs)
         {
-            foreach (ArmorSet armorSet in ArmorSets.Where(x =>
+            foreach (ArmorSetData armorSet in ArmorSets.Where(x =>
                 x.HeadType.Equals(head.type) && x.BodyType.Equals(body.type) && x.LegsType.Equals(legs.type)))
                 return armorSet.SetId;
 

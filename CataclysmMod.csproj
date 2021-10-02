@@ -37,6 +37,5 @@
   <ItemGroup>
     <Folder Include="Content\Default\MonoMod\" />
     <Folder Include="Content\Default\Recipes\" />
-    <Folder Include="Core\Cecil\" />
   </ItemGroup>
 </Project>

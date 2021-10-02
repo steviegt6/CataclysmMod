@@ -1,6 +1,6 @@
-﻿using CataclysmMod.Common.ModCompatibility;
-using CataclysmMod.Common.Utilities;
+﻿using CataclysmMod.Common.Utilities;
 using CataclysmMod.Content.Default.Items;
+using CataclysmMod.Core.ModCompatibility;
 using Microsoft.Xna.Framework;
 using Split;
 using Split.Items.Accesories.Expert;

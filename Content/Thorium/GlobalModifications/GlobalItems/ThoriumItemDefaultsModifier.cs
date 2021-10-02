@@ -1,5 +1,5 @@
-﻿using CataclysmMod.Common.ModCompatibility;
-using CataclysmMod.Content.Default.GlobalModifications;
+﻿using CataclysmMod.Content.Default.GlobalModifications;
+using CataclysmMod.Core.ModCompatibility;
 using Terraria;
 using Terraria.ModLoader;
 using ThoriumMod.Items.Placeable;

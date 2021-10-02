@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
-using CataclysmMod.Common.ModCompatibility;
 using CataclysmMod.Content.Default.GlobalModifications;
+using CataclysmMod.Core.ModCompatibility;
 using Terraria.ModLoader;
 using ThoriumMod.NPCs.Depths;
 

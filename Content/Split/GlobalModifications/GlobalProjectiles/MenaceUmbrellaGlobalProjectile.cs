@@ -1,7 +1,7 @@
 ﻿using System.Linq;
-using CataclysmMod.Common.ModCompatibility;
 using CataclysmMod.Content.Default.GlobalModifications;
 using CataclysmMod.Content.Split.Projectiles;
+using CataclysmMod.Core.ModCompatibility;
 using Split.Projectiles.Hostile.Bosses.Menace;
 using Terraria;
 using Terraria.ModLoader;

@@ -1,7 +1,9 @@
 Cataclysm is a Terraria mod focusing on changing different aspects of different mods.
-Current support mods: Calamity, Thorium
+Current support mods: Calamity, Thorium, Clicker Class, and Split
 
 Have any suggestions? Any bugs to report? Shoot them at me through the repository's issue tracker (https://github.com/Steviegt6/CataclysmMod/issues) or directly in my Discord server (the homepage).
+
+1.1.1.0 finally fixed issues with Mac & Linux.
 
 1.1.0.0 overhauled the mod's internal code and made many changes, allowing Cataclysm to no longer be a Calamity-only add-on.
 

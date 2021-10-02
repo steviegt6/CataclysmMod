@@ -1,15 +1,16 @@
-﻿using System;
-using CalamityMod;
+﻿using CalamityMod;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
 
-namespace DirectCalamityDependencies
+namespace CataclysmMod.Content.Calamity.Projectiles
 {
-    public class DecreeDaggerProj : ModProjectile
+    public class DecreeDaggerSplitProj : ModProjectile
     {
+        public int SplitTime;
+
         public override string Texture => "CalamityMod/Items/Weapons/Rogue/CursedDagger";
 
         public override void SetStaticDefaults()
@@ -24,24 +25,24 @@ namespace DirectCalamityDependencies
         {
             projectile.width = projectile.height = 12;
             projectile.friendly = true;
-            projectile.penetrate = 5;
             projectile.aiStyle = 2;
             projectile.timeLeft = 600;
-            projectile.Calamity().rogue = true;
             projectile.localNPCHitCooldown = 10;
             aiType = 48;
+            projectile.Calamity().rogue = true;
         }
 
         public override void AI()
         {
+            SplitTime++;
+
             if (Main.rand.NextBool(4))
             {
                 Vector2 spawnPos = projectile.position + projectile.velocity;
-                Vector2 spawnVelocity = new Vector2(projectile.velocity.X * 0.5f,
-                    projectile.velocity.Y * 0.5f);
+                Vector2 spawnSpeed = new Vector2(projectile.velocity.X * 0.5f, projectile.velocity.Y * 0.5f);
 
-                Dust.NewDust(spawnPos, projectile.width, projectile.height, DustID.CursedTorch, spawnVelocity.X,
-                    spawnVelocity.Y);
+                Dust.NewDust(spawnPos, projectile.width, projectile.height, DustID.CursedTorch, spawnSpeed.X,
+                    spawnSpeed.Y);
             }
 
             if (projectile.Calamity().stealthStrike && projectile.timeLeft % 8 == 0 &&
@@ -52,18 +53,18 @@ namespace DirectCalamityDependencies
                     ? ProjectileID.CursedFlameFriendly
                     : ProjectileID.CursedDartFlame;
 
-                Projectile proj = Projectile.NewProjectileDirect(projectile.Center, velocity, type,
+                Projectile stealthStrikeExtra = Projectile.NewProjectileDirect(projectile.Center, velocity, type,
                     (int) (projectile.damage * 0.5f), projectile.knockBack * 0.5f, projectile.owner);
-                proj.Calamity().stealthStrike = true;
-                proj.usesLocalNPCImmunity = true;
-                proj.localNPCHitCooldown = 10;
+                stealthStrikeExtra.usesLocalNPCImmunity = true;
+                stealthStrikeExtra.localNPCHitCooldown = 10;
+                projectile.Calamity().forceRogue = true;
             }
 
             Vector2 center = projectile.Center;
             bool doSpecial = false;
 
             foreach (NPC npc in Main.npc)
-                if (npc.CanBeChasedBy(projectile))
+                if (npc.CanBeChasedBy(projectile) && SplitTime >= 120)
                 {
                     float offset = npc.width / 2f + npc.height / 2f;
                     bool special = projectile.Calamity().stealthStrike ||
@@ -80,65 +81,29 @@ namespace DirectCalamityDependencies
             if (!doSpecial)
                 return;
 
-            Vector2 direction = projectile.DirectionTo(center);
-
             projectile.extraUpdates = 1;
+            Vector2 direction = projectile.DirectionTo(center);
 
             if (direction.HasNaNs())
                 direction = Vector2.UnitX;
 
-            projectile.velocity = (projectile.velocity * 20f + direction * 12f) / 21f;
+            Vector2 baseVelocity = projectile.velocity * 20f + direction * 12f;
+            projectile.velocity = baseVelocity / 21f;
         }
 
         public override void Kill(int timeLeft)
         {
-            for (int i = 0; i < 10; i++)
+            for (int i = 0; i < 20; i++)
             {
                 Vector2 spawnPos = projectile.position + projectile.velocity;
-                Vector2 spawnVelocity = new Vector2(projectile.oldVelocity.X * 0.5f,
-                    projectile.oldVelocity.Y * 0.5f);
+                Vector2 spawnSpeed = new Vector2(projectile.oldVelocity.X * 0.5f, projectile.oldVelocity.Y * 0.5f);
 
-                Dust.NewDust(spawnPos, projectile.width, projectile.height, DustID.CursedTorch, spawnVelocity.X,
-                    spawnVelocity.Y);
-            }
-
-            if (!projectile.Calamity().stealthStrike)
-                return;
-
-            for (int i = 0; i < 2; i++)
-            {
-                Vector2 velocity = new Vector2(Main.rand.Next(1, 5) * (Main.rand.NextBool()
-                        ? 1
-                        : -1),
-                    Main.rand.Next(1, 5) * (Main.rand.NextBool()
-                        ? 1
-                        : -1));
-
-                Projectile.NewProjectile(projectile.position, velocity,
-                    ModContent.ProjectileType<DecreeDaggerSplitProj>(), projectile.damage, projectile.knockBack,
-                    projectile.owner);
+                Dust.NewDust(spawnPos, projectile.width, projectile.height, DustID.CursedTorch, spawnSpeed.X,
+                    spawnSpeed.Y);
             }
         }
 
-        public override bool OnTileCollide(Vector2 oldVelocity)
-        {
-            projectile.penetrate--;
-
-            if (projectile.penetrate <= 0)
-                projectile.Kill();
-            else
-            {
-                projectile.ai[0] += 0.1f;
-
-                if (Math.Abs(projectile.velocity.X - oldVelocity.X) > 0.1f)
-                    projectile.velocity.X = 0f - oldVelocity.X;
-
-                if (Math.Abs(projectile.velocity.Y - oldVelocity.Y) > 0.1f)
-                    projectile.velocity.Y = 0f - oldVelocity.Y;
-            }
-
-            return false;
-        }
+        public override bool OnTileCollide(Vector2 oldVelocity) => false;
 
         public override bool PreDraw(SpriteBatch spriteBatch, Color lightColor)
         {

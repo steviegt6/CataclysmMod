@@ -1,5 +1,5 @@
-﻿using CataclysmMod.Common.ModCompatibility;
-using CataclysmMod.Content.Default.Items;
+﻿using CataclysmMod.Content.Default.Items;
+using CataclysmMod.Core.ModCompatibility;
 using Microsoft.Xna.Framework;
 using Terraria;
 using Terraria.ID;

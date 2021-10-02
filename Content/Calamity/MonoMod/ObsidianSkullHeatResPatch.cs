@@ -1,10 +1,10 @@
 ﻿using System;
 using System.Reflection;
 using CalamityMod.CalPlayer;
-using CataclysmMod.Common.ModCompatibility;
 using CataclysmMod.Common.Utilities;
 using CataclysmMod.Content.Calamity.GlobalModifications.ModPlayers;
 using CataclysmMod.Content.Default.MonoMod;
+using CataclysmMod.Core.ModCompatibility;
 using Mono.Cecil.Cil;
 using MonoMod.Cil;
 using Terraria;

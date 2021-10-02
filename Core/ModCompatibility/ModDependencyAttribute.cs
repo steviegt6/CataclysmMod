@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace CataclysmMod.Common.ModCompatibility
+namespace CataclysmMod.Core.ModCompatibility
 {
     [AttributeUsage(AttributeTargets.Class, AllowMultiple = true)]
     public class ModDependencyAttribute : Attribute

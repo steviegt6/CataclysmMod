@@ -1,4 +1,4 @@
-﻿using CataclysmMod.Common.ModCompatibility;
+﻿using CataclysmMod.Core.ModCompatibility;
 using Terraria.ModLoader;
 
 namespace CataclysmMod.Content.Default.Projectiles

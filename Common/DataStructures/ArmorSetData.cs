@@ -1,13 +1,13 @@
-﻿namespace CataclysmMod.Common.ArmorSets
+﻿namespace CataclysmMod.Common.DataStructures
 {
-    public readonly struct ArmorSet
+    public readonly struct ArmorSetData
     {
         public readonly int HeadType;
         public readonly int BodyType;
         public readonly int LegsType;
         public readonly string SetId;
 
-        public ArmorSet(int headType, int bodyType, int legsType, string setId)
+        public ArmorSetData(int headType, int bodyType, int legsType, string setId)
         {
             HeadType = headType;
             BodyType = bodyType;

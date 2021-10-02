@@ -1,4 +1,4 @@
-﻿using CataclysmMod.Common.ModCompatibility;
+﻿using CataclysmMod.Core.ModCompatibility;
 
 namespace CataclysmMod.Content.Default.Items.Tests
 {

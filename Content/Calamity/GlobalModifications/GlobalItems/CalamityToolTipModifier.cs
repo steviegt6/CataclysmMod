@@ -2,7 +2,7 @@
 using System.Linq;
 using CalamityMod.Items.Accessories;
 using CalamityMod.Items.Tools;
-using CataclysmMod.Common.ToolTips;
+using CataclysmMod.Common.DataStructures;
 using CataclysmMod.Common.Utilities;
 using Terraria;
 using Terraria.ID;
@@ -12,36 +12,36 @@ namespace CataclysmMod.Content.Calamity.GlobalModifications.GlobalItems
 {
     public class CalamityToolTipModifier : CalamityGlobalItemBase
     {
-        public List<ToolTipReplacementStructure> ToolTipReplacements => new List<ToolTipReplacementStructure>
+        public List<ToolTipReplacement> ToolTipReplacements => new List<ToolTipReplacement>
         {
             // Nightmare & Deathbringer
-            new ToolTipReplacementStructure("Able to mine Hellstone", "Capable of mining Hellstone and Aerialite"),
+            new ToolTipReplacement("Able to mine Hellstone", "Capable of mining Hellstone and Aerialite"),
 
             // Picksaw
-            new ToolTipReplacementStructure("Capable of mining Lihzahrd Bricks",
+            new ToolTipReplacement("Capable of mining Lihzahrd Bricks",
                 "Capable of mining Lihzahrd Bricks and Astral Ore", ItemID.Picksaw),
 
             // Seismic Hampick
-            new ToolTipReplacementStructure("Capable of mining Lihzahrd Bricks",
+            new ToolTipReplacement("Capable of mining Lihzahrd Bricks",
                 "Capable of mining Lihzahrd Bricks, Astral Ore, and Scoria",
                 ModContent.ItemType<FlamebeakHampick>()),
 
             // Genesis Pickaxe
-            new ToolTipReplacementStructure("Can mine Uelibloom Ore",
+            new ToolTipReplacement("Can mine Uelibloom Ore",
                 "Capable of mining Uelibloom Ore and Exodium Clusters"),
 
             // Gold & Platinum
-            new ToolTipReplacementStructure("Can mine Meteorite", "Capable of mining Meteorite and Sea Prisms")
+            new ToolTipReplacement("Can mine Meteorite", "Capable of mining Meteorite and Sea Prisms")
         };
 
         public override void ModifyTooltips(Item item, List<TooltipLine> tooltips)
         {
-            foreach (ToolTipReplacementStructure tooltipData in ToolTipReplacements)
+            foreach (ToolTipReplacement tooltipData in ToolTipReplacements)
             {
-                TooltipLine tooltip = tooltips.FirstOrDefault(l => l.text == tooltipData.ToolTipToMatch);
+                TooltipLine tooltip = tooltips.FirstOrDefault(l => l.text == tooltipData.Match);
 
                 if (tooltip != null && (item.type == tooltipData.ItemId || tooltipData.ItemId == ItemID.None))
-                    tooltip.text = tooltipData.ToolTipReplacement;
+                    tooltip.text = tooltipData.Replacement;
             }
 
             switch (item.type)
