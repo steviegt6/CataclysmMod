@@ -15,6 +15,9 @@ namespace CataclysmMod.Common.Utilities
 
         public static void Load()
         {
+            if (Main.dedServ)
+                return;
+
             GlowMasks = new Dictionary<string, int>();
 
             List<Texture2D> glowMasks = Main.glowMaskTexture.ToList();
@@ -32,6 +35,9 @@ namespace CataclysmMod.Common.Utilities
 
         public static void Unload()
         {
+            if (Main.dedServ)
+                return;
+
             Main.glowMaskTexture = Main.glowMaskTexture.Where(x => !x.Name.StartsWith(TextureSearch)).ToArray();
             GlowMasks.Clear();
             GlowMasks = null;
@@ -39,7 +45,10 @@ namespace CataclysmMod.Common.Utilities
 
         private static IEnumerable<(string, Texture2D)> GetGlowMasks()
         {
-            yield return (nameof(PharaohsFear), ModContent.GetTexture($"CataclysmMod/Content/Split/Items/Accessories/{nameof(PharaohsFear)}_Glow"));
+            yield return (
+                nameof(PharaohsFear),
+                ModContent.GetTexture($"CataclysmMod/Content/Split/Items/Accessories/{nameof(PharaohsFear)}_Glow")
+            );
         }
     }
 }

@@ -37,7 +37,9 @@ namespace CataclysmMod.Content.Split.Items.Accessories
             item.rare = ItemRarityID.Expert;
             item.defense = 4;
             item.expert = true;
-            item.glowMask = (short) GlowMaskRepository.GlowMasks[nameof(PharaohsFear)];
+
+            if (!Main.dedServ) 
+                item.glowMask = (short) GlowMaskRepository.GlowMasks[nameof(PharaohsFear)];
         }
 
         public override void UpdateAccessory(Player player, bool hideVisual)
