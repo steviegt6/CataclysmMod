@@ -34,8 +34,4 @@
       <HintPath>lib\ThoriumMod.XNA.dll</HintPath>
     </Reference>
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Content\Default\MonoMod\" />
-    <Folder Include="Content\Default\Recipes\" />
-  </ItemGroup>
 </Project>
