@@ -11,7 +11,7 @@ namespace CataclysmMod.Content.Calamity.MonoMod
 {
     public class ShrineBlocksPatch : MonoModPatcher<string>
     {
-        public override MethodInfo Method => typeof(SmallBiomes).GetCachedMethod(nameof(SmallBiomes.PlaceShrines));
+        public override MethodInfo Method => typeof(UndergroundShrines).GetCachedMethod(nameof(UndergroundShrines.PlaceShrines));
 
         public override string ModderMethod => nameof(ChangeCavernShrineBlocks);
 

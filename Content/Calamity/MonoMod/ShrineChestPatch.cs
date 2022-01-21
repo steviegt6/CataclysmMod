@@ -11,7 +11,7 @@ namespace CataclysmMod.Content.Calamity.MonoMod
     public class ShrineChestPatch : MonoModPatcher<string>
     {
         public override MethodInfo Method =>
-            typeof(WorldGenerationMethods).GetCachedMethod(nameof(WorldGenerationMethods.SpecialChest));
+            typeof(UndergroundShrines).GetCachedMethod(nameof(UndergroundShrines.SpecialChest));
 
         public override string ModderMethod => nameof(ChangeCavernShrineChest);
 

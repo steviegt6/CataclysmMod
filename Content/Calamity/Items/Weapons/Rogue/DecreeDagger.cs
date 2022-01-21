@@ -42,7 +42,7 @@ namespace CataclysmMod.Content.Calamity.Items.Weapons.Rogue
             item.autoReuse = true;
             item.value = Item.buyPrice(gold: 36);
             item.rare = ItemRarityID.Pink;
-            item.Calamity().customRarity = CalamityRarity.RareVariant;
+            item.Calamity().challengeDrop = true;
         }
 
         public override bool Shoot(Player player, ref Vector2 position, ref float speedX, ref float speedY,
