@@ -10,16 +10,8 @@ namespace CataclysmMod.Core.Loading
     /// <summary>
     ///     Represents an informational object for mod load handling.
     /// </summary>
-    // Self-referencing generic for CLR abuse.
-    public abstract class Addon<TSelf> where TSelf : Addon<TSelf>, new()
+    public abstract class Addon
     {
-        private static TSelf Self;
-
-        /// <summary>
-        ///     A singleton addon instance.
-        /// </summary>
-        public static TSelf Instance => Self ?? (Self = new TSelf());
-
         /// <summary>
         ///     The internal name of the mod.
         /// </summary>
@@ -34,5 +26,18 @@ namespace CataclysmMod.Core.Loading
         ///     Whether this mod is enabled.
         /// </summary>
         public virtual bool IsEnabled => ModLoader.GetMod(InternalName) != null;
+    }
+    
+    /// <inheritdoc cref="Addon"/>
+    /// <typeparam name="TSelf">Self-referential generic type.</typeparam>
+    // Self-referencing generic for CLR abuse.
+    public abstract class Addon<TSelf> : Addon where TSelf : Addon<TSelf>, new()
+    {
+        private static TSelf Self;
+
+        /// <summary>
+        ///     A singleton addon instance.
+        /// </summary>
+        public static TSelf Instance => Self ?? (Self = new TSelf());
     }
 }

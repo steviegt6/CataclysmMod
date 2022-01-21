@@ -6,6 +6,7 @@ using System;
 
 namespace CataclysmMod.Core.Loading
 {
+    [AttributeUsage(AttributeTargets.Class, Inherited = false, AllowMultiple = true)]
     public class AddonContentAttribute : Attribute
     {
         public readonly Type AddonType;
