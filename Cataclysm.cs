@@ -66,66 +66,60 @@ namespace CataclysmMod
                 string name = type.Name;
 
                 if (type.IsSubclassOf(typeof(ModItem)))
-                    NamelessAddItem((ModItem) instance, name);
+                    AddItem(name, (ModItem) instance);
                 //else if (type.IsSubclassOf(typeof(GlobalItem)))
-                //    NamelessAddGlobalItem(type);
+                //    AddGlobalItem(type);
                 //else if (type.IsSubclassOf(typeof(ModPrefix)))
-                //    NamelessAddPrefix(type);
+                //    AddPrefix(type);
                 //else if (type.IsSubclassOf(typeof(ModDust)))
-                //    NamelessAddDust(type);
+                //    AddDust(type);
                 //else if (type.IsSubclassOf(typeof(ModTile)))
-                //    NamelessAddTile(type);
+                //    AddTile(type);
                 //else if (type.IsSubclassOf(typeof(GlobalTile)))
-                //    NamelessAddGlobalTile(type);
+                //    AddGlobalTile(type);
                 //else if (type.IsSubclassOf(typeof(ModTileEntity)))
-                //    NamelessAddTileEntity(type);
+                //    AddTileEntity(type);
                 //else if (type.IsSubclassOf(typeof(ModWall)))
-                //    NamelessAddWall(type);
+                //    AddWall(type);
                 //else if (type.IsSubclassOf(typeof(GlobalWall)))
-                //    NamelessAddGlobalWall(type);
+                //    AddGlobalWall(type);
                 //else if (type.IsSubclassOf(typeof(ModProjectile)))
-                //    NamelessAddProjectile(type);
+                //    AddProjectile(type);
                 //else if (type.IsSubclassOf(typeof(GlobalProjectile)))
-                //    NamelessAddGlobalProjectile(type);
+                //    AddGlobalProjectile(type);
                 //else if (type.IsSubclassOf(typeof(ModNPC)))
-                //    NamelessAddNPC(type);
+                //    AddNPC(type);
                 //else if (type.IsSubclassOf(typeof(GlobalNPC)))
-                //    NamelessAddGlobalNPC(type);
+                //    AddGlobalNPC(type);
                 //else if (type.IsSubclassOf(typeof(ModPlayer)))
-                //    NamelessAddPlayer(type);
+                //    AddPlayer(type);
                 //else if (type.IsSubclassOf(typeof(ModBuff)))
-                //    NamelessAddBuff(type);
+                //    AddBuff(type);
                 //else if (type.IsSubclassOf(typeof(GlobalBuff)))
-                //    NamelessAddGlobalBuff(type);
+                //    AddGlobalBuff(type);
                 //else if (type.IsSubclassOf(typeof(ModMountData)))
-                //    NamelessAddMount(type);
+                //    AddMount(type);
                 //else if (type.IsSubclassOf(typeof(ModGore)))
-                //    modGores.NamelessAdd(type);
+                //    modGores.Add(type);
                 //else if (type.IsSubclassOf(typeof(ModSound)))
-                //    modSounds.NamelessAdd(type);
+                //    modSounds.Add(type);
                 //else if (type.IsSubclassOf(typeof(ModWorld)))
-                //    NamelessAddModWorld(type);
+                //    AddModWorld(type);
                 //else if (type.IsSubclassOf(typeof(ModUgBgStyle)))
-                //    NamelessAddUgBgStyle(type);
+                //    AddUgBgStyle(type);
                 //else if (type.IsSubclassOf(typeof(ModSurfaceBgStyle)))
-                //    NamelessAddSurfaceBgStyle(type);
+                //    AddSurfaceBgStyle(type);
                 //else if (type.IsSubclassOf(typeof(GlobalBgStyle)))
-                //    NamelessAddGlobalBgStyle(type);
+                //    AddGlobalBgStyle(type);
                 //else if (type.IsSubclassOf(typeof(ModWaterStyle)))
-                //    NamelessAddWaterStyle(type);
+                //    AddWaterStyle(type);
                 //else if (type.IsSubclassOf(typeof(ModWaterfallStyle)))
-                //    NamelessAddWaterfallStyle(type);
+                //    AddWaterfallStyle(type);
                 //else if (type.IsSubclassOf(typeof(GlobalRecipe)))
-                //    NamelessAddGlobalRecipe(type);
+                //    AddGlobalRecipe(type);
                 //else if (type.IsSubclassOf(typeof(ModCommand)))
-                //    NamelessAddCommand(type);
+                //    AddCommand(type);
             }
-        }
-
-        private void NamelessAddItem(ModItem item, string name)
-        {
-            if (item.Autoload(ref name))
-                AddItem(name, item);
         }
     }
 }
