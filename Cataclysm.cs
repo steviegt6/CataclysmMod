@@ -2,21 +2,33 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
+using System.Threading.Tasks;
 using CataclysmMod.Common.Addons;
+using CataclysmMod.Common.Configuration;
+using CataclysmMod.Common.UserInterface;
+using CataclysmMod.Common.UserInterface.AddonDisplay;
 using CataclysmMod.Core.Loading;
+using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
+using Terraria;
 using Terraria.ModLoader;
 
 namespace CataclysmMod
 {
     public sealed class Cataclysm : Mod
     {
-        public Dictionary<Type, Addon> RegisteredAddons = new Dictionary<Type, Addon>
+        public VersionHandlerConfig VhConfig = new VersionHandlerConfig();
+        
+        public readonly UserInterfaceHandler InterfaceHandler = new UserInterfaceHandler();
+        public readonly Dictionary<Type, Addon> RegisteredAddons = new Dictionary<Type, Addon>
         {
             {typeof(CalamityModAddon), CalamityModAddon.Instance},
             {typeof(ClickerClassAddon), ClickerClassAddon.Instance},
             {typeof(SplitAddon), SplitAddon.Instance},
             {typeof(ThoriumModAddon), ThoriumModAddon.Instance}
         };
+
+        public bool WarningsShown = false;
 
         public Cataclysm()
         {
@@ -34,14 +46,52 @@ namespace CataclysmMod
         {
             base.Load();
 
+            VhConfig = VersionHandlerConfig.DeserializeConfig();
+
             Logger.Info("Registered addons:");
 
             foreach (Addon addon in RegisteredAddons.Values)
                 Logger.Info($"  {addon.InternalName}: minimum v{addon.MinimumVersion}");
-
+            
             Logger.Debug("Loading addon content...");
 
             Autoload();
+        }
+
+        public override void Unload()
+        {
+            base.Unload();
+            
+            VersionHandlerConfig.SerializeConfig(VhConfig);
+        }
+
+        public override void PostAddRecipes()
+        {
+            base.PostAddRecipes();
+
+            new TaskFactory().StartNew(() =>
+            {
+                while (Main.menuMode != 0)
+                {
+                }
+
+                Main.menuMode = 888;
+                Main.MenuUI.SetState(new UIAddons());
+            });
+        }
+
+        public override void UpdateUI(GameTime gameTime)
+        {
+            base.UpdateUI(gameTime);
+
+            InterfaceHandler.UpdateStates(gameTime);
+        }
+
+        public override void PostDrawInterface(SpriteBatch spriteBatch)
+        {
+            base.PostDrawInterface(spriteBatch);
+
+            InterfaceHandler.DrawStates(spriteBatch);
         }
 
         private void Autoload()

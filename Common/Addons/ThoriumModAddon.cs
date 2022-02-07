@@ -11,6 +11,8 @@ namespace CataclysmMod.Common.Addons
     {
         public override string InternalName => "ThoriumMod";
 
+        public override string DisplayName => "Thorium Mod";
+
         public override Version MinimumVersion => new Version(1, 6, 5, 4);
     }
 }

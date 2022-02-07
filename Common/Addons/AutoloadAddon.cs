@@ -14,7 +14,9 @@ namespace CataclysmMod.Common.Addons
     public class AutoloadAddon : Addon<AutoloadAddon>
     {
         public override string InternalName => "Terraria";
-        
+
+        public override string DisplayName => "Invisible";
+
         public override Version MinimumVersion => Version.Parse(Main.versionNumber);
 
         public override bool IsEnabled => true;
