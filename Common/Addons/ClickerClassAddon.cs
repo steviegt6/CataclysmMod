@@ -4,6 +4,8 @@
 
 using System;
 using CataclysmMod.Core.Loading;
+using ClickerClass;
+using Terraria.ModLoader.Config;
 
 namespace CataclysmMod.Common.Addons
 {
@@ -14,7 +16,9 @@ namespace CataclysmMod.Common.Addons
         public override string DisplayName => "The Clicker Class";
 
         public override Version MinimumVersion => new Version(1, 2, 7, 1);
-        
+
+        public override ModConfig Config => new ClickerConfigClient();
+
         public override string Description => "Pending...";
     }
 }
