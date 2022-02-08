@@ -18,6 +18,9 @@ namespace CataclysmMod
     public sealed class Cataclysm : Mod
     {
         public VersionHandlerConfig VhConfig = new VersionHandlerConfig();
+
+        public UIAddons AddonsUI;
+        public UIAddonInfo AddonInfoUI;
         
         public readonly UserInterfaceHandler InterfaceHandler = new UserInterfaceHandler();
         public readonly Dictionary<Type, Addon> RegisteredAddons = new Dictionary<Type, Addon>
@@ -56,6 +59,9 @@ namespace CataclysmMod
             Logger.Debug("Loading addon content...");
 
             Autoload();
+
+            AddonsUI = new UIAddons();
+            AddonInfoUI = new UIAddonInfo();
         }
 
         public override void Unload()
@@ -76,7 +82,7 @@ namespace CataclysmMod
                 }
 
                 Main.menuMode = 888;
-                Main.MenuUI.SetState(new UIAddons());
+                Main.MenuUI.SetState(AddonsUI);
             });
         }
 

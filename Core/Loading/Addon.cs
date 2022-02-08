@@ -46,9 +46,9 @@ namespace CataclysmMod.Core.Loading
         public virtual ModConfig Config => null;
 
         /// <summary>
-        ///     Vanity display integer for changes.
+        ///     Vanity display for changes.
         /// </summary>
-        public virtual int Changes => 0;
+        public virtual string Description => "";
     }
 
     /// <inheritdoc cref="Addon"/>

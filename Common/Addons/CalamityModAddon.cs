@@ -14,5 +14,7 @@ namespace CataclysmMod.Common.Addons
         public override string DisplayName => "Calamity Mod";
 
         public override Version MinimumVersion => new Version(1, 5, 0, 3);
+        
+        public override string Description => "Pending...";
     }
 }

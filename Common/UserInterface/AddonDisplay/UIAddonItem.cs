@@ -29,6 +29,7 @@ namespace CataclysmMod.Common.UserInterface.AddonDisplay
 		public UIImage ConfigButton;
 		public UIText AddonDisplayName;
 		public string Tooltip;
+		public UIAddonStateText AddonStateText;
 
 		public UIAddonItem(Addon addon)
 		{
@@ -62,6 +63,13 @@ namespace CataclysmMod.Common.UserInterface.AddonDisplay
 				Top = {Pixels = 5}
 			};
 			Append(AddonDisplayName);
+
+			AddonStateText = new UIAddonStateText(Addon.IsEnabled)
+			{
+				Top = {Pixels = 40},
+				Left = {Pixels = 85f}
+			};
+			Append(AddonStateText);
 
 			MoreInfoButton = new UIImage(UICommon.ButtonModInfoTexture)
 			{
@@ -111,13 +119,13 @@ namespace CataclysmMod.Common.UserInterface.AddonDisplay
 			spriteBatch.Draw(UICommon.DividerTexture, drawPos, null, Color.White, 0f, Vector2.Zero, new Vector2((innerDimensions.Width - 95f) / 8f, 1f), SpriteEffects.None, 0f);
 
 			if (MoreInfoButton?.IsMouseHovering == true)
-			{
 				Tooltip = "View addon changes";
-			}
 			else if (ConfigButton?.IsMouseHovering == true)
-			{
 				Tooltip = "Open addon config";
-			}
+			else if (AddonStateText.IsMouseHovering)
+				Tooltip = Addon.IsEnabled
+					? Addon.DisplayName + " is enabled"
+					: $"Please enable {Addon.DisplayName} for changes to take effect";
 		}
 
 		public override void MouseOver(UIMouseEvent evt)
@@ -137,10 +145,7 @@ namespace CataclysmMod.Common.UserInterface.AddonDisplay
 		internal void ShowMoreInfo(UIMouseEvent evt, UIElement listeningElement)
 		{
 			Main.PlaySound(SoundID.MenuOpen);
-			
-			// TODO: This
-			//Interface.modInfo.Show(ModName, _mod.DisplayName, Interface.modsMenuID, _mod, _mod.properties.description,
-			//	_mod.properties.homepage);
+			ModContent.GetInstance<Cataclysm>().AddonInfoUI.Show(Addon);
 		}
 
 		internal void OpenConfig(UIMouseEvent evt, UIElement listeningElement)
@@ -168,6 +173,7 @@ namespace CataclysmMod.Common.UserInterface.AddonDisplay
 			modConfigField.SetValue(modConfigUIInstance, new List<ModConfig> { Addon.Config });
 			modConfigField.SetValue(modConfigUIInstance, Addon.Config);
 			
+			// TODO: Replace with our own menu... probably.
 			Main.menuMode = 10024; // Interface.modConfigID;
 		}
 	}

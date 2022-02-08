@@ -14,5 +14,7 @@ namespace CataclysmMod.Common.Addons
         public override string DisplayName => "Split";
 
         public override Version MinimumVersion => new Version(0, 4, 1, 10);
+        
+        public override string Description => "Pending...";
     }
 }

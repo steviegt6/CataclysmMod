@@ -14,5 +14,7 @@ namespace CataclysmMod.Common.Addons
         public override string DisplayName => "The Clicker Class";
 
         public override Version MinimumVersion => new Version(1, 2, 7, 1);
+        
+        public override string Description => "Pending...";
     }
 }
