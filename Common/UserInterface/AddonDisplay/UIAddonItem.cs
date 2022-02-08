@@ -8,6 +8,7 @@ using System.Reflection;
 using CataclysmMod.Core.Loading;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using Rejuvena.Backscatter.Cache;
 using Terraria;
 using Terraria.GameContent.UI.Elements;
 using Terraria.ID;
@@ -155,22 +156,16 @@ namespace CataclysmMod.Common.UserInterface.AddonDisplay
 			
 			Main.PlaySound(SoundID.MenuOpen);
 			Assembly tml = typeof(ModLoader).Assembly;
-			Type modConfigUI = tml.GetType("Terraria.ModLoader.UI.UIModConfig");
-			Type interfaceT = tml.GetType("Terraria.ModLoader.UI.Interface");
+			Type modConfigUI = tml.GetCachedTypeNotNull("Terraria.ModLoader.UI.UIModConfig");
+			Type interfaceT = tml.GetCachedTypeNotNull("Terraria.ModLoader.UI.Interface");
 			// ReSharper disable once PossibleNullReferenceException
-			object modConfigUIInstance = interfaceT.GetField(
-				"modConfig",
-				BindingFlags.Static | BindingFlags.NonPublic
-			).GetValue(null);
-			FieldInfo modField = modConfigUI.GetField("mod", BindingFlags.Instance | BindingFlags.NonPublic);
-			FieldInfo modConfigsField = modConfigUI.GetField("modConfigs", BindingFlags.Instance | BindingFlags.NonPublic);
-			FieldInfo modConfigField = modConfigUI.GetField("modConfig", BindingFlags.Instance | BindingFlags.NonPublic);
+			object modConfigUIInstance = interfaceT.GetCachedFieldNotNull("modConfig").GetValue(null);
+			FieldInfo modField = modConfigUI.GetCachedFieldNotNull("mod");
+			FieldInfo modConfigsField = modConfigUI.GetCachedFieldNotNull("modConfigs");
+			FieldInfo modConfigField = modConfigUI.GetCachedFieldNotNull("modConfig");
 
-			if (modField == null || modConfigsField == null || modConfigField == null)
-				return;
-			
 			modField.SetValue(modConfigUIInstance, ModContent.GetInstance<Cataclysm>());
-			modConfigField.SetValue(modConfigUIInstance, new List<ModConfig> { Addon.Config });
+			modConfigsField.SetValue(modConfigUIInstance, new List<ModConfig> { Addon.Config });
 			modConfigField.SetValue(modConfigUIInstance, Addon.Config);
 			
 			// TODO: Replace with our own menu... probably.
