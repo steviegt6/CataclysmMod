@@ -35,7 +35,8 @@ namespace CataclysmMod.Common.UserInterface.AddonDisplay
 				HAlign = 0.5f
 			};
 
-			UIPanel uIPanel = new UIPanel {
+			UIPanel uIPanel = new UIPanel
+			{
 				Width = {Percent = 1f},
 				Height = {Pixels = -110, Percent = 1f},
 				BackgroundColor = UICommon.MainPanelBackground
@@ -64,10 +65,11 @@ namespace CataclysmMod.Common.UserInterface.AddonDisplay
 			BackPanel.Append(TitleDisplay);
 
 			UIAutoScaleTextTextPanel<string> backButton = new UIAutoScaleTextTextPanel<string>(Language.GetTextValue("UI.Back")) {
-				Width = {Pixels = -10, Percent = 0.333f},
+				Width = new StyleDimension(-10f, 1f / 3f),
 				Height = {Pixels = 40},
 				VAlign = 1f,
-				Top = {Pixels = -20}
+				HAlign = 0.5f,
+				Top = {Pixels = -65}
 			}.WithFadedMouseOver();
 			backButton.OnClick += BackClick;
 			BackPanel.Append(backButton);
@@ -76,9 +78,9 @@ namespace CataclysmMod.Common.UserInterface.AddonDisplay
 		}
 
 		public void Show(Addon addon) {
-			AddonDisplayName = Addon.DisplayName;
 			Addon = addon;
-			AddonInfo = Addon.Description;
+			AddonDisplayName = addon.DisplayName;
+			AddonInfo = addon.Description;
 
 			Main.MenuUI.SetState(ModContent.GetInstance<Cataclysm>().AddonInfoUI);
 		}
@@ -92,7 +94,7 @@ namespace CataclysmMod.Common.UserInterface.AddonDisplay
 			AddonDisplayName = string.Empty;
 		}
 
-		private void BackClick(UIMouseEvent evt, UIElement listeningElement) {
+		private static void BackClick(UIMouseEvent evt, UIElement listeningElement) {
 			Main.PlaySound(SoundID.MenuClose);
 			Main.MenuUI.SetState(ModContent.GetInstance<Cataclysm>().AddonsUI);
 		}

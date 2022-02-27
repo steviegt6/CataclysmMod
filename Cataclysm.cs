@@ -5,13 +5,11 @@ using System.Reflection;
 using System.Threading.Tasks;
 using CataclysmMod.Common.Addons;
 using CataclysmMod.Common.Configuration;
-using CataclysmMod.Common.UserInterface;
 using CataclysmMod.Common.UserInterface.AddonDisplay;
 using CataclysmMod.Core.Loading;
-using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Graphics;
 using Terraria;
 using Terraria.ModLoader;
+using Terraria.ModLoader.Config;
 
 namespace CataclysmMod
 {
@@ -22,26 +20,25 @@ namespace CataclysmMod
         public UIAddons AddonsUI;
         public UIAddonInfo AddonInfoUI;
         
-        public readonly UserInterfaceHandler InterfaceHandler = new UserInterfaceHandler();
         public readonly Dictionary<Type, Addon> RegisteredAddons = new Dictionary<Type, Addon>
         {
             {typeof(CalamityModAddon), CalamityModAddon.Instance},
             {typeof(ClickerClassAddon), ClickerClassAddon.Instance},
             {typeof(SplitAddon), SplitAddon.Instance},
-            {typeof(ThoriumModAddon), ThoriumModAddon.Instance}
+            {typeof(ThoriumModAddon), ThoriumModAddon.Instance},
+            {typeof(AutoloadAddon), AutoloadAddon.Instance}
         };
-
-        public bool WarningsShown = false;
 
         public Cataclysm()
         {
-            // Disable autoloading entirely. We will autoload everything.
+            // Disable autoloading regular content.
+            // Keep gores, backgrounds, and sounds around.
             Properties = new ModProperties
             {
                 Autoload = false,
-                AutoloadBackgrounds = false,
-                AutoloadGores = false,
-                AutoloadSounds = false
+                AutoloadBackgrounds = true,
+                AutoloadGores = true,
+                AutoloadSounds = true
             };
         }
 
@@ -86,20 +83,6 @@ namespace CataclysmMod
             });
         }
 
-        public override void UpdateUI(GameTime gameTime)
-        {
-            base.UpdateUI(gameTime);
-
-            InterfaceHandler.UpdateStates(gameTime);
-        }
-
-        public override void PostDrawInterface(SpriteBatch spriteBatch)
-        {
-            base.PostDrawInterface(spriteBatch);
-
-            InterfaceHandler.DrawStates(spriteBatch);
-        }
-
         private void Autoload()
         {
             IOrderedEnumerable<Type> types = Code.GetTypes().OrderBy(
@@ -123,58 +106,60 @@ namespace CataclysmMod
 
                 if (type.IsSubclassOf(typeof(ModItem)))
                     AddItem(name, (ModItem) instance);
-                //else if (type.IsSubclassOf(typeof(GlobalItem)))
-                //    AddGlobalItem(type);
-                //else if (type.IsSubclassOf(typeof(ModPrefix)))
-                //    AddPrefix(type);
-                //else if (type.IsSubclassOf(typeof(ModDust)))
-                //    AddDust(type);
-                //else if (type.IsSubclassOf(typeof(ModTile)))
-                //    AddTile(type);
-                //else if (type.IsSubclassOf(typeof(GlobalTile)))
-                //    AddGlobalTile(type);
-                //else if (type.IsSubclassOf(typeof(ModTileEntity)))
-                //    AddTileEntity(type);
-                //else if (type.IsSubclassOf(typeof(ModWall)))
-                //    AddWall(type);
-                //else if (type.IsSubclassOf(typeof(GlobalWall)))
-                //    AddGlobalWall(type);
-                //else if (type.IsSubclassOf(typeof(ModProjectile)))
-                //    AddProjectile(type);
-                //else if (type.IsSubclassOf(typeof(GlobalProjectile)))
-                //    AddGlobalProjectile(type);
-                //else if (type.IsSubclassOf(typeof(ModNPC)))
-                //    AddNPC(type);
-                //else if (type.IsSubclassOf(typeof(GlobalNPC)))
-                //    AddGlobalNPC(type);
-                //else if (type.IsSubclassOf(typeof(ModPlayer)))
-                //    AddPlayer(type);
-                //else if (type.IsSubclassOf(typeof(ModBuff)))
-                //    AddBuff(type);
-                //else if (type.IsSubclassOf(typeof(GlobalBuff)))
-                //    AddGlobalBuff(type);
-                //else if (type.IsSubclassOf(typeof(ModMountData)))
-                //    AddMount(type);
-                //else if (type.IsSubclassOf(typeof(ModGore)))
-                //    modGores.Add(type);
-                //else if (type.IsSubclassOf(typeof(ModSound)))
-                //    modSounds.Add(type);
-                //else if (type.IsSubclassOf(typeof(ModWorld)))
-                //    AddModWorld(type);
-                //else if (type.IsSubclassOf(typeof(ModUgBgStyle)))
-                //    AddUgBgStyle(type);
-                //else if (type.IsSubclassOf(typeof(ModSurfaceBgStyle)))
-                //    AddSurfaceBgStyle(type);
-                //else if (type.IsSubclassOf(typeof(GlobalBgStyle)))
-                //    AddGlobalBgStyle(type);
-                //else if (type.IsSubclassOf(typeof(ModWaterStyle)))
-                //    AddWaterStyle(type);
-                //else if (type.IsSubclassOf(typeof(ModWaterfallStyle)))
-                //    AddWaterfallStyle(type);
-                //else if (type.IsSubclassOf(typeof(GlobalRecipe)))
-                //    AddGlobalRecipe(type);
-                //else if (type.IsSubclassOf(typeof(ModCommand)))
-                //    AddCommand(type);
+                else if (type.IsSubclassOf(typeof(GlobalItem)))
+                    AddGlobalItem(name, (GlobalItem) instance);
+                else if (type.IsSubclassOf(typeof(ModPrefix)))
+                    AddPrefix(name, (ModPrefix) instance);
+                else if (type.IsSubclassOf(typeof(ModDust)))
+                    AddDust(name, (ModDust) instance);
+                else if (type.IsSubclassOf(typeof(ModTile)))
+                    AddTile(name, (ModTile) instance, ((IHasTexture) instance).LoadedTexture);
+                else if (type.IsSubclassOf(typeof(GlobalTile)))
+                    AddGlobalTile(name, (GlobalTile) instance);
+                else if (type.IsSubclassOf(typeof(ModTileEntity)))
+                    AddTileEntity(name, (ModTileEntity) instance);
+                else if (type.IsSubclassOf(typeof(ModWall)))
+                    AddWall(name, (ModWall) instance, ((IHasTexture) instance).LoadedTexture);
+                else if (type.IsSubclassOf(typeof(GlobalWall)))
+                    AddGlobalWall(name, (GlobalWall) instance);
+                else if (type.IsSubclassOf(typeof(ModProjectile)))
+                    AddProjectile(name, (ModProjectile) instance);
+                else if (type.IsSubclassOf(typeof(GlobalProjectile)))
+                    AddGlobalProjectile(name, (GlobalProjectile) instance);
+                else if (type.IsSubclassOf(typeof(ModNPC)))
+                    AddNPC(name, (ModNPC) instance);
+                else if (type.IsSubclassOf(typeof(GlobalNPC)))
+                    AddGlobalNPC(name, (GlobalNPC) instance);
+                else if (type.IsSubclassOf(typeof(ModPlayer)))
+                    AddPlayer(name, (ModPlayer) instance);
+                else if (type.IsSubclassOf(typeof(ModBuff)))
+                    AddBuff(name, (ModBuff) instance, ((IHasTexture) instance).LoadedTexture);
+                else if (type.IsSubclassOf(typeof(GlobalBuff)))
+                    AddGlobalBuff(name, (GlobalBuff) instance);
+                // else if (type.IsSubclassOf(typeof(ModMountData)))
+                //     AddMount(name, (ModMountData) instance);
+                // else if (type.IsSubclassOf(typeof(ModGore)))
+                //     modGores.Add(name, (ModGore) instance);
+                // else if (type.IsSubclassOf(typeof(ModSound)))
+                //     modSounds.Add(name, (ModSound) instance);
+                else if (type.IsSubclassOf(typeof(ModWorld)))
+                    AddModWorld(name, (ModWorld) instance);
+                // else if (type.IsSubclassOf(typeof(ModUgBgStyle)))
+                //     AddUgBgStyle(name, (ModUgBgStyle) instance);
+                // else if (type.IsSubclassOf(typeof(ModSurfaceBgStyle)))
+                //     AddSurfaceBgStyle(name, (ModSurfaceBgStyle) instance);
+                // else if (type.IsSubclassOf(typeof(GlobalBgStyle)))
+                //     AddGlobalBgStyle(name, (GlobalBgStyle) instance);
+                // else if (type.IsSubclassOf(typeof(ModWaterStyle)))
+                //     AddWaterStyle(name, (ModWaterStyle) instance);
+                else if (type.IsSubclassOf(typeof(ModWaterfallStyle)))
+                    AddWaterfallStyle(name, (ModWaterfallStyle) instance, ((IHasTexture) instance).LoadedTexture);
+                else if (type.IsSubclassOf(typeof(GlobalRecipe)))
+                    AddGlobalRecipe(name, (GlobalRecipe) instance);
+                else if (type.IsSubclassOf(typeof(ModCommand)))
+                    AddCommand(name, (ModCommand) instance);
+                else if (type.IsSubclassOf(typeof(ModConfig)))
+                    AddConfig(name, (ModConfig) instance);
             }
         }
     }

@@ -4,7 +4,6 @@
 
 using System;
 using CataclysmMod.Core.Loading;
-using Terraria;
 
 namespace CataclysmMod.Common.Addons
 {
@@ -17,7 +16,7 @@ namespace CataclysmMod.Common.Addons
 
         public override string DisplayName => "Invisible";
 
-        public override Version MinimumVersion => Version.Parse(Main.versionNumber);
+        public override Version MinimumVersion => new Version(1, 3, 5, 1);
 
         public override bool IsEnabled => true;
     }

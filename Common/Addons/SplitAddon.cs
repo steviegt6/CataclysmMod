@@ -3,7 +3,10 @@
 #endregion
 
 using System;
+using CataclysmMod.Common.Configuration.ModConfigs;
 using CataclysmMod.Core.Loading;
+using Terraria.ModLoader;
+using Terraria.ModLoader.Config;
 
 namespace CataclysmMod.Common.Addons
 {
@@ -14,6 +17,8 @@ namespace CataclysmMod.Common.Addons
         public override string DisplayName => "Split";
 
         public override Version MinimumVersion => new Version(0, 4, 1, 10);
+        
+        public override ModConfig Config => ModContent.GetInstance<SplitAddonConfig>();
         
         public override string Description => "Pending...";
     }

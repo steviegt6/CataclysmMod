@@ -3,7 +3,10 @@
 #endregion
 
 using System;
+using CataclysmMod.Common.Configuration.ModConfigs;
 using CataclysmMod.Core.Loading;
+using Terraria.ModLoader;
+using Terraria.ModLoader.Config;
 
 namespace CataclysmMod.Common.Addons
 {
@@ -13,8 +16,10 @@ namespace CataclysmMod.Common.Addons
         
         public override string DisplayName => "Calamity Mod";
 
-        public override Version MinimumVersion => new Version(1, 5, 0, 3);
-        
+        public override Version MinimumVersion => new Version(1, 5, 0, 4);
+
+        public override ModConfig Config => ModContent.GetInstance<CalamityModAddonConfig>();
+
         public override string Description => "Pending...";
     }
 }

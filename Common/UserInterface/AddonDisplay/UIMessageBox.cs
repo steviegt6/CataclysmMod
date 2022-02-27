@@ -64,7 +64,7 @@ namespace CataclysmMod.Common.UserInterface.AddonDisplay
 			{
 				if (position >= 0)
 					Utils.DrawBorderString(spriteBatch, drawText.Item1, new Vector2(space.X, space.Y + position),
-						Color.White, 1f);
+						Color.White);
 				position += drawText.Item2;
 			}
 

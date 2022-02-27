@@ -3,8 +3,10 @@
 #endregion
 
 using System;
+using CataclysmMod.Common.Configuration.ModConfigs;
 using CataclysmMod.Core.Loading;
 using ClickerClass;
+using Terraria.ModLoader;
 using Terraria.ModLoader.Config;
 
 namespace CataclysmMod.Common.Addons
@@ -17,7 +19,7 @@ namespace CataclysmMod.Common.Addons
 
         public override Version MinimumVersion => new Version(1, 2, 7, 1);
 
-        public override ModConfig Config => new ClickerConfigClient();
+        public override ModConfig Config => ModContent.GetInstance<ClickerClassAddonConfig>();
 
         public override string Description => "Pending...";
     }

@@ -21,7 +21,7 @@ namespace CataclysmMod.Common.UserInterface.AddonDisplay
 {
 	public class UIAddonItem : UIPanel
 	{
-		private const float PADDING = 5f;
+		private const float Padding = 5f;
 
 		public Addon Addon;
 		
@@ -89,7 +89,7 @@ namespace CataclysmMod.Common.UserInterface.AddonDisplay
 			{
 				Width = {Pixels = 36},
 				Height = {Pixels = 36f},
-				Left = {Pixels = MoreInfoButton.Left.Pixels - 36 - PADDING, Precent = 1f},
+				Left = {Pixels = MoreInfoButton.Left.Pixels - 36 - Padding, Precent = 1f},
 				Top = {Pixels = 40f}
 			};
 			ConfigButton.OnClick += OpenConfig;
@@ -122,7 +122,7 @@ namespace CataclysmMod.Common.UserInterface.AddonDisplay
 			if (MoreInfoButton?.IsMouseHovering == true)
 				Tooltip = "View addon changes";
 			else if (ConfigButton?.IsMouseHovering == true)
-				Tooltip = "Open addon config";
+				Tooltip = "Open addon config (exiting brings you to the Mods menu)";
 			else if (AddonStateText.IsMouseHovering)
 				Tooltip = Addon.IsEnabled
 					? Addon.DisplayName + " is enabled"
@@ -155,21 +155,28 @@ namespace CataclysmMod.Common.UserInterface.AddonDisplay
 				return;
 			
 			Main.PlaySound(SoundID.MenuOpen);
+			ModConfigSetMod(Addon.Config);
+			Main.menuMode = 10024; // Interface.modConfigID;
+		}
+
+		internal static void ModConfigSetMod(ModConfig config)
+		{
+			Mod mod = ModContent.GetInstance<Cataclysm>();
+			
 			Assembly tml = typeof(ModLoader).Assembly;
-			Type modConfigUI = tml.GetCachedTypeNotNull("Terraria.ModLoader.UI.UIModConfig");
+			Type modConfigUI = tml.GetCachedTypeNotNull("Terraria.ModLoader.Config.UI.UIModConfig");
 			Type interfaceT = tml.GetCachedTypeNotNull("Terraria.ModLoader.UI.Interface");
+			Type configManager = tml.GetCachedTypeNotNull("Terraria.ModLoader.Config.ConfigManager");
 			// ReSharper disable once PossibleNullReferenceException
 			object modConfigUIInstance = interfaceT.GetCachedFieldNotNull("modConfig").GetValue(null);
 			FieldInfo modField = modConfigUI.GetCachedFieldNotNull("mod");
 			FieldInfo modConfigsField = modConfigUI.GetCachedFieldNotNull("modConfigs");
 			FieldInfo modConfigField = modConfigUI.GetCachedFieldNotNull("modConfig");
-
-			modField.SetValue(modConfigUIInstance, ModContent.GetInstance<Cataclysm>());
-			modConfigsField.SetValue(modConfigUIInstance, new List<ModConfig> { Addon.Config });
-			modConfigField.SetValue(modConfigUIInstance, Addon.Config);
+			FieldInfo configsField = configManager.GetCachedFieldNotNull("Configs");
 			
-			// TODO: Replace with our own menu... probably.
-			Main.menuMode = 10024; // Interface.modConfigID;
+			modField.SetValue(modConfigUIInstance, mod);
+			modConfigsField.SetValue(modConfigUIInstance, ReflectionCache.GetValue<IDictionary<Mod, List<ModConfig>>>(configsField)[mod]);
+			modConfigField.SetValue(modConfigUIInstance, config);
 		}
 	}
 }

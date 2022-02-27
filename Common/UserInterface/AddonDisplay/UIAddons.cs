@@ -4,6 +4,7 @@
 
 using System.Collections.Generic;
 using System.Linq;
+using CataclysmMod.Common.Addons;
 using CataclysmMod.Core.Loading;
 using Microsoft.Xna.Framework;
 using Terraria;
@@ -38,6 +39,9 @@ namespace CataclysmMod.Common.UserInterface.AddonDisplay
 
             foreach (Addon addon in ModContent.GetInstance<Cataclysm>().RegisteredAddons.Values)
             {
+                if (addon is AutoloadAddon)
+                    continue;
+                
                 UIAddonItem item = new UIAddonItem(addon);
                 item.Activate();
                 Items.Add(item);
@@ -137,7 +141,7 @@ namespace CataclysmMod.Common.UserInterface.AddonDisplay
         {
             base.Update(gameTime);
 
-            if (!UpdateNeeded)
+            if (!UpdateNeeded || FilterTextBox == null)
                 return;
 
             UpdateNeeded = false;

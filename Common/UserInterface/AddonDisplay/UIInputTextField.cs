@@ -14,19 +14,19 @@ namespace CataclysmMod.Common.UserInterface.AddonDisplay
     public class UIInputTextField : UIElement
     {
         private readonly string HintText;
-        public string _currentString = string.Empty;
-        public int _textBlinkerCount;
+        public string CurrentString = string.Empty;
+        public int TextBlinkerCount;
 
         public string Text
         {
-            get => _currentString;
+            get => CurrentString;
             
             set
             {
-                if (_currentString == value)
+                if (CurrentString == value)
                     return;
                 
-                _currentString = value;
+                CurrentString = value;
                 OnTextChange?.Invoke(this, EventArgs.Empty);
             }
         }
@@ -44,22 +44,22 @@ namespace CataclysmMod.Common.UserInterface.AddonDisplay
         {
             PlayerInput.WritingText = true;
             Main.instance.HandleIME();
-            string newString = Main.GetInputText(_currentString);
+            string newString = Main.GetInputText(CurrentString);
 
-            if (newString != _currentString)
+            if (newString != CurrentString)
             {
-                _currentString = newString;
+                CurrentString = newString;
                 OnTextChange?.Invoke(this, EventArgs.Empty);
             }
 
-            string displayString = _currentString;
+            string displayString = CurrentString;
 
-            if (++_textBlinkerCount / 20 % 2 == 0)
+            if (++TextBlinkerCount / 20 % 2 == 0)
                 displayString += "|";
 
             CalculatedStyle space = GetDimensions();
 
-            if (_currentString.Length == 0)
+            if (CurrentString.Length == 0)
                 Utils.DrawBorderString(spriteBatch, HintText, new Vector2(space.X, space.Y), Color.Gray);
             else
                 Utils.DrawBorderString(spriteBatch, displayString, new Vector2(space.X, space.Y), Color.White);

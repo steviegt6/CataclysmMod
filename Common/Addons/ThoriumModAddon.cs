@@ -3,7 +3,10 @@
 #endregion
 
 using System;
+using CataclysmMod.Common.Configuration.ModConfigs;
 using CataclysmMod.Core.Loading;
+using Terraria.ModLoader;
+using Terraria.ModLoader.Config;
 
 namespace CataclysmMod.Common.Addons
 {
@@ -14,6 +17,8 @@ namespace CataclysmMod.Common.Addons
         public override string DisplayName => "Thorium Mod";
 
         public override Version MinimumVersion => new Version(1, 6, 5, 4);
+        
+        public override ModConfig Config => ModContent.GetInstance<ThoriumModAddonConfig>();
 
         public override string Description => "Pending...";
     }
