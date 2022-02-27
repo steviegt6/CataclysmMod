@@ -103,11 +103,11 @@ namespace CataclysmMod
                 if (type.IsAbstract || type.GetConstructor(Type.EmptyTypes) == null)
                     continue;
 
-                AddonContentAttribute attribute = type.GetCustomAttribute<AddonContentAttribute>();
+                IEnumerable<AddonContentAttribute> attributes = type.GetCustomAttributes<AddonContentAttribute>();
 
-                if (attribute != null)
-                    if (!RegisteredAddons[attribute.AddonType].IsEnabled)
-                        continue;
+                foreach (AddonContentAttribute attrib in attributes)
+                    if (!RegisteredAddons[attrib.AddonType].IsEnabled)
+                        goto Skip;
 
                 object instance = Activator.CreateInstance(type);
                 string name = type.Name;
@@ -170,6 +170,8 @@ namespace CataclysmMod
                     AddConfig(name, (ModConfig) instance);
                 else if (instance is ILoadable loadable)
                     loadable.Load();
+                
+                Skip: ;
             }
         }
 
