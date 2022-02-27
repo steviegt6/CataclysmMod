@@ -60,7 +60,8 @@ namespace CataclysmMod.Common.UserInterface.AddonDisplay
 				position = -Scrollbar.GetValue();
 			}
 
-			foreach (Tuple<string, float> drawText in DrawTexts.TakeWhile(drawText => !(position + drawText.Item2 > space.Height)))
+			Tuple<string, float>[] drawTexts = DrawTexts.ToArray();
+			foreach (Tuple<string, float> drawText in drawTexts.TakeWhile(drawText => !(position + drawText.Item2 > space.Height)))
 			{
 				if (position >= 0)
 					Utils.DrawBorderString(spriteBatch, drawText.Item1, new Vector2(space.X, space.Y + position),
@@ -74,6 +75,7 @@ namespace CataclysmMod.Common.UserInterface.AddonDisplay
 		public override void RecalculateChildren()
 		{
 			base.RecalculateChildren();
+			
 			if (!HeightNeedsRecalculating)
 			{
 				return;

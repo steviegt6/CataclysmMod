@@ -20,6 +20,8 @@ namespace CataclysmMod
 
         public UIAddons AddonsUI;
         public UIAddonInfo AddonInfoUI;
+        public bool ShowChangelog;
+        public bool FirstTime;
         
         public readonly Dictionary<Type, Addon> RegisteredAddons = new Dictionary<Type, Addon>
         {
@@ -46,9 +48,9 @@ namespace CataclysmMod
         public override void Load()
         {
             base.Load();
-            
-            MonoModHooks.RequestNativeAccess();
 
+            MonoModHooks.RequestNativeAccess();
+            
             VhConfig = VersionHandlerConfig.DeserializeConfig();
 
             Logger.Info("Registered addons:");
@@ -62,6 +64,9 @@ namespace CataclysmMod
 
             AddonsUI = new UIAddons();
             AddonInfoUI = new UIAddonInfo();
+
+            ShowChangelog = Version.Parse(VhConfig.LastLoadedVersion) < Version;
+            VhConfig.LastLoadedVersion = Version.ToString();
         }
 
         public override void Unload()
@@ -69,6 +74,21 @@ namespace CataclysmMod
             base.Unload();
             
             VersionHandlerConfig.SerializeConfig(VhConfig);
+        }
+
+        public override void PostAddRecipes()
+        {
+            base.PostAddRecipes();
+
+            new TaskFactory().StartNew(() =>
+            {
+                while (Main.menuMode != 0 && ShowChangelog)
+                {
+                }
+
+                Main.menuMode = 888;
+                Main.MenuUI.SetState(new UIChangelog(0, GetChangelog()));
+            });
         }
 
         private void Autoload()
@@ -151,6 +171,16 @@ namespace CataclysmMod
                 else if (instance is ILoadable loadable)
                     loadable.Load();
             }
+        }
+
+        private string GetChangelog()
+        {
+            string text = VhConfig.SeenStartupScreen ? "" : TextValue("Changelog.Startup");
+            text += $"\n{TextValue("Changelog.ActualChangelog")}";
+
+            VhConfig.SeenStartupScreen = true;
+
+            return text;
         }
 
         public static LocalizedText Text(string key) => LanguageManager.Instance.GetText("Mods.CataclysmMod." + key);
