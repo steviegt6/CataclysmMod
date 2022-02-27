@@ -14,7 +14,7 @@ namespace CataclysmMod.Core.Loading
         public AddonContentAttribute(Type addonType)
         {
             if (!addonType.IsSubclassOf(typeof(Addon)))
-                throw new Exception("Non-addon type passed into constructor of AddonContentAttribute");
+                throw new Exception($"Non-addon type passed into constructor of {nameof(AddonContentAttribute)}");
             
             AddonType = addonType;
         }

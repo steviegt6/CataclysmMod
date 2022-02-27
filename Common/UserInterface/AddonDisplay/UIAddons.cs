@@ -24,7 +24,7 @@ namespace CataclysmMod.Common.UserInterface.AddonDisplay
         public UIElement DisplayPanel;
         public UIList AddonsList;
         public UIScrollbar Scrollbar;
-        public UITextPanel<string> Header;
+        public UITextPanel<LocalizedText> Header;
         public UIAutoScaleTextTextPanel<string> BackButton;
         public UIElement UpperMenuContainer;
         public UIInputTextField FilterTextBox;
@@ -85,7 +85,7 @@ namespace CataclysmMod.Common.UserInterface.AddonDisplay
 
             DisplayPanel.Append(Scrollbar);
 
-            Header = new UITextPanel<string>("Cataclysm Addons", 0.8f, true)
+            Header = new UITextPanel<LocalizedText>(Cataclysm.Text("UI.AddonsTitle"), 0.8f, true)
             {
                 HAlign = 0.5f,
                 Top = {Pixels = -35},
@@ -123,7 +123,7 @@ namespace CataclysmMod.Common.UserInterface.AddonDisplay
             filterTextBoxBackground.OnRightClick += (evt, element) => FilterTextBox.Text = "";
             UpperMenuContainer.Append(filterTextBoxBackground);
 
-            FilterTextBox = new UIInputTextField("Filter addons...")
+            FilterTextBox = new UIInputTextField(Cataclysm.TextValue("UI.FilterAddons"))
             {
                 Top = {Pixels = 5},
                 Left = {Pixels = -120, Percent = 1f},

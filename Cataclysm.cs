@@ -8,6 +8,7 @@ using CataclysmMod.Common.Configuration;
 using CataclysmMod.Common.UserInterface.AddonDisplay;
 using CataclysmMod.Core.Loading;
 using Terraria;
+using Terraria.Localization;
 using Terraria.ModLoader;
 using Terraria.ModLoader.Config;
 
@@ -162,5 +163,9 @@ namespace CataclysmMod
                     AddConfig(name, (ModConfig) instance);
             }
         }
+
+        public static LocalizedText Text(string key) => LanguageManager.Instance.GetText("Mods.CataclysmMod." + key);
+        
+        public static string TextValue(string key, params object[] args) => Text(key).Format(args);
     }
 }

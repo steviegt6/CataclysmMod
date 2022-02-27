@@ -13,7 +13,7 @@ namespace CataclysmMod.Common.UserInterface.AddonDisplay
 {
     public class UIAddonStateText : UIElement
     {
-        private bool Enabled;
+        private readonly bool Enabled;
 
         private string DisplayText => Enabled
             ? Language.GetTextValue("GameUI.Enabled")

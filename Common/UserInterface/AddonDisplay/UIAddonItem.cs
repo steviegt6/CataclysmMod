@@ -47,7 +47,7 @@ namespace CataclysmMod.Common.UserInterface.AddonDisplay
 		{
 			base.OnInitialize();
 
-			string text = Addon.DisplayName + " v" + Addon.MinimumVersion + " or above";
+			string text = $"{Addon.DisplayName} {Cataclysm.TextValue("UI.VersionAbove", Addon.MinimumVersion)}";
 
 			Texture2D iconTexture = ModContent.GetTexture(Addon.Texture);
 
@@ -120,13 +120,13 @@ namespace CataclysmMod.Common.UserInterface.AddonDisplay
 			spriteBatch.Draw(UICommon.DividerTexture, drawPos, null, Color.White, 0f, Vector2.Zero, new Vector2((innerDimensions.Width - 95f) / 8f, 1f), SpriteEffects.None, 0f);
 
 			if (MoreInfoButton?.IsMouseHovering == true)
-				Tooltip = "View addon changes";
+				Tooltip = Cataclysm.TextValue("AddonChanges");
 			else if (ConfigButton?.IsMouseHovering == true)
-				Tooltip = "Open addon config (exiting brings you to the Mods menu)";
+				Tooltip = Cataclysm.TextValue("OpenConfig");
 			else if (AddonStateText.IsMouseHovering)
 				Tooltip = Addon.IsEnabled
-					? Addon.DisplayName + " is enabled"
-					: $"Please enable {Addon.DisplayName} for changes to take effect";
+					? Cataclysm.TextValue("UI.IsEnabled", Addon.DisplayName)
+					: Cataclysm.TextValue("UI.IsDisabled", Addon.DisplayName);
 		}
 
 		public override void MouseOver(UIMouseEvent evt)
