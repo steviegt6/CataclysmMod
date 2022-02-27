@@ -24,7 +24,7 @@ namespace CataclysmMod.Common.UserInterface.AddonDisplay
         public UIElement DisplayPanel;
         public UIList AddonsList;
         public UIScrollbar Scrollbar;
-        public UITextPanel<LocalizedText> Header;
+        public UITextPanel<string> Header;
         public UIAutoScaleTextTextPanel<string> BackButton;
         public UIElement UpperMenuContainer;
         public UIInputTextField FilterTextBox;
@@ -85,7 +85,7 @@ namespace CataclysmMod.Common.UserInterface.AddonDisplay
 
             DisplayPanel.Append(Scrollbar);
 
-            Header = new UITextPanel<LocalizedText>(Cataclysm.Text("UI.AddonsTitle"), 0.8f, true)
+            Header = new UITextPanel<string>(Cataclysm.TextValue("UI.AddonsTitle"), 0.8f, true)
             {
                 HAlign = 0.5f,
                 Top = {Pixels = -35},

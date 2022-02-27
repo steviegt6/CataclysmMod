@@ -46,6 +46,8 @@ namespace CataclysmMod
         public override void Load()
         {
             base.Load();
+            
+            MonoModHooks.RequestNativeAccess();
 
             VhConfig = VersionHandlerConfig.DeserializeConfig();
 
@@ -67,21 +69,6 @@ namespace CataclysmMod
             base.Unload();
             
             VersionHandlerConfig.SerializeConfig(VhConfig);
-        }
-
-        public override void PostAddRecipes()
-        {
-            base.PostAddRecipes();
-
-            new TaskFactory().StartNew(() =>
-            {
-                while (Main.menuMode != 0)
-                {
-                }
-
-                Main.menuMode = 888;
-                Main.MenuUI.SetState(AddonsUI);
-            });
         }
 
         private void Autoload()
@@ -161,6 +148,8 @@ namespace CataclysmMod
                     AddCommand(name, (ModCommand) instance);
                 else if (type.IsSubclassOf(typeof(ModConfig)))
                     AddConfig(name, (ModConfig) instance);
+                else if (instance is ILoadable loadable)
+                    loadable.Load();
             }
         }
 

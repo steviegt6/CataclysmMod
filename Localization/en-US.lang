@@ -1,7 +1,9 @@
-﻿UI.AddonsTitle=Cataclysm Addons
+﻿Vore=This entry is vored
+UI.AddonsTitle=Cataclysm Addons
 UI.FilterAddons=Filter addons...
 UI.VersionAbove=v{0} or above
 UI.AddonChanges=View addon changes
 UI.OpenConfig=Open addon config (exiting brings you to the Mods menu)
 UI.IsEnabled={0} is enabled
 UI.IsDisabled=Please enabled {0} for changes to take effect
+UI.AddonsButton=Cataclysm Addons
