@@ -30,6 +30,14 @@ namespace CataclysmMod
             {typeof(ThoriumModAddon), ThoriumModAddon.Instance},
             {typeof(AutoloadAddon), AutoloadAddon.Instance}
         };
+        
+        public Action PreAddRecipeHooks;
+        public Action AddRecipeHooks;
+        public Action PostAddRecipeHooks;
+        public Action PreAddRecipeGroupHooks;
+        public Action AddRecipeGroupHooks;
+        public Action PostAddRecipeGroupHooks;
+        public Action ModifyRecipes;
 
         public Cataclysm()
         {
@@ -68,18 +76,41 @@ namespace CataclysmMod
             VhConfig.LastLoadedVersion = Version.ToString();
             
             VersionHandlerConfig.SerializeConfig(VhConfig);
+
+            foreach (Addon addon in RegisteredAddons.Values.Where(addon => addon.IsEnabled)) 
+                addon.LoadEnabled();
         }
 
         public override void Unload()
         {
             base.Unload();
             
-            VersionHandlerConfig.SerializeConfig(VhConfig);
+            foreach (Addon addon in RegisteredAddons.Values.Where(addon => addon.IsEnabled)) 
+                addon.UnloadEnabled();
+            
+            // VersionHandlerConfig.SerializeConfig(VhConfig);
+        }
+        
+        
+        public override void AddRecipes()
+        {
+            PreAddRecipeHooks?.Invoke();
+            AddRecipeHooks?.Invoke();
+            PostAddRecipeHooks?.Invoke();
+        }
+
+        public override void AddRecipeGroups()
+        {
+            PreAddRecipeHooks?.Invoke();
+            AddRecipeGroupHooks?.Invoke();
+            PostAddRecipeGroupHooks?.Invoke();
         }
 
         public override void PostAddRecipes()
         {
             base.PostAddRecipes();
+            
+            ModifyRecipes?.Invoke();
 
             new TaskFactory().StartNew(() =>
             {

@@ -49,6 +49,14 @@ namespace CataclysmMod.Core.Loading
         ///     Vanity display for changes.
         /// </summary>
         public virtual string Description => "";
+
+        public virtual void LoadEnabled()
+        {
+        }
+
+        public virtual void UnloadEnabled()
+        {
+        }
     }
 
     /// <inheritdoc cref="Addon"/>

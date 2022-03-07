@@ -9,6 +9,7 @@ using Terraria.ModLoader.Config;
 namespace CataclysmMod.Common.Configuration.ModConfigs
 {
     [AddonContent(typeof(AutoloadAddon))]
+    [Label("Calamity Mod")]
     public class CalamityModAddonConfig : ModConfig
     {
         public override ConfigScope Mode => ConfigScope.ClientSide;

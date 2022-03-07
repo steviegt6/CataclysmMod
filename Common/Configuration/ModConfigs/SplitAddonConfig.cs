@@ -9,6 +9,7 @@ using Terraria.ModLoader.Config;
 namespace CataclysmMod.Common.Configuration.ModConfigs
 {
     [AddonContent(typeof(AutoloadAddon))]
+    [Label("Split")]
     public class SplitAddonConfig : ModConfig
     {
         public override ConfigScope Mode => ConfigScope.ClientSide;

@@ -9,6 +9,7 @@ using Terraria.ModLoader.Config;
 namespace CataclysmMod.Common.Configuration.ModConfigs
 {
     [AddonContent(typeof(AutoloadAddon))]
+    [Label("The Clicker Class")]
     public class ClickerClassAddonConfig : ModConfig
     {
         public override ConfigScope Mode => ConfigScope.ClientSide;
