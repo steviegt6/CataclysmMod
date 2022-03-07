@@ -5,6 +5,7 @@
 using System;
 using CataclysmMod.Common.Configuration.ModConfigs;
 using CataclysmMod.Core.Loading;
+using CataclysmMod.Core.Localization;
 using ClickerClass;
 using Terraria.ModLoader;
 using Terraria.ModLoader.Config;
@@ -21,6 +22,6 @@ namespace CataclysmMod.Common.Addons
 
         public override ModConfig Config => ModContent.GetInstance<ClickerClassAddonConfig>();
 
-        public override string Description => "Pending...";
+        public override string Description => FilelessEntries.GetClickerClassDescription();
     }
 }

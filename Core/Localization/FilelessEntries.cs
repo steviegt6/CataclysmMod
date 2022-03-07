@@ -75,5 +75,44 @@ namespace CataclysmMod.Core.Localization
             
             return $"\"{name}\" not found!";
         }
+
+        public static string GetCalamityDescription()
+        {
+            switch (LanguageManager.Instance.ActiveCulture.Name)
+            {
+            }
+
+            return "";
+        }
+        
+        public static string GetClickerClassDescription()
+        {
+            switch (LanguageManager.Instance.ActiveCulture.Name)
+            {
+            }
+
+            return "* Added new Clicker weapons for each gem variant" +
+                   "\n* Added a debug Clicker that can cycle through each Click Effect";
+        }
+        
+        public static string GetThoriumDescription()
+        {
+            switch (LanguageManager.Instance.ActiveCulture.Name)
+            {
+            }
+
+            return "* Globee is twice as likely to spawn" +
+                   "\n* Modded Stained Glass variants now match vanilla sell prices";
+        }
+        
+        public static string GetSplitDescription()
+        {
+            switch (LanguageManager.Instance.ActiveCulture.Name)
+            {
+            }
+
+            return "* Added the Pharaoh's Fear, an upgrade to the Terror Shield" +
+                   "\n* Raining projectiles from Menace can be blocked using an Umbrella";
+        }
     }
 }
