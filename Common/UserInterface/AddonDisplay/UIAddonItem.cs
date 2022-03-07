@@ -120,9 +120,9 @@ namespace CataclysmMod.Common.UserInterface.AddonDisplay
 			spriteBatch.Draw(UICommon.DividerTexture, drawPos, null, Color.White, 0f, Vector2.Zero, new Vector2((innerDimensions.Width - 95f) / 8f, 1f), SpriteEffects.None, 0f);
 
 			if (MoreInfoButton?.IsMouseHovering == true)
-				Tooltip = Cataclysm.TextValue("AddonChanges");
+				Tooltip = Cataclysm.TextValue("UI.AddonChanges");
 			else if (ConfigButton?.IsMouseHovering == true)
-				Tooltip = Cataclysm.TextValue("OpenConfig");
+				Tooltip = Cataclysm.TextValue("UI.OpenConfig");
 			else if (AddonStateText.IsMouseHovering)
 				Tooltip = Addon.IsEnabled
 					? Cataclysm.TextValue("UI.IsEnabled", Addon.DisplayName)
