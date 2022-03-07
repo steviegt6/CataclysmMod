@@ -17,3 +17,6 @@ ItemName.RubyClicker=Ruby Clicker
 ItemName.SapphireClicker=Sapphire Clicker
 ItemName.TopazClicker=Topaz Clicker
 ItemName.SusClicker=sus cicker [sic]
+
+ItemName.PharashsFear=Pharaoh's Fear
+ItemTooltip.PharaohsFear=Grants immunity to knockback and fire blocks\nGrants immunity to most debuffs\nTemporarily increases defense shortly after being struck\nReleases homing skulls when moving\nTheir damage scales with defense
