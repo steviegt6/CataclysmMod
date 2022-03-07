@@ -4,6 +4,7 @@
 
 using System.Collections.Generic;
 using System.Linq;
+using CataclysmMod.Core.Localization;
 using ClickerClass;
 using Microsoft.Xna.Framework;
 using Terraria;
@@ -13,7 +14,7 @@ namespace CataclysmMod.Content.ClickerClass.Items.Weapons.Clickers.Misc
 {
     public class SusClicker : BaseClickerItem
     {
-        public static List<string> AvailableEffects = new List<string>();
+        public static readonly List<string> AvailableEffects = new List<string>();
         public static int EffectIndex;
 
         public override void SetStaticDefaults()
@@ -23,8 +24,8 @@ namespace CataclysmMod.Content.ClickerClass.Items.Weapons.Clickers.Misc
             ClickerCompatibilityCalls.RegisterClickEffect(
                 mod,
                 "Impostor",
-                Cataclysm.TextValue("ClickEffect.Impostor"),
-                Cataclysm.TextValue("ClickDescription.Impostor"),
+                FilelessEntries.GetClickEffect("Impostor"),
+                FilelessEntries.GetClickDescription("Impostor"),
                 3,
                 Color.Red,
                 PerformSuspiciousActivities
@@ -67,9 +68,13 @@ namespace CataclysmMod.Content.ClickerClass.Items.Weapons.Clickers.Misc
                 EffectIndex = 0;
 
             if (ClickerSystem.IsClickEffect(AvailableEffects[EffectIndex], out ClickEffect effect))
-                CombatText.NewText(player.getRect(),
-                    new Color(Main.rand.Next(0, 256), Main.rand.Next(0, 256), Main.rand.Next(0, 256)),
-                    $"Selected: {effect.DisplayName}");
+                CombatText.NewText(
+                    player.getRect(),
+                    new Color(Main.rand.Next(0, 256),
+                        Main.rand.Next(0, 256),
+                        Main.rand.Next(0, 256)),
+                    $"Selected: {effect.DisplayName}"
+                );
 
             return true;
         }

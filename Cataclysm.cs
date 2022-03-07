@@ -7,6 +7,7 @@ using CataclysmMod.Common.Addons;
 using CataclysmMod.Common.Configuration;
 using CataclysmMod.Common.UserInterface.AddonDisplay;
 using CataclysmMod.Core.Loading;
+using CataclysmMod.Core.Localization;
 using Terraria;
 using Terraria.Localization;
 using Terraria.ModLoader;
@@ -209,8 +210,8 @@ namespace CataclysmMod
 
         private string GetChangelog()
         {
-            string text = VhConfig.SeenStartupScreen ? "" : TextValue("Changelog.Startup");
-            text += $"\n{TextValue("Changelog.ActualChangelog")}";
+            string text = VhConfig.SeenStartupScreen ? "" : FilelessEntries.GetStartup();
+            text += $"\n{FilelessEntries.GetActualChangelog()}";
 
             VhConfig.SeenStartupScreen = true;
 
