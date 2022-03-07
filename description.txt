@@ -11,3 +11,5 @@ As of 2.0.0, the entire mod has been rewritten. You can review all added content
 Report issues on the issue tracker, located at on the GitHub (https://github.com/Steviegt6/CataclysmMod/issues).
 
 Join the Discord if you'd like to talk, or would like to suggest features: https://discord.gg/Y8bvvqyFQw
+
+And, yes, Angry Dog no longer drops Cryophobia.
