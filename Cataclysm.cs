@@ -21,7 +21,6 @@ namespace CataclysmMod
         public UIAddons AddonsUI;
         public UIAddonInfo AddonInfoUI;
         public bool ShowChangelog;
-        public bool FirstTime;
         
         public readonly Dictionary<Type, Addon> RegisteredAddons = new Dictionary<Type, Addon>
         {
@@ -67,6 +66,8 @@ namespace CataclysmMod
 
             ShowChangelog = Version.Parse(VhConfig.LastLoadedVersion) < Version;
             VhConfig.LastLoadedVersion = Version.ToString();
+            
+            VersionHandlerConfig.SerializeConfig(VhConfig);
         }
 
         public override void Unload()

@@ -59,7 +59,7 @@ namespace CataclysmMod.Core.Loading
         private static TSelf Self;
 
         /// <summary>
-        ///     A singleton addon instance.
+        ///     A singleton addon instance. Produces an instance of itself if none was previously initialized.
         /// </summary>
         public static TSelf Instance => Self ?? (Self = new TSelf());
     }

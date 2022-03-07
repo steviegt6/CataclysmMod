@@ -16,10 +16,11 @@ namespace CataclysmMod.Common.Configuration
             typeof(TConfig).Name.ToLower() + ".json"
         );
 
-        public static void SerializeConfig(TConfig config) => File.WriteAllText(
-            Path,
-            JsonConvert.SerializeObject(config)
-        );
+        public static void SerializeConfig(TConfig config)
+        {
+            Directory.CreateDirectory(System.IO.Path.GetDirectoryName(Path) ?? "");
+            File.WriteAllText(Path, JsonConvert.SerializeObject(config));
+        }
 
         public static TConfig DeserializeConfig() => !File.Exists(Path)
             ? new TConfig()
