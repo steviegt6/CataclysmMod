@@ -6,7 +6,6 @@ using System;
 using CataclysmMod.Common.Configuration.ModConfigs;
 using CataclysmMod.Core.Loading;
 using CataclysmMod.Core.Localization;
-using ClickerClass;
 using Terraria.ModLoader;
 using Terraria.ModLoader.Config;
 

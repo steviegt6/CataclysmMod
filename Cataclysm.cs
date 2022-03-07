@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using CataclysmMod.Common.Addons;
 using CataclysmMod.Common.Configuration;
 using CataclysmMod.Common.UserInterface.AddonDisplay;
+using CataclysmMod.Content.Vanilla.Components.Items;
 using CataclysmMod.Core.Loading;
 using CataclysmMod.Core.Localization;
 using Terraria;
@@ -88,6 +89,8 @@ namespace CataclysmMod
             
             foreach (Addon addon in RegisteredAddons.Values.Where(addon => addon.IsEnabled)) 
                 addon.UnloadEnabled();
+            
+            GetGlobalItem<GlowmaskedItemHandler>().Unload();
             
             // VersionHandlerConfig.SerializeConfig(VhConfig);
         }

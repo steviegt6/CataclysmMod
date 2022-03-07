@@ -2,13 +2,11 @@
 // Copyright (C) 2022 Tomat and Contributors, MIT License
 #endregion
 
-using CataclysmMod.Core.Loading;
 using Microsoft.Xna.Framework.Graphics;
 using Terraria;
 using Terraria.GameContent.UI.Elements;
 using Terraria.ID;
 using Terraria.Localization;
-using Terraria.ModLoader;
 using Terraria.ModLoader.UI;
 using Terraria.UI;
 using Terraria.UI.Gamepad;

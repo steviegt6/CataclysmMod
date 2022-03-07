@@ -2,7 +2,6 @@
 // Copyright (C) 2022 Tomat and Contributors, MIT License
 #endregion
 
-using System;
 using System.Reflection;
 using CataclysmMod.Core.Loading;
 using CataclysmMod.Core.Weaving;
