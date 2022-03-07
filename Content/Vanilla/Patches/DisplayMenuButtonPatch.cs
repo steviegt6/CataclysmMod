@@ -3,9 +3,9 @@
 #endregion
 
 using System.Reflection;
+using CataclysmMod.Core;
 using CataclysmMod.Core.Loading;
 using CataclysmMod.Core.Weaving;
-using Rejuvena.Backscatter.Cache;
 using Terraria;
 using Terraria.ModLoader;
 using Terraria.ID;
@@ -26,12 +26,13 @@ namespace CataclysmMod.Content.Vanilla.Patches
         
         public void Load()
         {
-            MethodInfo detoured = typeof(ModLoader).Assembly.GetCachedTypeNotNull("Terraria.ModLoader.UI.Interface")
-                .GetMethod("AddMenuButtons", BindingFlags.Static | BindingFlags.NonPublic);
+            MethodInfo detoured = typeof(ModLoader).Assembly
+                .GetCachedType("Terraria.ModLoader.UI.Interface")
+                .GetCachedMethod("AddMenuButtons");
             
             HookCreator.Detour(
                 detoured,
-                GetType().GetMethod(nameof(AddMenuButton), BindingFlags.Static | BindingFlags.Public)
+                GetType().GetCachedMethod(nameof(AddMenuButton))
             );
         }
 

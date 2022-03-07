@@ -4,5 +4,4 @@ version = 2.0.0
 homepage = https://discord.gg/Y8bvvqyFQw
 weakReferences = CalamityMod, ThoriumMod, ClickerClass, Split
 sortAfter = CalamityMod, ThoriumMod, ClickerClass, Split
-dllReferences = Rejuvena.Backscatter
 buildIgnore = obj\, bin\, .vs\, *.user

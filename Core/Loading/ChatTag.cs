@@ -5,7 +5,6 @@
 using System.Collections.Concurrent;
 using System.Collections.Generic;
 using Microsoft.Xna.Framework;
-using Rejuvena.Backscatter.Cache;
 using Terraria.UI.Chat;
 
 namespace CataclysmMod.Core.Loading
@@ -19,7 +18,9 @@ namespace CataclysmMod.Core.Loading
             IEnumerable<string> aliases = Aliases;
 
             ConcurrentDictionary<string, ITagHandler> handlers =
-                (ConcurrentDictionary<string, ITagHandler>) typeof(ChatManager).GetCachedFieldNotNull("_handlers")
+                (ConcurrentDictionary<string, ITagHandler>)
+                typeof(ChatManager)
+                    .GetCachedField("_handlers")
                     .GetValue(null);
 
             foreach (string alias in aliases) 

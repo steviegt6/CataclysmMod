@@ -5,10 +5,10 @@
 using System;
 using System.Collections.Generic;
 using System.Reflection;
+using CataclysmMod.Core;
 using CataclysmMod.Core.Loading;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using Rejuvena.Backscatter.Cache;
 using Terraria;
 using Terraria.GameContent.UI.Elements;
 using Terraria.ID;
@@ -164,18 +164,18 @@ namespace CataclysmMod.Common.UserInterface.AddonDisplay
 			Mod mod = ModContent.GetInstance<Cataclysm>();
 			
 			Assembly tml = typeof(ModLoader).Assembly;
-			Type modConfigUI = tml.GetCachedTypeNotNull("Terraria.ModLoader.Config.UI.UIModConfig");
-			Type interfaceT = tml.GetCachedTypeNotNull("Terraria.ModLoader.UI.Interface");
-			Type configManager = tml.GetCachedTypeNotNull("Terraria.ModLoader.Config.ConfigManager");
+			Type modConfigUI = tml.GetCachedType("Terraria.ModLoader.Config.UI.UIModConfig");
+			Type interfaceT = tml.GetCachedType("Terraria.ModLoader.UI.Interface");
+			Type configManager = tml.GetCachedType("Terraria.ModLoader.Config.ConfigManager");
 			// ReSharper disable once PossibleNullReferenceException
-			object modConfigUIInstance = interfaceT.GetCachedFieldNotNull("modConfig").GetValue(null);
-			FieldInfo modField = modConfigUI.GetCachedFieldNotNull("mod");
-			FieldInfo modConfigsField = modConfigUI.GetCachedFieldNotNull("modConfigs");
-			FieldInfo modConfigField = modConfigUI.GetCachedFieldNotNull("modConfig");
-			FieldInfo configsField = configManager.GetCachedFieldNotNull("Configs");
+			object modConfigUIInstance = interfaceT.GetCachedField("modConfig").GetValue(null);
+			FieldInfo modField = modConfigUI.GetCachedField("mod");
+			FieldInfo modConfigsField = modConfigUI.GetCachedField("modConfigs");
+			FieldInfo modConfigField = modConfigUI.GetCachedField("modConfig");
+			FieldInfo configsField = configManager.GetCachedField("Configs");
 			
 			modField.SetValue(modConfigUIInstance, mod);
-			modConfigsField.SetValue(modConfigUIInstance, ReflectionCache.GetValue<IDictionary<Mod, List<ModConfig>>>(configsField)[mod]);
+			modConfigsField.SetValue(modConfigUIInstance, configsField.GetValue<IDictionary<Mod, List<ModConfig>>>(null)[mod]);
 			modConfigField.SetValue(modConfigUIInstance, config);
 		}
 	}

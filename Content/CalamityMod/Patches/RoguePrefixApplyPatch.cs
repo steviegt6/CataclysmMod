@@ -3,12 +3,11 @@
 #endregion
 
 using System;
-using System.Reflection;
 using CalamityMod.Prefixes;
 using CataclysmMod.Content.CalamityMod.Components.Items;
+using CataclysmMod.Core;
 using CataclysmMod.Core.Loading;
 using CataclysmMod.Core.Weaving;
-using Rejuvena.Backscatter.Cache;
 using Terraria;
 
 namespace CataclysmMod.Content.CalamityMod.Patches
@@ -18,8 +17,8 @@ namespace CataclysmMod.Content.CalamityMod.Patches
         public void Load()
         {
             HookCreator.Detour(
-                typeof(RoguePrefix).GetMethod(nameof(RoguePrefix.Apply), BindingFlags.Instance | BindingFlags.Public),
-                GetType().GetMethod(nameof(ApplyOnFakes), BindingFlags.Static | BindingFlags.Public)
+                typeof(RoguePrefix).GetCachedMethod(nameof(RoguePrefix.Apply)),
+                GetType().GetCachedMethod(nameof(ApplyOnFakes))
             );
         }
         
