@@ -25,3 +25,9 @@ ItemName.DecreeDager=Dagger of Decree
 Item.Tooltip=Throws two daggers, with the top-most being capable of homing and splitting\nStealth strikes cause the top-most dagger to split into two more on death\nStealh strikes grant the bottom-most dagger increased pierce\nStealth strikes cause all thrown daggers to emit cursed fireballs
 ProjectileName.DecreeDagerProj=Cursed Dagger
 ProjectileName.DecreeDagerSplitProj=Cursed Dagger
+
+ItemName.SulphurousShell=Sulphurous Shell
+ItemTooltip.SulphurousShell=If you listen closely, you can hear your ear dissolving
+
+ItemName.GrandSharkRepellent=Grand Shark Repellent
+ItemTooltip.GrandSharkRepellent=Stops the Grand Sand Shark from spawning when you kill 10 sand sharks\nEquipping this will reset the sand shark counter to 0
