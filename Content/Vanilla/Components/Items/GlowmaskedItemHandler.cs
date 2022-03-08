@@ -13,13 +13,12 @@ namespace CataclysmMod.Content.Vanilla.Components.Items
     public class GlowmaskedItemHandler : GlobalItem
     {
         private static Dictionary<string, short> GlowmaskCollection = new Dictionary<string, short>();
-
-        public void Unload()
+        
+        public static void Unload()
         {
             Main.glowMaskTexture = Main.glowMaskTexture.Where(x => !x?.Name.StartsWith("$") ?? true).ToArray();
-
+            
             GlowmaskCollection.Clear();
-            GlowmaskCollection = null;
         }
 
         public short GetGlowmask(IGlowmaskedItemComponent glowmaskedItem)

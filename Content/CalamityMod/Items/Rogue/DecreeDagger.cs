@@ -6,6 +6,7 @@ using CalamityMod;
 using CalamityMod.Items;
 using CalamityMod.Projectiles.Rogue;
 using CataclysmMod.Common.Addons;
+using CataclysmMod.Content.CalamityMod.Components.Items;
 using CataclysmMod.Content.CalamityMod.Projectiles;
 using CataclysmMod.Core.Loading;
 using Microsoft.Xna.Framework;
@@ -16,10 +17,12 @@ using Terraria.ModLoader;
 namespace CataclysmMod.Content.CalamityMod.Items.Rogue
 {
     [AddonContent(typeof(CalamityModAddon))]
-    public class DecreeDagger : ModItem
+    public class DecreeDagger : ModItem, IRogueItemComponent
     {
         public override string Texture => "CalamityMod/Items/Weapons/Rogue/CursedDagger";
 
+        public float StealthStrikeDamage { get; set; } = 1f;
+        
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Dagger of Decree");

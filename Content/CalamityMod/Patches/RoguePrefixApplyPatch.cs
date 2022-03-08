@@ -4,6 +4,7 @@
 
 using System;
 using CalamityMod.Prefixes;
+using CataclysmMod.Common.Addons;
 using CataclysmMod.Content.CalamityMod.Components.Items;
 using CataclysmMod.Core;
 using CataclysmMod.Core.Loading;
@@ -12,6 +13,7 @@ using Terraria;
 
 namespace CataclysmMod.Content.CalamityMod.Patches
 {
+    [AddonContent(typeof(CalamityModAddon))]
     public class RoguePrefixApplyPatch : ILoadable
     {
         public void Load()

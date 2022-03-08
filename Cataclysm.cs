@@ -90,7 +90,7 @@ namespace CataclysmMod
             foreach (Addon addon in RegisteredAddons.Values.Where(addon => addon.IsEnabled)) 
                 addon.UnloadEnabled();
             
-            GetGlobalItem<GlowmaskedItemHandler>().Unload();
+            GlowmaskedItemHandler.Unload();
             
             // VersionHandlerConfig.SerializeConfig(VhConfig);
         }
