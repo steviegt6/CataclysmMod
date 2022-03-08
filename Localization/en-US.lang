@@ -20,3 +20,8 @@ ItemName.SusClicker=sus cicker [sic]
 
 ItemName.PharashsFear=Pharaoh's Fear
 ItemTooltip.PharaohsFear=Grants immunity to knockback and fire blocks\nGrants immunity to most debuffs\nTemporarily increases defense shortly after being struck\nReleases homing skulls when moving\nTheir damage scales with defense
+
+ItemName.DecreeDager=Dagger of Decree
+Item.Tooltip=Throws two daggers, with the top-most being capable of homing and splitting\nStealth strikes cause the top-most dagger to split into two more on death\nStealh strikes grant the bottom-most dagger increased pierce\nStealth strikes cause all thrown daggers to emit cursed fireballs
+ProjectileName.DecreeDagerProj=Cursed Dagger
+ProjectileName.DecreeDagerSplitProj=Cursed Dagger
