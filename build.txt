@@ -1,6 +1,6 @@
 displayName = Cataclysm (Addon: Calamity, Thorium, Split, Clicker Class)
-author = convicted tomatophile (Stevie)
-version = 1.1.1.1
+author = Tomat
+version = 1.1.1.2
 homepage = https://discord.com/invite/qrZ4Bpz
 weakReferences = CalamityMod, ThoriumMod, ClickerClass, Split
 sortAfter = CalamityMod, ThoriumMod, ClickerClass, Split

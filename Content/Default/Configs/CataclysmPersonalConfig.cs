@@ -10,9 +10,9 @@ namespace CataclysmMod.Content.Default.Configs
 
         public override ConfigScope Mode => ConfigScope.ClientSide;
 
-        [Header("Calamity")]
+        /*[Header("Calamity")]
         [Label("Show Organic Enemy Status Text")]
         [DefaultValue(false)]
-        public bool ShowOrganicText { get; set; }
+        public bool ShowOrganicText { get; set; }*/
     }
 }

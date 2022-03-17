@@ -12,7 +12,7 @@ namespace CataclysmMod.Content.Calamity.GlobalModifications.GlobalProjectiles
 {
     public class CalamityProjectileIntelligenceModifier : CalamityGlobalProjectileBase
     {
-        public List<int> SlimeGodNpcs => new List<int>
+        /*public List<int> SlimeGodNpcs => new List<int>
         {
             ModContent.NPCType<SlimeGodCore>(),
             ModContent.NPCType<SlimeGod>(),
@@ -24,9 +24,9 @@ namespace CataclysmMod.Content.Calamity.GlobalModifications.GlobalProjectiles
         {
             ModContent.ProjectileType<AbyssMine>(),
             ModContent.ProjectileType<AbyssMine2>()
-        };
+        };*/
 
-        public override bool PreAI(Projectile projectile)
+        /*public override bool PreAI(Projectile projectile)
         {
             if (!AbyssMines.Contains(projectile.type))
                 return base.PreAI(projectile);
@@ -40,7 +40,7 @@ namespace CataclysmMod.Content.Calamity.GlobalModifications.GlobalProjectiles
                 projectile.Kill();
 
             return base.PreAI(projectile);
-        }
+        }*/
 
         public override void AI(Projectile projectile)
         {

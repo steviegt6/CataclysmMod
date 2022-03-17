@@ -17,7 +17,43 @@ namespace CataclysmMod.Content.Calamity.GlobalModifications.GlobalNpcs
         }
 
         private static void SetupWizardShop(Chest shop, ref int nextSlot) =>
-            CalamityGlobalTownNPC.SetShopItem(ref shop, ref nextSlot, ItemID.GuideVoodooDoll, Main.hardMode,
-                Item.sellPrice(gold: 20));
+            SetShopItem(
+                ref shop,
+                ref nextSlot,
+                ItemID.GuideVoodooDoll,
+                Main.hardMode,
+                Item.sellPrice(gold: 20)
+            );
+        
+        public static void SetShopItem(
+            ref Chest shop,
+            ref int nextSlot,
+            int itemID,
+            bool condition = true,
+            int? price = null,
+            bool ignoreDiscount = false)
+        {
+            if (!condition)
+                return;
+            
+            shop.item[nextSlot].SetDefaults(itemID);
+            
+            if (price.HasValue)
+            {
+                shop.item[nextSlot].shopCustomPrice = price;
+                
+                if (Main.LocalPlayer.discount && !ignoreDiscount)
+                {
+                    Item item = shop.item[nextSlot];
+                    int? shopCustomPrice = shop.item[nextSlot].shopCustomPrice;
+
+                    if (shopCustomPrice != null)
+                        shopCustomPrice = (int) (shopCustomPrice.Value * 0.8f);
+                    
+                    item.shopCustomPrice = shopCustomPrice;
+                }
+            }
+            ++nextSlot;
+        }
     }
 }

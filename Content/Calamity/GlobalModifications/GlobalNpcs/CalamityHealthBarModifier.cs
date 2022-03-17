@@ -1,4 +1,4 @@
-﻿using CalamityMod;
+﻿/*using CalamityMod;
 using CataclysmMod.Content.Default.Configs;
 using Microsoft.Xna.Framework;
 using Terraria;
@@ -34,4 +34,4 @@ namespace CataclysmMod.Content.Calamity.GlobalModifications.GlobalNpcs
             return base.DrawHealthBar(npc, hbPosition, ref scale, ref position);
         }
     }
-}
+}*/
