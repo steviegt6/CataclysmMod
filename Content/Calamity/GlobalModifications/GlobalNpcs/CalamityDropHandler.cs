@@ -81,9 +81,6 @@ namespace CataclysmMod.Content.Calamity.GlobalModifications.GlobalNpcs
             if (npc.type == ModContent.NPCType<Sunskater>())
                 DropHelper.DropItemChance(npc, ItemID.SharkFin, 0.10f);
 
-            if (npc.type == ModContent.NPCType<AngryDog>())
-                DropHelper.DropItemChance(npc, ModContent.ItemType<Cryophobia>(), 0.15f);
-
             if (npc.type == ModContent.NPCType<GreatSandShark>() && Main.rand.NextBool(3))
                 Item.NewItem(npc.Hitbox, ModContent.ItemType<GrandSharkRepellent>());
         }
