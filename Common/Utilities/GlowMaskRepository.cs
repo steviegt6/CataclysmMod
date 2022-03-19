@@ -13,11 +13,14 @@ namespace CataclysmMod.Common.Utilities
 
         public static Dictionary<string, int> GlowMasks;
 
+        private static Texture2D[] GlowMaskCache;
+
         public static void Load()
         {
             if (Main.dedServ)
                 return;
 
+            GlowMaskCache = Main.glowMaskTexture.ToArray(); // shallow copy
             GlowMasks = new Dictionary<string, int>();
 
             List<Texture2D> glowMasks = Main.glowMaskTexture.ToList();
@@ -35,12 +38,10 @@ namespace CataclysmMod.Common.Utilities
 
         public static void Unload()
         {
-            if (Main.dedServ)
+            if (Main.dedServ || GlowMaskCache == null)
                 return;
 
-            Main.glowMaskTexture = Main.glowMaskTexture.Where(x => !x.Name.StartsWith(TextureSearch)).ToArray();
-            GlowMasks.Clear();
-            GlowMasks = null;
+            Main.glowMasktexture = GlowMaskCache;
         }
 
         private static IEnumerable<(string, Texture2D)> GetGlowMasks()

@@ -1,5 +1,5 @@
-1.1.1.2 IS A PATCH TO KEEP THE MOD FUNCTIONAL
-A COMPLETE REWRITE IS UIN THE WORKS
+1.1.1.x IS A PATCH TO KEEP THE MOD FUNCTIONAL
+A COMPLETE REWRITE IS IN THE WORKS
 
 Cataclysm is a Terraria mod focusing on changing different aspects of different mods.
 Current support mods: Calamity, Thorium, Clicker Class, and Split
