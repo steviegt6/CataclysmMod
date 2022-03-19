@@ -41,7 +41,7 @@ namespace CataclysmMod.Common.Utilities
             if (Main.dedServ || GlowMaskCache == null)
                 return;
 
-            Main.glowMasktexture = GlowMaskCache;
+            Main.glowMaskTexture = GlowMaskCache;
         }
 
         private static IEnumerable<(string, Texture2D)> GetGlowMasks()
